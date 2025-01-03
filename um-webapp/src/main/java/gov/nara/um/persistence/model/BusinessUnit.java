@@ -1,5 +1,4 @@
 package gov.nara.um.persistence.model;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -13,22 +12,20 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-
 @Entity
 @Data
 @Getter
 @Setter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name = "business_unit_catalog", schema = "oif_ods")
-//@Table(name = "business_unit_catalog")
+//@Table(name = "business_unit_catalog", schema = "oif_ods")
+@Table(name = "business_unit_catalog")
 public class BusinessUnit  implements INameableEntity, INameableDto {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_seq_gen")
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_seq_gen")
     @SequenceGenerator(name = "bu_seq_gen", sequenceName = "oif_ods.business_unit_seq", allocationSize=1)
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(hidden = true)
     private Integer id;
 
@@ -62,9 +59,6 @@ public class BusinessUnit  implements INameableEntity, INameableDto {
             }
         }
     }
-
-
-
 
     @Override
     public Integer getId() {
