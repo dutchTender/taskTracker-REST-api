@@ -15,14 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Data
-@Getter
-@Setter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
 @Table(name = "business_unit_configuration")
 public class BusinessUnitConfiguration implements ILongNameableEntity, ILongNameableDto {
-
-
     @Id
     @Column(name = "configuration_id")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_conf_seq_gen")
