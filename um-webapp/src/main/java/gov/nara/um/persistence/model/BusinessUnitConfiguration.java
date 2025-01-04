@@ -29,6 +29,7 @@ public class BusinessUnitConfiguration implements ILongNameableEntity, ILongName
 
     @Column(name = "configuration_name", unique = true, nullable = false)
     private String name;
-
+    public BusinessUnitConfiguration(){
+    }
 
 }

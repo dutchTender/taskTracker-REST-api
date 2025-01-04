@@ -42,6 +42,8 @@ public class BusinessUnit  implements INameableEntity, INameableDto {
             orphanRemoval = true
     )
     private List<BusinessUnitConfigurationPreference> businessUnitConfigurationPreferences = new ArrayList<>();
+    public BusinessUnit(){
+    }
     public BusinessUnitConfigurationPreference addBusinessUnitConfigurationPreference(BusinessUnitConfigurationPreference businessUnitConfigurationPreference){
         businessUnitConfigurationPreferences.add(businessUnitConfigurationPreference);
         return  businessUnitConfigurationPreference;
