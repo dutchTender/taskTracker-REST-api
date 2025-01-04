@@ -1,5 +1,4 @@
 package gov.nara.um.service.impl;
-
 import gov.nara.common.persistence.service.AbstractService;
 import gov.nara.um.persistence.dao.IBusinessUnitDao;
 import gov.nara.um.persistence.dao.IUserJpaDao;
@@ -20,11 +19,8 @@ public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> imple
 
     @Autowired
     private IBusinessUnitDao dao;
-
     @Autowired
     private IUserJpaDao userDao;
-
-
     public BusinessUnitServiceImpl() {
         super();
     }
@@ -37,7 +33,6 @@ public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> imple
     }
     // other
     // remove user
-
     // Spring
     @Override
     protected final IBusinessUnitDao getDao() {
@@ -63,7 +58,6 @@ public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> imple
         }
         return businessUnit;
     }
-
     @Override
     public BusinessUnit removerUser(String unitId, String userId) {
         Optional <BusinessUnit> businessUnitOptional =  dao.findById(Integer.valueOf(unitId));

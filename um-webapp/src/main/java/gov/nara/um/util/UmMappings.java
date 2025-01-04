@@ -1,9 +1,6 @@
 package gov.nara.um.util;
 
 public final class UmMappings {
-
-
-
     public static final String BUSINESSUNITS = "business-units";
 
     public static final String USERS = "users";
@@ -19,13 +16,9 @@ public final class UmMappings {
     // discoverability
 
     public static final class Singular {
-
-
         public static final String BUSINESSUNIT = "business-unit";
-
         public static final String USER = "user";
     }
-
     public static final String AUTHENTICATION = "authentication";
 
     private UmMappings() {
