@@ -7,6 +7,8 @@ import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
 import gov.nara.common.web.controller.ISortingController;
+import gov.nara.um.persistence.dto.BusinessUnitDTO;
+import gov.nara.um.persistence.dto.UserDTO;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.IBusinessUnitService;
@@ -18,9 +20,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-
-
+import java.util.Set;
 
 
 @Controller
@@ -28,7 +31,10 @@ import java.util.List;
 public class UserController extends AbstractLongIdController<User> implements ILongIdSortingController<User> {
 
     @Autowired
-    private IUserService service;
+    private IUserService userService;
+
+    @Autowired
+    private IBusinessUnitService bUnitService;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -130,7 +136,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
         updateInternal(id, resource);
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,15 +149,26 @@ public class UserController extends AbstractLongIdController<User> implements IL
         deleteByIdInternal(id);
     }
 
+    private User buildUserFromDTO(UserDTO dto){
+        User user = new User();
+        user.setName(dto.getUser_name());
+        user.setUser_type(dto.getUser_type());
+        user.setBusinessUnits(buildBusinessUnitFromIDs(dto.getBusiness_unitIDs()));
+        return  user;
+    }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Spring
-    // dependency injection
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private Set<BusinessUnit> buildBusinessUnitFromIDs(Integer[] bUnits){
+        Set<BusinessUnit> businessUnits = new HashSet<>();
+        Arrays.stream(bUnits).iterator().forEachRemaining(bUnitID ->{
+            System.out.println("processing business unit ID for user DTO : " + bUnitID);
+            BusinessUnit bUnit = bUnitService.findOne(bUnitID);
+            businessUnits.add(bUnit);
+        });
+        return  businessUnits;
+    }
     @Override
     protected final IUserService getService() {
-        return service;
+        return userService;
     }
 
 }
