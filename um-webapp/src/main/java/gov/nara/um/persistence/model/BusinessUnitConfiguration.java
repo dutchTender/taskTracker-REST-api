@@ -30,24 +30,5 @@ public class BusinessUnitConfiguration implements ILongNameableEntity, ILongName
     @Column(name = "configuration_name", unique = true, nullable = false)
     private String name;
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 
 }

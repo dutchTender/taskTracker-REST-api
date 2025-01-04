@@ -46,7 +46,6 @@ public class BusinessUnit  implements INameableEntity, INameableDto {
         businessUnitConfigurationPreferences.add(businessUnitConfigurationPreference);
         return  businessUnitConfigurationPreference;
     }
-
     public void removeBusinessUnitConfigurationPreference( BusinessUnitConfigurationPreference businessUnitConfigurationPreference){
         for(Iterator<BusinessUnitConfigurationPreference> iterBUCP = businessUnitConfigurationPreferences.iterator(); iterBUCP.hasNext(); ) {
             BusinessUnitConfigurationPreference current = iterBUCP.next();
