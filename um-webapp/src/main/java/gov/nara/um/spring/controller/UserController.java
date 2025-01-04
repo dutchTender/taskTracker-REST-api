@@ -114,7 +114,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody final User resource) {
-
         createInternal(resource);
     }
 

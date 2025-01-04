@@ -44,8 +44,6 @@ public class BusinessUnit  implements INameableEntity, INameableDto {
             orphanRemoval = true
     )
     private List<BusinessUnitConfigurationPreference> businessUnitConfigurationPreferences = new ArrayList<>();
-
-
     public BusinessUnitConfigurationPreference addBusinessUnitConfigurationPreference(BusinessUnitConfigurationPreference businessUnitConfigurationPreference){
         businessUnitConfigurationPreferences.add(businessUnitConfigurationPreference);
         return  businessUnitConfigurationPreference;
@@ -59,7 +57,6 @@ public class BusinessUnit  implements INameableEntity, INameableDto {
             }
         }
     }
-
     @Override
     public Integer getId() {
         return id;

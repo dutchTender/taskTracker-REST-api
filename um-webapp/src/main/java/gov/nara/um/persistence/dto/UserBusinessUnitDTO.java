@@ -3,13 +3,9 @@ package gov.nara.um.persistence.dto;
 
 
 public class UserBusinessUnitDTO   {
-
-
-
     private Long user_id;
 
     private Integer business_unit_id;
-
 
     public Long getUser_id() {
         return user_id;

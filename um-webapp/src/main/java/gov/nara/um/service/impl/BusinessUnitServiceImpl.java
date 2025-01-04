@@ -2,7 +2,9 @@ package gov.nara.um.service.impl;
 
 import gov.nara.common.persistence.service.AbstractService;
 import gov.nara.um.persistence.dao.IBusinessUnitDao;
+import gov.nara.um.persistence.dao.IUserJpaDao;
 import gov.nara.um.persistence.model.BusinessUnit;
+import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.IBusinessUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -19,31 +21,24 @@ public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> imple
     @Autowired
     private IBusinessUnitDao dao;
 
-
+    @Autowired
+    private IUserJpaDao userDao;
 
 
     public BusinessUnitServiceImpl() {
         super();
     }
-
     // API
     // find
-
     @Override
     @Transactional(readOnly = true)
     public BusinessUnit findByName(final String name) {
         return dao.findByName(name);
     }
-
     // other
-
-
     // remove user
 
-
-
     // Spring
-
     @Override
     protected final IBusinessUnitDao getDao() {
         return dao;
@@ -52,5 +47,35 @@ public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> imple
     @Override
     protected JpaSpecificationExecutor<BusinessUnit> getSpecificationExecutor() {
         return dao;
+    }
+    @Override
+    public BusinessUnit addUser(String unitId, String userId) {
+        Optional <BusinessUnit> businessUnitOptional =  dao.findById(Integer.valueOf(unitId));
+        BusinessUnit businessUnit =  businessUnitOptional.get();
+        Optional <User> userOptional = userDao.findById(Long.valueOf(userId));
+        User user = userOptional.get();
+        if(businessUnit != null && user != null){
+            // we need to add it to the current versoin. no longer singular referenced
+            //businessUnit.addUser(user);
+            //user.setBusinessUnit(businessUnit);
+            dao.save(businessUnit);
+            userDao.save(user);
+        }
+        return businessUnit;
+    }
+
+    @Override
+    public BusinessUnit removerUser(String unitId, String userId) {
+        Optional <BusinessUnit> businessUnitOptional =  dao.findById(Integer.valueOf(unitId));
+        BusinessUnit businessUnit =  businessUnitOptional.get();
+        Optional <User> userOptional = userDao.findById(Long.valueOf(userId));
+        User user = userOptional.get();
+        if(businessUnit != null && user != null){
+            //businessUnit.removeUser(user);
+            //user.setBusinessUnit(null);
+            dao.save(businessUnit);
+            userDao.save(user);
+        }
+        return businessUnit;
     }
 }

@@ -1,10 +1,6 @@
 package gov.nara.um.persistence.model;
-
-
-
 import javax.persistence.*;
 import java.util.Objects;
-
 @Entity
 //@Table(name = "business_unit_config_values", schema = "oif_ods")
 public class BusinessUnitConfigurationPreference {
@@ -66,7 +62,6 @@ public class BusinessUnitConfigurationPreference {
                 getBusinessUnitConfigID().equals(that.getBusinessUnitConfigID()) &&
                 Objects.equals(getConfigurationValue(), that.getConfigurationValue());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getBusinessUnitID(), getBusinessUnitConfigID(), getConfigurationValue());

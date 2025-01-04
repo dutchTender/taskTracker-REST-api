@@ -23,7 +23,7 @@ public class User implements ILongNameableEntity, ILongNameableDto {
     @Column(name = "user_name")
     private String name;
     private String user_type;
-    private Long businessunit_id;
+
     @JoinTable(
             name = "user_business_unit",
             joinColumns = @JoinColumn(
@@ -46,33 +46,5 @@ public class User implements ILongNameableEntity, ILongNameableDto {
     public void setBusinessUnits(Set<BusinessUnit> businessUnits) {
         this.businessUnits = businessUnits;
     }
-    @Override
-    public void setId(Long id) { this.id = id; }
 
-    @Override
-    public Long getId() { return this.id; }
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUser_type() {
-        return user_type;
-    }
-
-    public void setUser_type(String user_type) {
-        this.user_type = user_type;
-    }
-
-    public Long getBusinessunit_id() {
-        return businessunit_id;
-    }
-
-    public void setBusinessunit_id(Long businessunit_id) {
-        this.businessunit_id = businessunit_id;
-    }
 }

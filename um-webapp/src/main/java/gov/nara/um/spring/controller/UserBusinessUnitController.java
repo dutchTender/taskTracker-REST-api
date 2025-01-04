@@ -61,9 +61,7 @@ public class UserBusinessUnitController extends AbstractLongIdController<User>  
                 userBusinessUnitDTO.setBusiness_unit_id(businessUnit.getId());
                 userBusinessUnitDTO.setUser_id(current.getId());
                 returnList.add(userBusinessUnitDTO);
-
             }
-
         }
         return returnList;
     }
@@ -90,15 +88,11 @@ public class UserBusinessUnitController extends AbstractLongIdController<User>  
                 userBusinessUnitDTO.setUser_id(user.getId());
                 returnList.add(userBusinessUnitDTO);
             }
-
         }
         else {
             throw new MyResourceNotFoundException("the resource requested does not exist.");
         }
-
-
         return returnList;
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,18 +127,8 @@ public class UserBusinessUnitController extends AbstractLongIdController<User>  
             message += "value is not valid";
             throw new MyBadRequestException(message);
         }
-
         // throw custom bad request exception
-
-
-
     }
-
-
-
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,12 +165,7 @@ public class UserBusinessUnitController extends AbstractLongIdController<User>  
             message += "value in the API payload is not valid.";
             throw new MyBadRequestException(message);
         }
-
-
-
     }
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,13 +186,9 @@ public class UserBusinessUnitController extends AbstractLongIdController<User>  
             throw new MyBadRequestException("user id value provided in the API path was not valid.");
         }
     }
-
-
     @Override
     protected ILongRawService<User> getService() {
 
         return userService;
     }
-
-
 }

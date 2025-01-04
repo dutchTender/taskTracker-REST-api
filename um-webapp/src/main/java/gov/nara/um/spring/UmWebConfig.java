@@ -1,5 +1,4 @@
 package gov.nara.um.spring;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
@@ -41,18 +40,12 @@ public class UmWebConfig implements WebMvcConfigurer {
                 .genericModelSubstitutes(ResponseEntity.class)
                 ;
     }// @formatter:on
-
-
     // custom http message converter
-
     @Override
     public void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
-
-
         final Optional<HttpMessageConverter<?>> converterFound = converters.stream()
                 .filter(c -> c instanceof AbstractJackson2HttpMessageConverter)
                 .findFirst();
-
         if (converterFound.isPresent()) {
             final AbstractJackson2HttpMessageConverter converter = (AbstractJackson2HttpMessageConverter) converterFound.get();
             converter.getObjectMapper()

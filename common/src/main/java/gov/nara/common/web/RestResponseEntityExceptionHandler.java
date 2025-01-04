@@ -29,19 +29,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public RestResponseEntityExceptionHandler() {
         super();
     }
-
     // API
-
     // 400  duplicate entry will be checked here
-
-
-
     @ExceptionHandler({ ConstraintViolationException.class, MyBadRequestException.class, DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleBadRequest(final RuntimeException ex, final WebRequest request) {
         //final String bodyOfResponse = "This should be application specific";
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
-
     // bad request name
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
@@ -50,14 +44,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), headers, HttpStatus.BAD_REQUEST, request);
     }
-
     // bad request value
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), headers, HttpStatus.BAD_REQUEST, request);
     }
-
     // 403
     // forbidden resource access
     @ExceptionHandler({ MyForbiddenException.class })
@@ -65,9 +57,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.FORBIDDEN, ex), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
-
     // 404
-
     /* if we enable this. unit test for the controller will start failing  */
 
     @ExceptionHandler( {MyResourceNotFoundException.class })
@@ -75,37 +65,28 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.NOT_FOUND, ex), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
-
-
-
     @ExceptionHandler({ MyEntityNotFoundException.class })
     protected ResponseEntity<Object> handleNotFound(final MyEntityNotFoundException ex, final WebRequest request) {
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.NOT_FOUND, ex), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
-
     @ExceptionHandler(value = { EntityNotFoundException.class })
     protected ResponseEntity<Object> handleBadRequest(final EntityNotFoundException ex, final WebRequest request) {
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.NOT_FOUND, ex), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
-
     // 409
-
     @ExceptionHandler({ InvalidDataAccessApiUsageException.class, DataAccessException.class, MyConflictException.class })
     protected ResponseEntity<Object> handleConflict(final RuntimeException ex, final WebRequest request) {
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.CONFLICT, ex), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
-
     // 4xx
-
     @ExceptionHandler({ MyPreconditionFailedException.class })
     /*412*/protected ResponseEntity<Object> handlePreconditionFailed(final RuntimeException ex, final WebRequest request) {
 
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.PRECONDITION_FAILED, ex), new HttpHeaders(), HttpStatus.PRECONDITION_FAILED, request);
     }
-
     @ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class })
     /*500*/public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
         logger.error("500 Status Code", ex);
@@ -113,14 +94,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-
-
-
-
     private APIErrorDto exceptionMessage(final  HttpStatus httpStatus, final  Exception ex){
         final  String message = ex.getMessage() == null ? ex.getClass().getSimpleName() : ex.getMessage();
         final  String devMessage = ExceptionUtils.getRootCauseMessage(ex);
-
         return new APIErrorDto(httpStatus.value(), message, devMessage);
     }
 

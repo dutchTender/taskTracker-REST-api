@@ -31,7 +31,9 @@ public class UserServiceImpl extends AbstractLongIdService<User>  implements IUs
     }
 
     // other
-
+    public void removeUser(final String name){
+        dao.delete(findByName(name));
+    }
     // Spring
 
     @Override
