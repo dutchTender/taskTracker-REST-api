@@ -3,15 +3,12 @@ package gov.nara.um.spring.controller;
 
 
 import gov.nara.common.util.QueryConstants;
-import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
-import gov.nara.common.web.controller.ISortingController;
-import gov.nara.um.persistence.dto.BusinessUnitDTO;
 import gov.nara.um.persistence.dto.UserDTO;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.service.IBusinessUnitService;
+import gov.nara.um.service.IBUnitService;
 import gov.nara.um.service.IUserService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     private IUserService userService;
 
     @Autowired
-    private IBusinessUnitService bUnitService;
+    private IBUnitService bUnitService;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API

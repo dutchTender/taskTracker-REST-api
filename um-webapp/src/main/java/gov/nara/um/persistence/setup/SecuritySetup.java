@@ -2,7 +2,7 @@ package gov.nara.um.persistence.setup;
 
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.service.IBusinessUnitService;
+import gov.nara.um.service.IBUnitService;
 import gov.nara.um.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
 
     @Autowired
-    private  IBusinessUnitService iBusinessUnitService;
+    private IBUnitService iBusinessUnitService;
 
     @Autowired
     private  IUserService iUserService;

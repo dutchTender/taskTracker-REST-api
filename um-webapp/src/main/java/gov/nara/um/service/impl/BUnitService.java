@@ -4,7 +4,7 @@ import gov.nara.um.persistence.dao.IBUnitDao;
 import gov.nara.um.persistence.dao.IUserDao;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.service.IBusinessUnitService;
+import gov.nara.um.service.IBUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> implements IBusinessUnitService {
+public class BUnitService extends AbstractService<BusinessUnit> implements IBUnitService {
 
     @Autowired
     private IBUnitDao dao;
     @Autowired
     private IUserDao userDao;
-    public BusinessUnitServiceImpl() {
+    public BUnitService() {
         super();
     }
     // API

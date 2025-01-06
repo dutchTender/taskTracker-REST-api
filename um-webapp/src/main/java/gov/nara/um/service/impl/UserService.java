@@ -12,17 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserServiceImpl extends AbstractLongIdService<User>  implements IUserService {
+public class UserService extends AbstractLongIdService<User>  implements IUserService {
 
     @Autowired
     private IUserDao dao;
 
-    public UserServiceImpl() {
+    public UserService() {
         super();
     }
 
     // API
-
     // find
     @Override
     @Transactional(readOnly = true)

@@ -9,7 +9,7 @@ import gov.nara.common.web.exception.MyResourceNotFoundException;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.persistence.dto.UserBusinessUnitDTO;
-import gov.nara.um.service.IBusinessUnitService;
+import gov.nara.um.service.IBUnitService;
 import gov.nara.um.service.IUserService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ import java.util.Set;
 
 @Controller
 @RequestMapping(value = UmMappings.USERS_BUSINESSUNITS)
-public class UserBusinessUnitController extends AbstractLongIdController<User>  {
+public class UserBUnitController extends AbstractLongIdController<User>  {
 
     @Autowired
     private IUserService userService;
 
     @Autowired
-    private IBusinessUnitService businessUnitService;
+    private IBUnitService businessUnitService;
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

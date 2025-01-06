@@ -5,7 +5,7 @@ import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.ISortingController;
 import gov.nara.um.persistence.dao.IUserDao;
 import gov.nara.um.persistence.model.BusinessUnit;
-import gov.nara.um.service.IBusinessUnitService;
+import gov.nara.um.service.IBUnitService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +19,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = UmMappings.BUSINESSUNITS)
-public class BusinessUnitController extends AbstractController<BusinessUnit> implements ISortingController<BusinessUnit> {
+public class BUnitController extends AbstractController<BusinessUnit> implements ISortingController<BusinessUnit> {
 
     @Autowired
-    private IBusinessUnitService service;
+    private IBUnitService service;
     @Autowired
     private IUserDao userDao;
     // API
@@ -113,7 +113,7 @@ public class BusinessUnitController extends AbstractController<BusinessUnit> imp
     // Spring
 
     @Override
-    protected final IBusinessUnitService getService() {
+    protected final IBUnitService getService() {
         return service;
     }
 
