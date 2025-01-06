@@ -1,7 +1,7 @@
 package gov.nara.um.service.impl;
 import gov.nara.common.persistence.service.AbstractService;
-import gov.nara.um.persistence.dao.IBusinessUnitDao;
-import gov.nara.um.persistence.dao.IUserJpaDao;
+import gov.nara.um.persistence.dao.IBUnitDao;
+import gov.nara.um.persistence.dao.IUserDao;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.IBusinessUnitService;
@@ -18,9 +18,9 @@ import java.util.Optional;
 public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> implements IBusinessUnitService {
 
     @Autowired
-    private IBusinessUnitDao dao;
+    private IBUnitDao dao;
     @Autowired
-    private IUserJpaDao userDao;
+    private IUserDao userDao;
     public BusinessUnitServiceImpl() {
         super();
     }
@@ -35,7 +35,7 @@ public class BusinessUnitServiceImpl extends AbstractService<BusinessUnit> imple
     // remove user
     // Spring
     @Override
-    protected final IBusinessUnitDao getDao() {
+    protected final IBUnitDao getDao() {
         return dao;
     }
 

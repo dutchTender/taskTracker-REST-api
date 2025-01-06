@@ -164,6 +164,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
             BusinessUnit bUnit = bUnitService.findOne(bUnitID);
             businessUnits.add(bUnit);
         });
+        System.out.println(businessUnits.toArray().length); // assert that that size matches input bUnits
         return  businessUnits;
     }
     @Override

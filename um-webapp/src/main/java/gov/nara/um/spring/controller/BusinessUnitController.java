@@ -3,7 +3,7 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.ISortingController;
-import gov.nara.um.persistence.dao.IUserJpaDao;
+import gov.nara.um.persistence.dao.IUserDao;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.service.IBusinessUnitService;
 import gov.nara.um.util.UmMappings;
@@ -24,7 +24,7 @@ public class BusinessUnitController extends AbstractController<BusinessUnit> imp
     @Autowired
     private IBusinessUnitService service;
     @Autowired
-    private IUserJpaDao userDao;
+    private IUserDao userDao;
     // API
     // find - all/paginated
     @Override
