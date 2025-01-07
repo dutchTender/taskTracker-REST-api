@@ -42,7 +42,6 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
         return buildDTOListFromConfigurationList(bUnitConfigList);
 
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,15 +49,16 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
-    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
-    @ResponseBody
-    public List<BusinessUnitConfiguration> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+    public List<BusinessUnitConfiguration> findAllPaginated(final int page, final int size) {
         return findPaginatedInternal(page, size);
     }
-
-
+    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<BUnitConfigurationDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+        List<BusinessUnitConfiguration> bUnitConfigList = findAllPaginated(page, size);
+        return buildDTOListFromConfigurationList(bUnitConfigList);
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,15 +66,16 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Unit testing  : DONE
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
-    @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
-    @ResponseBody
     public List<BusinessUnitConfiguration> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
-
-
+    @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<BUnitConfigurationDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        List<BusinessUnitConfiguration> bUnitConfigList =  findAllSorted(sortBy, sortOrder);
+        return buildDTOListFromConfigurationList(bUnitConfigList);
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,12 +84,15 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public List<BusinessUnitConfiguration> findAll(final HttpServletRequest request) {
         return findAllInternal(request);
     }
-
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public List<BUnitConfigurationDTO> findAllDTO(final HttpServletRequest request) {
+        List<BusinessUnitConfiguration> bUnitConfigList = findAll(request);
+        return buildDTOListFromConfigurationList(bUnitConfigList);
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,12 +100,16 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public BusinessUnitConfiguration findOne(@PathVariable("id") final Long id) {
+
+    public BusinessUnitConfiguration findOne(final Long id) {
         return findOneInternal(id);
     }
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public BUnitConfigurationDTO findOneDTO(@PathVariable("id") final Long id) {
 
+        return buildDTOFromBUnitConfiguration(findOne(id));
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,12 +117,15 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
+
     public void create(@RequestBody final BusinessUnitConfiguration resource) {
         createInternal(resource);
     }
-
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createDTO(@RequestBody final BUnitConfigurationDTO resource) {
+        create(buildBUnitConfigurationFromDTO(resource));
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,12 +133,14 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody final BusinessUnitConfiguration resource) {
         updateInternal(id, resource);
     }
-
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDTO(@PathVariable("id") final Long id, @RequestBody final BUnitConfigurationDTO resource) {
+        update(id, buildBUnitConfigurationFromDTO(resource));
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,13 +159,18 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
         bUnitConfigDTO.setName(bUnitConfig.getName());
         return  bUnitConfigDTO;
     }
-
     private List<BUnitConfigurationDTO> buildDTOListFromConfigurationList( List<BusinessUnitConfiguration> BUnitConfigurationList ){
         List<BUnitConfigurationDTO> dtoList = new ArrayList<>();
         BUnitConfigurationList.forEach( bUnitConfiguration ->{
             dtoList.add(buildDTOFromBUnitConfiguration(bUnitConfiguration));
         } );
         return dtoList;
+    }
+    private BusinessUnitConfiguration buildBUnitConfigurationFromDTO(BUnitConfigurationDTO bUnitConfigurationDTO){
+        BusinessUnitConfiguration bUnitConfig = new BusinessUnitConfiguration();
+        bUnitConfig.setId(bUnitConfigurationDTO.getId());
+        bUnitConfig.setName(bUnitConfigurationDTO.getName());
+        return  bUnitConfig;
     }
     @Override
     protected final IBUnitConfigurationService getService() {
