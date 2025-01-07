@@ -50,9 +50,6 @@ public class BUnitService extends AbstractService<BusinessUnit> implements IBUni
         Optional <User> userOptional = userDao.findById(Long.valueOf(userId));
         User user = userOptional.get();
         if(businessUnit != null && user != null){
-            // we need to add it to the current versoin. no longer singular referenced
-            //businessUnit.addUser(user);
-            //user.setBusinessUnit(businessUnit);
             dao.save(businessUnit);
             userDao.save(user);
         }
@@ -65,8 +62,6 @@ public class BUnitService extends AbstractService<BusinessUnit> implements IBUni
         Optional <User> userOptional = userDao.findById(Long.valueOf(userId));
         User user = userOptional.get();
         if(businessUnit != null && user != null){
-            //businessUnit.removeUser(user);
-            //user.setBusinessUnit(null);
             dao.save(businessUnit);
             userDao.save(user);
         }

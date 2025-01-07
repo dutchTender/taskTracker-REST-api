@@ -1,5 +1,4 @@
 package gov.nara.um.persistence.dto;
-import gov.nara.common.interfaces.IDto;
 import gov.nara.common.interfaces.ILongDto;
 import lombok.Data;
 import java.util.HashSet;

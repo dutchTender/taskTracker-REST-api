@@ -1,4 +1,5 @@
 package gov.nara.um.persistence.model;
+import gov.nara.common.interfaces.IWithName;
 import lombok.Data;
 
 import javax.persistence.*;
