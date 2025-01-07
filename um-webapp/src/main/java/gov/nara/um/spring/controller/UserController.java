@@ -1,11 +1,8 @@
 package gov.nara.um.spring.controller;
 
-
-
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
-import gov.nara.um.persistence.dto.BUnitDTO;
 import gov.nara.um.persistence.dto.UserDTO;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
@@ -30,7 +27,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
     @Autowired
     private IBUnitService bUnitService;
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,8 +45,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         return buildDTOListFromUsers(userList);
     }
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,8 +64,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
         List<User> userList =  findAllPaginated(page, size);
         return buildDTOListFromUsers(userList);
     }
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +71,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // Unit testing  : DONE
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     public List<User> findAllSorted(final String sortBy, final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
@@ -90,7 +81,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
         List<User> userList = findAllSorted(sortBy, sortOrder);
         return buildDTOListFromUsers(userList);
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,7 +105,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public User findOne(final Long id) {return findOneInternal(id);}
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -124,7 +113,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
         UserDTO userDTO = buildDTOFromUser(user);
         return userDTO;
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +125,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public void create(@RequestBody final User resource) {
         createInternal(resource);
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +137,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public void update(@PathVariable("id") final Long id, @RequestBody final UserDTO resource) {
         updateInternal(id, buildUserFromDTO(resource));
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

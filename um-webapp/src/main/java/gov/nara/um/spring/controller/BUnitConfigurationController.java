@@ -3,8 +3,8 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
+import gov.nara.um.persistence.dto.BUnitConfigurationDTO;
 import gov.nara.um.persistence.model.BusinessUnitConfiguration;
-
 import gov.nara.um.service.IBUnitConfigurationService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,7 +22,6 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
 
     @Autowired
     private IBUnitConfigurationService service;
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,11 +30,17 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
+
+    public List<BusinessUnitConfiguration> findAllPaginatedAndSorted(final int page,  final int size, final String sortBy, final String sortOrder) {
+        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
+    }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<BusinessUnitConfiguration> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
+    public List<BUnitConfigurationDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        List<BusinessUnitConfiguration> bUnitConfigList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+        return buildDTOListFromConfigurationList(bUnitConfigList);
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +140,20 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
+    private BUnitConfigurationDTO buildDTOFromBUnitConfiguration(BusinessUnitConfiguration bUnitConfig){
+        BUnitConfigurationDTO bUnitConfigDTO = new BUnitConfigurationDTO();
+        bUnitConfigDTO.setId(bUnitConfig.getId());
+        bUnitConfigDTO.setName(bUnitConfig.getName());
+        return  bUnitConfigDTO;
+    }
 
+    private List<BUnitConfigurationDTO> buildDTOListFromConfigurationList( List<BusinessUnitConfiguration> BUnitConfigurationList ){
+        List<BUnitConfigurationDTO> dtoList = new ArrayList<>();
+        BUnitConfigurationList.forEach( bUnitConfiguration ->{
+            dtoList.add(buildDTOFromBUnitConfiguration(bUnitConfiguration));
+        } );
+        return dtoList;
+    }
     @Override
     protected final IBUnitConfigurationService getService() {
         return service;

@@ -134,12 +134,10 @@ public class BUnitController extends AbstractController<BusinessUnit> implements
              newConfigID.setBusinessUnitID(bUnitID);
              newConfigPref.setBusinessUnitConfigID(newConfig);
              newConfigPref.setId(newConfigID);
-             // we need to businessUnitConfigPreference services so we can call find one
              bUnitConfigPrefs.add(newConfigPref);
         });
         return bUnitConfigPrefs;
     }
-
     private BUnitDTO buildDTOFromBUnit(BusinessUnit bUnit){
         BUnitDTO bUnitDTO = new BUnitDTO();
         bUnitDTO.setId(bUnit.getId());
@@ -149,7 +147,6 @@ public class BUnitController extends AbstractController<BusinessUnit> implements
         bUnitDTO.setBUnitConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getBusinessUnitConfigurationPreferences()));
         return  bUnitDTO;
     }
-    // Spring
     private ArrayList<Long> buildIDsFromBUConfigPreferences(List<BusinessUnitConfigurationPreference> bUnitConfigs){
         ArrayList<Long> BUnitConfigIDs = new ArrayList<>();
         bUnitConfigs.forEach(bUnitConfig ->{

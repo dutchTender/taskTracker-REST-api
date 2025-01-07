@@ -46,7 +46,6 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<UserBUnitDTO> findAll(final HttpServletRequest request) {
-
         List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
         List<User>  userList = new ArrayList<User>();
         // nothing to extract from the request
