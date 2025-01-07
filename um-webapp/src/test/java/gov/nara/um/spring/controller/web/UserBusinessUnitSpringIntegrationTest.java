@@ -1,6 +1,6 @@
 package gov.nara.um.spring.controller.web;
 
-import gov.nara.um.persistence.dao.IUserDao;
+import gov.nara.um.persistence.dao.IUserDAO;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class UserBusinessUnitSpringIntegrationTest {
 
 
     @Autowired
-    private IUserDao userJpaDao;
+    private IUserDAO userJpaDao;
     @Autowired
     private TestEntityManager entityManager;
 

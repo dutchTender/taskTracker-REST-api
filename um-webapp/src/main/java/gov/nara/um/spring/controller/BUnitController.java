@@ -3,8 +3,11 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.ISortingController;
-import gov.nara.um.persistence.dao.IUserDao;
+import gov.nara.um.persistence.dao.IUserDAO;
+import gov.nara.um.persistence.dto.BUnitDTO;
 import gov.nara.um.persistence.model.BusinessUnit;
+import gov.nara.um.persistence.model.BusinessUnitConfigurationPreference;
+import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.IBUnitService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
-
 
 
 
@@ -24,17 +27,25 @@ public class BUnitController extends AbstractController<BusinessUnit> implements
     @Autowired
     private IBUnitService service;
     @Autowired
-    private IUserDao userDao;
+    private IUserDAO userDao;
     // API
     // find - all/paginated
     @Override
-    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
-    @ResponseBody
-    public List<BusinessUnit> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                        @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+
+    public List<BusinessUnit> findAllPaginatedAndSorted( final int page, final int size,  final String sortBy, final String sortOrder) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
     }
-
+    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<BUnitDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                        @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+           List<BusinessUnit> bUnitList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+           List<BUnitDTO> DTOList = new ArrayList<>();
+           bUnitList.forEach(bUnit ->{
+               DTOList.add(buildDTOFromBUnit(bUnit));
+           });
+           return DTOList;
+    }
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
@@ -110,8 +121,23 @@ public class BUnitController extends AbstractController<BusinessUnit> implements
 
     }
 
+    private BUnitDTO buildDTOFromBUnit(BusinessUnit bUnit){
+        BUnitDTO bUnitDTO = new BUnitDTO();
+        bUnitDTO.setId(bUnit.getId());
+        bUnitDTO.setName(bUnit.getName());
+        bUnitDTO.setLdapName(bUnit.getLdapName());
+        bUnitDTO.setOrg_code(bUnit.getOrg_code());
+        bUnitDTO.setBUnitConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getBusinessUnitConfigurationPreferences()));
+        return  bUnitDTO;
+    }
     // Spring
-
+    private ArrayList<Long> buildIDsFromBUConfigPreferences(List<BusinessUnitConfigurationPreference> bUnitConfigs){
+        ArrayList<Long> BUnitConfigIDs = new ArrayList<>();
+        bUnitConfigs.forEach(bUnitConfig ->{
+            BUnitConfigIDs.add(bUnitConfig.getId().getBusinessUnitConfigID());
+        });
+        return  BUnitConfigIDs;
+    }
     @Override
     protected final IBUnitService getService() {
         return service;

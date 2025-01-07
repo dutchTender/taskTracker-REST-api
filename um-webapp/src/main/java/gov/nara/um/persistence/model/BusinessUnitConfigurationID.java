@@ -1,9 +1,12 @@
 package gov.nara.um.persistence.model;
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class BusinessUnitConfigurationID implements Serializable {
 
@@ -17,4 +20,6 @@ public class BusinessUnitConfigurationID implements Serializable {
     }
     public BusinessUnitConfigurationID() {
     }
+
+
 }

@@ -2,7 +2,7 @@ package gov.nara.um.service.impl;
 
 import gov.nara.common.persistence.service.AbstractLongIdService;
 
-import gov.nara.um.persistence.dao.IUserDao;
+import gov.nara.um.persistence.dao.IUserDAO;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService extends AbstractLongIdService<User>  implements IUserService {
 
     @Autowired
-    private IUserDao dao;
+    private IUserDAO dao;
 
     public UserService() {
         super();
@@ -36,7 +36,7 @@ public class UserService extends AbstractLongIdService<User>  implements IUserSe
     // Spring
 
     @Override
-    protected final IUserDao getDao() {
+    protected final IUserDAO getDao() {
         return dao;
     }
 
