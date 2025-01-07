@@ -6,9 +6,7 @@ import gov.nara.um.persistence.model.BusinessUnitConfiguration;
 import gov.nara.um.service.IBUnitConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 
 @Service
