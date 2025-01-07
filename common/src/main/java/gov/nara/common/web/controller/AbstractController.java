@@ -4,18 +4,12 @@ import gov.nara.common.persistence.model.INameableEntity;
 import gov.nara.common.web.RestPreconditions;
 
 public abstract class AbstractController<T extends INameableEntity> extends AbstractReadOnlyController<T> {
-    
-    // save/create/persist
-
     protected final void createInternal(final T resource) {
         RestPreconditions.checkRequestElementNotNull(resource);
         // verifies that id is not part of the payload
         RestPreconditions.checkRequestState(resource.getId() == null);
         getService().create(resource);
     }
-
-    // update
-
     /**
      * - note: the operation is IDEMPOTENT <br/>
      */
@@ -31,9 +25,6 @@ public abstract class AbstractController<T extends INameableEntity> extends Abst
         RestPreconditions.checkNotNull(getService().findOne(id));
         getService().update(resource);
     }
-
-    // delete/remove
-
     protected final void deleteByIdInternal(final Integer id) {
         getService().delete(id);
     }

@@ -51,12 +51,12 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllPaginatedAndSorted2DTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        ArrayList<UserDTO> returnDTOList = new ArrayList<>();
+        ArrayList<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         userList.forEach(user ->{
-            returnDTOList.add(buildDTOFromUser(user));
+            userDTOList.add(buildDTOFromUser(user));
         });
-        return returnDTOList;
+        return userDTOList;
     }
 
 
@@ -69,10 +69,19 @@ public class UserController extends AbstractLongIdController<User> implements IL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
+    public List<User> findAllPaginated( final int page,final int size) {
+        return findPaginatedInternal(page, size);
+    }
+
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<User> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return findPaginatedInternal(page, size);
+    public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+        ArrayList<UserDTO> userDTOList = new ArrayList<>();
+        List<User> userList =  findAllPaginated(page, size);
+        userList.forEach(user ->{
+            userDTOList.add(buildDTOFromUser(user));
+        });
+        return userDTOList;
     }
 
 
@@ -85,12 +94,19 @@ public class UserController extends AbstractLongIdController<User> implements IL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
-    @ResponseBody
-    public List<User> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public List<User> findAllSorted(final String sortBy, final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
-
+    @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        ArrayList<UserDTO> userDTOList = new ArrayList<>();
+        List<User> userList = findAllSorted(sortBy, sortOrder);
+        userList.forEach(user ->{
+            userDTOList.add(buildDTOFromUser(user));
+        });
+        return userDTOList;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -100,12 +116,19 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public List<User> findAll(final HttpServletRequest request) {
         return findAllInternal(request);
     }
-
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserDTO> findAllDTO(final HttpServletRequest request) {
+        ArrayList<UserDTO> userDTOList = new ArrayList<>();
+        List<User> userList = findAll(request);
+        userList.forEach(user ->{
+            userDTOList.add(buildDTOFromUser(user));
+        });
+        return userDTOList;
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,10 +136,14 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public User findOne(final Long id) {return findOneInternal(id);}
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public User findOne(@PathVariable("id") final Long id) {
-        return findOneInternal(id);
+    public UserDTO findOneDTO(@PathVariable("id") final Long id) {
+        User user = findOne(id);
+        UserDTO userDTO = buildDTOFromUser(user);
+        return userDTO;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,8 +168,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final User resource) {
-        updateInternal(id, resource);
+    public void update(@PathVariable("id") final Long id, @RequestBody final UserDTO resource) {
+        updateInternal(id, buildUserFromDTO(resource));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

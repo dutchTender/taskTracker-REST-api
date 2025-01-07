@@ -1,7 +1,6 @@
 package gov.nara.common.web.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import gov.nara.common.persistence.service.ILongRawService;
