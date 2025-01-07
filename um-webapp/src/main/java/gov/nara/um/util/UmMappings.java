@@ -7,12 +7,12 @@ public final class UmMappings {
 
     public static final String USERS_BUSINESSUNITS = "users/business-units";
 
-    public static final String BUSINESSUNITS_USERS = "/business-units/users";
+    public static final String BUSINESS_UNITS_USERS = "/business-units/users";
 
 
-    public static final String BUSINESSUNITS_CONFIGURATIONS = "/business-units/businessunits-configurations";
+    public static final String BUSINESS_UNITS_CONFIGURATIONS = "/business-units/business-units-configurations";
 
-    public static final String BUSINESSUNITS_CONFIGURATIONS_PREFERENCES = "/business-units/businessunits-config-preferences";
+    public static final String BUSINESS_UNITS_CONFIGURATIONS_PREFERENCES = "/business-units/business-units-config-preferences";
     // discoverability
 
     public static final class Singular {

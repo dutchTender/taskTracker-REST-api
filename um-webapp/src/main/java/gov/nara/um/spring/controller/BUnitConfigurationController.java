@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = UmMappings.BUSINESSUNITS_CONFIGURATIONS)
+@RequestMapping(value = UmMappings.BUSINESS_UNITS_CONFIGURATIONS)
 public class BUnitConfigurationController extends AbstractLongIdController<BusinessUnitConfiguration> implements ILongIdSortingController<BusinessUnitConfiguration> {
 
     @Autowired
