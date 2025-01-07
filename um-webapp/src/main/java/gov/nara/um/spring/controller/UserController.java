@@ -5,6 +5,7 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
+import gov.nara.um.persistence.dto.BUnitDTO;
 import gov.nara.um.persistence.dto.UserDTO;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
@@ -39,24 +40,14 @@ public class UserController extends AbstractLongIdController<User> implements IL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public List<User> findAllPaginatedAndSorted( final int page,  final int size, final String sortBy, final String sortOrder) {
-        ArrayList<UserDTO> returnList = new ArrayList<>();
-        List<User> userList = findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
-        userList.forEach(user ->{
-            returnList.add(buildDTOFromUser(user));
-        });
-
-        return userList;
+        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDTO> findAllPaginatedAndSorted2DTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+    public List<UserDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        ArrayList<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        userList.forEach(user ->{
-            userDTOList.add(buildDTOFromUser(user));
-        });
-        return userDTOList;
+        return buildDTOListFromUsers(userList);
     }
 
 
@@ -76,12 +67,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        ArrayList<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList =  findAllPaginated(page, size);
-        userList.forEach(user ->{
-            userDTOList.add(buildDTOFromUser(user));
-        });
-        return userDTOList;
+        return buildDTOListFromUsers(userList);
     }
 
 
@@ -100,12 +87,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
     public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        ArrayList<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = findAllSorted(sortBy, sortOrder);
-        userList.forEach(user ->{
-            userDTOList.add(buildDTOFromUser(user));
-        });
-        return userDTOList;
+        return buildDTOListFromUsers(userList);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,12 +105,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<UserDTO> findAllDTO(final HttpServletRequest request) {
-        ArrayList<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = findAll(request);
-        userList.forEach(user ->{
-            userDTOList.add(buildDTOFromUser(user));
-        });
-        return userDTOList;
+        return buildDTOListFromUsers(userList);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -185,9 +164,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
         deleteByIdInternal(id);
     }
 
-
-
-
     private User buildUserFromDTO(UserDTO dto){
         User user = new User();
         user.setName(dto.getUser_name());
@@ -220,6 +196,13 @@ public class UserController extends AbstractLongIdController<User> implements IL
         });
         System.out.println("BUnitDTO set size after conversion" + BUnitIDs.size()); // assert that that size matches input bUnits
         return  BUnitIDs;
+    }
+    private List<UserDTO> buildDTOListFromUsers(List<User> userList){
+        List<UserDTO> DTOList = new ArrayList<>();
+        userList.forEach(user ->{
+            DTOList.add(buildDTOFromUser(user));
+        });
+        return DTOList;
     }
     @Override
     protected final IUserService getService() {
