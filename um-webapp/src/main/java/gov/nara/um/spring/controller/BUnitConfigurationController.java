@@ -139,6 +139,6 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
 
     @Override
     protected final IBUnitConfigurationService getService() {
-        return userService;
+        return service;
     }
 }
