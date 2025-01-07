@@ -8,7 +8,7 @@ import gov.nara.common.web.exception.MyBadRequestException;
 import gov.nara.common.web.exception.MyResourceNotFoundException;
 import gov.nara.um.persistence.model.BusinessUnit;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.persistence.dto.UserBusinessUnitDTO;
+import gov.nara.um.persistence.dto.UserBUnitDTO;
 import gov.nara.um.service.IBUnitService;
 import gov.nara.um.service.IUserService;
 import gov.nara.um.util.UmMappings;
@@ -45,9 +45,9 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<UserBusinessUnitDTO> findAll(final HttpServletRequest request) {
+    public List<UserBUnitDTO> findAll(final HttpServletRequest request) {
 
-        List<UserBusinessUnitDTO> returnList = new ArrayList<UserBusinessUnitDTO>();
+        List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
         List<User>  userList = new ArrayList<User>();
         // nothing to extract from the request
         userList = userService.findAll();
@@ -57,7 +57,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
             Set<BusinessUnit> businessUnitsList = current.getBusinessUnits();
             for(Iterator<BusinessUnit> iterBU = businessUnitsList.iterator(); iterBU.hasNext(); ) {
                 BusinessUnit businessUnit = iterBU.next();
-                UserBusinessUnitDTO userBusinessUnitDTO = new UserBusinessUnitDTO();
+                UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
                 userBusinessUnitDTO.setBusiness_unit_id(businessUnit.getId());
                 userBusinessUnitDTO.setUser_id(current.getId());
                 returnList.add(userBusinessUnitDTO);
@@ -76,14 +76,14 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserBusinessUnitDTO> findOne(@PathVariable("id") final Long id) {
+    public List<UserBUnitDTO> findOne(@PathVariable("id") final Long id) {
 
-        List<UserBusinessUnitDTO> returnList = new ArrayList<UserBusinessUnitDTO>();
+        List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
         User user = userService.findOne(id);
         if(user != null){
             for(Iterator<BusinessUnit> iterBU =  user.getBusinessUnits().iterator(); iterBU.hasNext(); ) {
                 BusinessUnit businessUnit = iterBU.next();
-                UserBusinessUnitDTO userBusinessUnitDTO = new UserBusinessUnitDTO();
+                UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
                 userBusinessUnitDTO.setBusiness_unit_id(businessUnit.getId());
                 userBusinessUnitDTO.setUser_id(user.getId());
                 returnList.add(userBusinessUnitDTO);
@@ -104,7 +104,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody final UserBusinessUnitDTO resource) {
+    public void create(@RequestBody final UserBUnitDTO resource) {
 
         Long userId = resource.getUser_id();
         Integer businessUnitId = resource.getBusiness_unit_id();
@@ -138,7 +138,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final UserBusinessUnitDTO resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody final UserBUnitDTO resource) {
 
         Long userId = id;
         Integer businessUnitId = resource.getBusiness_unit_id();

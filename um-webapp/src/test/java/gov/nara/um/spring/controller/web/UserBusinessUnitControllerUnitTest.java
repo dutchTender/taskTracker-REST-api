@@ -1,7 +1,7 @@
 package gov.nara.um.spring.controller.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gov.nara.um.persistence.dto.UserBusinessUnitDTO;
+import gov.nara.um.persistence.dto.UserBUnitDTO;
 import gov.nara.um.service.IBUnitService;
 
 import gov.nara.um.service.IUserService;
@@ -77,7 +77,7 @@ public class UserBusinessUnitControllerUnitTest {
     @Test
     public final void check_userBusiness_unit_controller_AddOne_400_status_customException() throws Exception {
 
-        UserBusinessUnitDTO test_unit = new UserBusinessUnitDTO();
+        UserBUnitDTO test_unit = new UserBUnitDTO();
         test_unit.setBusiness_unit_id(1);
         test_unit.setUser_id(new Long(2));
         ObjectMapper objectMapper = new ObjectMapper();
@@ -98,7 +98,7 @@ public class UserBusinessUnitControllerUnitTest {
     @Test
     public final void check_Business_unit_controller_updateOne_400_status_customException() throws Exception {
 
-        UserBusinessUnitDTO test_unit = new UserBusinessUnitDTO();
+        UserBUnitDTO test_unit = new UserBUnitDTO();
         test_unit.setBusiness_unit_id(1);
         test_unit.setUser_id(Long.valueOf(2));
 

@@ -22,8 +22,6 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     @Autowired
     private IBUnitConfigurationService service;
 
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,4 +139,7 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     protected final IBUnitConfigurationService getService() {
         return service;
     }
+
+
+
 }

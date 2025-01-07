@@ -1,6 +1,4 @@
 package gov.nara.common.interfaces;
-
-
 import java.io.Serializable;
 import java.util.List;
 

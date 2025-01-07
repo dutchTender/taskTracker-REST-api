@@ -17,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Controller
@@ -41,12 +38,27 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
+    public List<User> findAllPaginatedAndSorted( final int page,  final int size, final String sortBy, final String sortOrder) {
+        ArrayList<UserDTO> returnList = new ArrayList<>();
+        List<User> userList = findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
+        userList.forEach(user ->{
+            returnList.add(buildDTOFromUser(user));
+        });
+
+        return userList;
+    }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<User> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                        @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
+    public List<UserDTO> findAllPaginatedAndSorted2DTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                   @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        ArrayList<UserDTO> returnDTOList = new ArrayList<>();
+        List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+        userList.forEach(user ->{
+            returnDTOList.add(buildDTOFromUser(user));
+        });
+        return returnDTOList;
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -146,23 +158,41 @@ public class UserController extends AbstractLongIdController<User> implements IL
         deleteByIdInternal(id);
     }
 
+
+
+
     private User buildUserFromDTO(UserDTO dto){
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setBusinessUnits(buildBusinessUnitFromIDs(dto.getBusiness_unitIDs()));
+        user.setBusinessUnits(buildBUnitFromIDs(dto.getBusiness_unitIDs()));
         return  user;
     }
-
-    private Set<BusinessUnit> buildBusinessUnitFromIDs(Integer[] bUnits){
-        Set<BusinessUnit> businessUnits = new HashSet<>();
-        Arrays.stream(bUnits).iterator().forEachRemaining(bUnitID ->{
+    private HashSet<BusinessUnit> buildBUnitFromIDs(HashSet<Integer> bUnitIDs){
+        HashSet<BusinessUnit> businessUnits = new HashSet<>();
+        bUnitIDs.forEach(bUnitID ->{
             System.out.println("processing business unit ID for user DTO : " + bUnitID);
             BusinessUnit bUnit = bUnitService.findOne(bUnitID);
             businessUnits.add(bUnit);
         });
-        System.out.println(businessUnits.toArray().length); // assert that that size matches input bUnits
+        System.out.println("BUnit set size after conversion" + businessUnits.size()); // assert that that size matches input bUnits
         return  businessUnits;
+    }
+    private UserDTO buildDTOFromUser(User user){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUser_name(user.getName());
+        userDTO.setUser_type(user.getUser_type());
+        userDTO.setBusiness_unitIDs(buildIDsFromBUnits(user.getBusinessUnits()));
+        return  userDTO;
+    }
+    private HashSet<Integer> buildIDsFromBUnits(Set<BusinessUnit> bUnits){
+        HashSet<Integer> BUnitIDs = new HashSet<>();
+        bUnits.forEach(bUnit ->{
+            System.out.println("processing business unit ID for user DTO : " + bUnit.getId());
+            BUnitIDs.add(bUnit.getId());
+        });
+        System.out.println("BUnitDTO set size after conversion" + BUnitIDs.size()); // assert that that size matches input bUnits
+        return  BUnitIDs;
     }
     @Override
     protected final IUserService getService() {

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import gov.nara.common.interfaces.IWithName;
-import gov.nara.common.persistence.service.IRawService;
 import com.google.common.collect.Lists;
 
 public abstract class AbstractLongIdReadOnlyController<T extends IWithName> {
@@ -63,7 +62,6 @@ public abstract class AbstractLongIdReadOnlyController<T extends IWithName> {
     }
 
     // count
-
     protected final long countInternal() {
         // InvalidDataAccessApiUsageException dataEx - ResourceNotFoundException
         return getService().count();
