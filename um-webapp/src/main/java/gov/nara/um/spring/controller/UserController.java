@@ -4,9 +4,9 @@ import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
 import gov.nara.um.persistence.dto.UserDTO;
-import gov.nara.um.persistence.model.BusinessUnit;
+import gov.nara.um.persistence.model.Task;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.service.IBUnitService;
+import gov.nara.um.service.ITaskService;
 import gov.nara.um.service.IUserService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     private IUserService userService;
 
     @Autowired
-    private IBUnitService bUnitService;
+    private ITaskService bUnitService;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,16 +160,16 @@ public class UserController extends AbstractLongIdController<User> implements IL
         user.setTasks(buildBUnitFromIDs(dto.getTaskIDs()));
         return  user;
     }
-    private HashSet<BusinessUnit> buildBUnitFromIDs(HashSet<Integer> bUnitIDs){
-        HashSet<BusinessUnit> businessUnits = new HashSet<>();
+    private HashSet<Task> buildBUnitFromIDs(HashSet<Integer> bUnitIDs){
+        HashSet<Task> tasks = new HashSet<>();
         if(bUnitIDs != null)
             bUnitIDs.forEach(bUnitID ->{
                 System.out.println("processing business unit ID for user DTO : " + bUnitID);
-                BusinessUnit bUnit = bUnitService.findOne(bUnitID);
-                businessUnits.add(bUnit);
+                Task bUnit = bUnitService.findOne(bUnitID);
+                tasks.add(bUnit);
             });
-        System.out.println("BUnit set size after conversion " + businessUnits.size()); // assert that that size matches input bUnits
-        return  businessUnits;
+        System.out.println("BUnit set size after conversion " + tasks.size()); // assert that that size matches input bUnits
+        return tasks;
     }
     private UserDTO buildDTOFromUser(User user){
         UserDTO userDTO = new UserDTO();
@@ -179,7 +179,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setTaskIDs(buildIDsFromBUnits(user.getTasks()));
         return  userDTO;
     }
-    private HashSet<Integer> buildIDsFromBUnits(Set<BusinessUnit> bUnits){
+    private HashSet<Integer> buildIDsFromBUnits(Set<Task> bUnits){
         HashSet<Integer> BUnitIDs = new HashSet<>();
         if(bUnits != null)
             bUnits.forEach(bUnit ->{

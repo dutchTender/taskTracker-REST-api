@@ -1,7 +1,7 @@
 package gov.nara.um.spring.controller.web;
 
-import gov.nara.um.persistence.dao.IUserDAO;
-import gov.nara.um.persistence.model.User;
+import gov.nara.um.persistence.dao.ITaskDAO;
+import gov.nara.um.persistence.model.Task;
 import gov.nara.um.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @ContextConfiguration(classes = {UmPersistenceJpaConfig.class})
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-public class UserBusinessUnitSpringIntegrationTest {
+public class TaskSpringIntegrationTest {
 // we are going to modify this to do a dataJPA test for integration testing
 
 
     @Autowired
-    private IUserDAO userJpaDao;
+    private ITaskDAO businessUnitDao;
     @Autowired
     private TestEntityManager entityManager;
 
@@ -34,17 +34,18 @@ public class UserBusinessUnitSpringIntegrationTest {
     @Test
     public final void whenFindByName_thenReturnBusinessUnit() {
         //given
-        User user = new User();
-        user.setName("li");
-        user.setUser_type("NARA");
-        entityManager.persist(user);
+        Task task = new Task();
+        task.setName("xxxx");
+        task.setTaskTime("xxxxxxxxx");
+        task.setTaskDescription("apex");
+        entityManager.persist(task);
         entityManager.flush();
 
         //when
-        User user1 = userJpaDao.findByName(user.getName());
+        Task task1 = businessUnitDao.findByName(task.getName());
 
         // verify that we can find the entity that was just added
-        assertThat(user1.getName()).isEqualTo(user.getName());
+        assertThat(task1.getName()).isEqualTo(task.getName());
     }
 
 
@@ -54,21 +55,22 @@ public class UserBusinessUnitSpringIntegrationTest {
     @Test
     public final void whenFindByName_thenReturnBusinessUnit_then_verifyDelete() {
         //given
-        User user = new User();
-        user.setName("li");
-        user.setUser_type("NARA");
-        entityManager.persist(user);
+        Task task = new Task();
+        task.setName("xxxx");
+        task.setTaskDescription("xxxxxxxxx");
+        task.setTaskTime("apex");
+        entityManager.persist(task);
         entityManager.flush();
 
         //when
-        User user1 = userJpaDao.findByName(user.getName());
-        entityManager.remove(user1);
+        Task task1 = businessUnitDao.findByName(task.getName());
+        entityManager.remove(task1);
         entityManager.flush();
 
-        User user2 = userJpaDao.findByName(user.getName());
+        Task task2 = businessUnitDao.findByName(task.getName());
 
         // verify that we can find the entity that was just added
-        assertThat(user2).isEqualTo(null);
+        assertThat(task2).isEqualTo(null);
     }
 
 

@@ -8,7 +8,7 @@ import java.util.List;
 public class BUnitDTO implements IDto {
     private Integer Id;
     private String name;
-    private String org_code;
-    private String ldapName;
-    private List<Long> BUnitConfigurationIDs;
+    private String taskTime;
+    private String taskDescription;
+    private List<Long> taskConfigurationIDs;
 }

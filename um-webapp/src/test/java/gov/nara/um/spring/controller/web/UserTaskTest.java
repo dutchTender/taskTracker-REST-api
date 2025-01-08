@@ -2,7 +2,7 @@ package gov.nara.um.spring.controller.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.nara.um.persistence.dto.UserBUnitDTO;
-import gov.nara.um.service.IBUnitService;
+import gov.nara.um.service.ITaskService;
 
 import gov.nara.um.service.IUserService;
 import gov.nara.um.spring.controller.UserBUnitController;
@@ -28,10 +28,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserBUnitController.class)
 @AutoConfigureMockMvc
-public class UserBusinessUnitControllerUnitTest {
+public class UserTaskTest {
 
     @MockBean
-    private IBUnitService businessUnitService;
+    private ITaskService businessUnitService;
 
     @MockBean
     private IUserService userService;

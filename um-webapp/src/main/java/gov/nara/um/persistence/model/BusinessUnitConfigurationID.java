@@ -9,12 +9,12 @@ import java.io.Serializable;
 @Embeddable
 public class BusinessUnitConfigurationID implements Serializable {
 
-    @Column( name = "business_unit_id")
-    private Integer businessUnitID;
+    @Column( name = "task_id")
+    private Integer taskID;
     @Column( name = "business_unit_config_id")
     private Long businessUnitConfigID;
-    public BusinessUnitConfigurationID(Integer businessUnitID, Long businessUnitConfigID) {
-        this.businessUnitID = businessUnitID;
+    public BusinessUnitConfigurationID(Integer taskID, Long businessUnitConfigID) {
+        this.taskID = taskID;
         this.businessUnitConfigID = businessUnitConfigID;
     }
     public BusinessUnitConfigurationID() {

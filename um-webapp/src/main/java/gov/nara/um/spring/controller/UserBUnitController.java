@@ -6,10 +6,10 @@ import gov.nara.common.persistence.service.ILongRawService;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.exception.MyBadRequestException;
 import gov.nara.common.web.exception.MyResourceNotFoundException;
-import gov.nara.um.persistence.model.BusinessUnit;
+import gov.nara.um.persistence.model.Task;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.persistence.dto.UserBUnitDTO;
-import gov.nara.um.service.IBUnitService;
+import gov.nara.um.service.ITaskService;
 import gov.nara.um.service.IUserService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
     private IUserService userService;
 
     @Autowired
-    private IBUnitService businessUnitService;
+    private ITaskService businessUnitService;
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,11 +53,11 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         // build return list by looping through all users
         for(Iterator<User> iterUser = userList.iterator(); iterUser.hasNext(); ) {
             User current = iterUser.next();
-            Set<BusinessUnit> businessUnitsList = current.getTasks();
-            for(Iterator<BusinessUnit> iterBU = businessUnitsList.iterator(); iterBU.hasNext(); ) {
-                BusinessUnit businessUnit = iterBU.next();
+            Set<Task> businessUnitsList = current.getTasks();
+            for(Iterator<Task> iterBU = businessUnitsList.iterator(); iterBU.hasNext(); ) {
+                Task task = iterBU.next();
                 UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
-                userBusinessUnitDTO.setBusiness_unit_id(businessUnit.getId());
+                userBusinessUnitDTO.setBusiness_unit_id(task.getId());
                 userBusinessUnitDTO.setUser_id(current.getId());
                 returnList.add(userBusinessUnitDTO);
             }
@@ -80,10 +80,10 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
         User user = userService.findOne(id);
         if(user != null){
-            for(Iterator<BusinessUnit> iterBU =  user.getTasks().iterator(); iterBU.hasNext(); ) {
-                BusinessUnit businessUnit = iterBU.next();
+            for(Iterator<Task> iterBU = user.getTasks().iterator(); iterBU.hasNext(); ) {
+                Task task = iterBU.next();
                 UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
-                userBusinessUnitDTO.setBusiness_unit_id(businessUnit.getId());
+                userBusinessUnitDTO.setBusiness_unit_id(task.getId());
                 userBusinessUnitDTO.setUser_id(user.getId());
                 returnList.add(userBusinessUnitDTO);
             }
@@ -108,10 +108,10 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         Long userId = resource.getUser_id();
         Integer businessUnitId = resource.getBusiness_unit_id();
         User user = userService.findOne(userId);
-        BusinessUnit businessUnit = businessUnitService.findOne(businessUnitId);
+        Task task = businessUnitService.findOne(businessUnitId);
 
-        if(user != null && businessUnit != null){
-            user.addBusinessUnit(businessUnit);
+        if(user != null && task != null){
+            user.addBusinessUnit(task);
             userService.update(user);
         }
         else {
@@ -142,13 +142,13 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         Long userId = id;
         Integer businessUnitId = resource.getBusiness_unit_id();
         User user = userService.findOne(userId);
-        BusinessUnit businessUnit = businessUnitService.findOne(businessUnitId);
+        Task task = businessUnitService.findOne(businessUnitId);
 
-        if(user != null && businessUnit != null){
+        if(user != null && task != null){
             if(user.getTasks().size() > 0){
                 user.getTasks().clear();;
             }
-            user.addBusinessUnit(businessUnit);
+            user.addBusinessUnit(task);
             userService.update(user);
         }
         else {

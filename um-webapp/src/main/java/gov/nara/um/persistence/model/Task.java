@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_catalog", schema = "oif_ods")
-@Table(name = "business_unit_catalog")
-public class BusinessUnit  implements INameableEntity, INameableDto {
+@Table(name = "tasks")
+public class Task implements INameableEntity, INameableDto {
 
     @Id
     @Column(name = "id")
@@ -28,27 +28,27 @@ public class BusinessUnit  implements INameableEntity, INameableDto {
     private String name;
 
     @Column
-    private String org_code;
+    private String taskTime;
 
-    @Column( name="ldap_id")
-    private String ldapName;
+    @Column
+    private String taskDescription;
 
     @OneToMany(
-            mappedBy = "businessUnitID",
+            mappedBy = "taskID",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<BusinessUnitConfigurationPreference> businessUnitConfigurationPreferences = new ArrayList<>();
-    public BusinessUnit(){
+    private List<TaskConfigurationPreference> tasksConfigurationPreferences = new ArrayList<>();
+    public Task(){
     }
-    public BusinessUnitConfigurationPreference addBusinessUnitConfigurationPreference(BusinessUnitConfigurationPreference businessUnitConfigurationPreference){
-        businessUnitConfigurationPreferences.add(businessUnitConfigurationPreference);
-        return  businessUnitConfigurationPreference;
+    public TaskConfigurationPreference addTasksConfigurationPreference(TaskConfigurationPreference taskConfigurationPreference){
+        tasksConfigurationPreferences.add(taskConfigurationPreference);
+        return taskConfigurationPreference;
     }
-    public void removeBusinessUnitConfigurationPreference( BusinessUnitConfigurationPreference businessUnitConfigurationPreference){
-        for(Iterator<BusinessUnitConfigurationPreference> iterBUCP = businessUnitConfigurationPreferences.iterator(); iterBUCP.hasNext(); ) {
-            BusinessUnitConfigurationPreference current = iterBUCP.next();
-            if(current.equals(businessUnitConfigurationPreference)){
+    public void removeTasksConfigurationPreference( TaskConfigurationPreference taskConfigurationPreference){
+        for(Iterator<TaskConfigurationPreference> iterBUCP = tasksConfigurationPreferences.iterator(); iterBUCP.hasNext(); ) {
+            TaskConfigurationPreference current = iterBUCP.next();
+            if(current.equals(taskConfigurationPreference)){
                 iterBUCP.remove();
             }
         }

@@ -1,8 +1,8 @@
 package gov.nara.um.persistence.setup;
 
-import gov.nara.um.persistence.model.BusinessUnit;
+import gov.nara.um.persistence.model.Task;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.service.IBUnitService;
+import gov.nara.um.service.ITaskService;
 import gov.nara.um.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
 
     @Autowired
-    private IBUnitService iBusinessUnitService;
+    private ITaskService iBusinessUnitService;
 
     @Autowired
     private  IUserService iUserService;
@@ -69,18 +69,18 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
         iUserService.create(user);
 
-        BusinessUnit businessUnit = new BusinessUnit();
-        businessUnit.setName("ADIS");
-        businessUnit.setOrg_code("NARA");
-        businessUnit.setLdapName("ADIS");
-        iBusinessUnitService.create(businessUnit);
+        Task task = new Task();
+        task.setName("ADIS");
+        task.setTaskTime("every day");
+        task.setTaskDescription("ADIS");
+        iBusinessUnitService.create(task);
 
 
 
         User user2 = iUserService.findByName(user.getName());
 
 
-        user2.addBusinessUnit(businessUnit);
+        user2.addBusinessUnit(task);
         iUserService.update(user2);
 
 

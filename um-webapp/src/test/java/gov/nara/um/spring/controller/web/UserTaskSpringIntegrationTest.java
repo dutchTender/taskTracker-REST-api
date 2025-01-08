@@ -1,7 +1,7 @@
 package gov.nara.um.spring.controller.web;
 
-import gov.nara.um.persistence.dao.IBUnitDAO;
-import gov.nara.um.persistence.model.BusinessUnit;
+import gov.nara.um.persistence.dao.IUserDAO;
+import gov.nara.um.persistence.model.User;
 import gov.nara.um.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @ContextConfiguration(classes = {UmPersistenceJpaConfig.class})
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-public class BusinessUnitSpringIntegrationTest {
+public class UserTaskSpringIntegrationTest {
 // we are going to modify this to do a dataJPA test for integration testing
 
 
     @Autowired
-    private IBUnitDAO businessUnitDao;
+    private IUserDAO userJpaDao;
     @Autowired
     private TestEntityManager entityManager;
 
@@ -34,18 +34,17 @@ public class BusinessUnitSpringIntegrationTest {
     @Test
     public final void whenFindByName_thenReturnBusinessUnit() {
         //given
-        BusinessUnit businessUnit = new BusinessUnit();
-        businessUnit.setName("xxxx");
-        businessUnit.setLdapName("xxxxxxxxx");
-        businessUnit.setOrg_code("apex");
-        entityManager.persist(businessUnit);
+        User user = new User();
+        user.setName("li");
+        user.setUser_type("NARA");
+        entityManager.persist(user);
         entityManager.flush();
 
         //when
-        BusinessUnit businessUnit1 = businessUnitDao.findByName(businessUnit.getName());
+        User user1 = userJpaDao.findByName(user.getName());
 
         // verify that we can find the entity that was just added
-        assertThat(businessUnit1.getName()).isEqualTo(businessUnit.getName());
+        assertThat(user1.getName()).isEqualTo(user.getName());
     }
 
 
@@ -55,22 +54,21 @@ public class BusinessUnitSpringIntegrationTest {
     @Test
     public final void whenFindByName_thenReturnBusinessUnit_then_verifyDelete() {
         //given
-        BusinessUnit businessUnit = new BusinessUnit();
-        businessUnit.setName("xxxx");
-        businessUnit.setLdapName("xxxxxxxxx");
-        businessUnit.setOrg_code("apex");
-        entityManager.persist(businessUnit);
+        User user = new User();
+        user.setName("li");
+        user.setUser_type("NARA");
+        entityManager.persist(user);
         entityManager.flush();
 
         //when
-        BusinessUnit businessUnit1 = businessUnitDao.findByName(businessUnit.getName());
-        entityManager.remove(businessUnit1);
+        User user1 = userJpaDao.findByName(user.getName());
+        entityManager.remove(user1);
         entityManager.flush();
 
-        BusinessUnit businessUnit2 = businessUnitDao.findByName(businessUnit.getName());
+        User user2 = userJpaDao.findByName(user.getName());
 
         // verify that we can find the entity that was just added
-        assertThat(businessUnit2).isEqualTo(null);
+        assertThat(user2).isEqualTo(null);
     }
 
 
