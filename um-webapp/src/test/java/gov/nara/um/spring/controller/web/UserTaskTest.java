@@ -78,7 +78,7 @@ public class UserTaskTest {
     public final void check_userBusiness_unit_controller_AddOne_400_status_customException() throws Exception {
 
         UserTasksDTO test_unit = new UserTasksDTO();
-        test_unit.setBusiness_unit_id(1);
+        test_unit.setTask_id(1);
         test_unit.setUser_id(new Long(2));
         ObjectMapper objectMapper = new ObjectMapper();
         String json_payLoad = objectMapper.writeValueAsString(test_unit);
@@ -99,7 +99,7 @@ public class UserTaskTest {
     public final void check_Business_unit_controller_updateOne_400_status_customException() throws Exception {
 
         UserTasksDTO test_unit = new UserTasksDTO();
-        test_unit.setBusiness_unit_id(1);
+        test_unit.setTask_id(1);
         test_unit.setUser_id(Long.valueOf(2));
 
         ObjectMapper objectMapper = new ObjectMapper();
