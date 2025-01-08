@@ -123,21 +123,6 @@ public class BUnitController extends AbstractController<BusinessUnit> implements
         bUnit.setBusinessUnitConfigurationPreferences(buildBUnitConfigPreferencesFromIDs(bUnitDTO.getBUnitConfigurationIDs(), bUnitDTO.getId()));
         return bUnit;
     }
-    private List<BusinessUnitConfigurationPreference> buildBUnitConfigPreferencesFromIDs(List<Long> prefIDs, Integer bUnitID){
-        ArrayList<BusinessUnitConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
-        prefIDs.forEach(id ->{
-             BusinessUnitConfigurationPreference newConfigPref = new BusinessUnitConfigurationPreference();
-             BusinessUnitConfiguration newConfig = new BusinessUnitConfiguration();
-             newConfig.setId(id);
-             BusinessUnitConfigurationID newConfigID = new BusinessUnitConfigurationID();
-             newConfigID.setBusinessUnitConfigID(id);
-             newConfigID.setBusinessUnitID(bUnitID);
-             newConfigPref.setBusinessUnitConfigID(newConfig);
-             newConfigPref.setId(newConfigID);
-             bUnitConfigPrefs.add(newConfigPref);
-        });
-        return bUnitConfigPrefs;
-    }
     private BUnitDTO buildDTOFromBUnit(BusinessUnit bUnit){
         BUnitDTO bUnitDTO = new BUnitDTO();
         bUnitDTO.setId(bUnit.getId());
@@ -147,18 +132,36 @@ public class BUnitController extends AbstractController<BusinessUnit> implements
         bUnitDTO.setBUnitConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getBusinessUnitConfigurationPreferences()));
         return  bUnitDTO;
     }
+    private List<BusinessUnitConfigurationPreference> buildBUnitConfigPreferencesFromIDs(List<Long> prefIDs, Integer bUnitID){
+        ArrayList<BusinessUnitConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
+        if(prefIDs != null)
+            prefIDs.forEach(id ->{
+                 BusinessUnitConfigurationPreference newConfigPref = new BusinessUnitConfigurationPreference();
+                 BusinessUnitConfiguration newConfig = new BusinessUnitConfiguration();
+                 newConfig.setId(id);
+                 BusinessUnitConfigurationID newConfigID = new BusinessUnitConfigurationID();
+                 newConfigID.setBusinessUnitConfigID(id);
+                 newConfigID.setBusinessUnitID(bUnitID);
+                 newConfigPref.setBusinessUnitConfigID(newConfig);
+                 newConfigPref.setId(newConfigID);
+                 bUnitConfigPrefs.add(newConfigPref);
+            });
+        return bUnitConfigPrefs;
+    }
     private ArrayList<Long> buildIDsFromBUConfigPreferences(List<BusinessUnitConfigurationPreference> bUnitConfigs){
         ArrayList<Long> BUnitConfigIDs = new ArrayList<>();
-        bUnitConfigs.forEach(bUnitConfig ->{
-            BUnitConfigIDs.add(bUnitConfig.getId().getBusinessUnitConfigID());
-        });
+        if(bUnitConfigs != null)
+            bUnitConfigs.forEach(bUnitConfig ->{
+                BUnitConfigIDs.add(bUnitConfig.getId().getBusinessUnitConfigID());
+            });
         return  BUnitConfigIDs;
     }
     private List<BUnitDTO> buildDTOListFromBUnits(List<BusinessUnit> bUnitList){
         List<BUnitDTO> DTOList = new ArrayList<>();
-        bUnitList.forEach(bUnit ->{
-            DTOList.add(buildDTOFromBUnit(bUnit));
-        });
+        if(bUnitList != null)
+            bUnitList.forEach(bUnit ->{
+                DTOList.add(buildDTOFromBUnit(bUnit));
+            });
         return DTOList;
     }
     @Override

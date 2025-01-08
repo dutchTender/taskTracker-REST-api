@@ -166,9 +166,10 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     }
     private List<BUnitConfigurationDTO> buildDTOListFromConfigurationList( List<BusinessUnitConfiguration> BUnitConfigurationList ){
         List<BUnitConfigurationDTO> dtoList = new ArrayList<>();
-        BUnitConfigurationList.forEach( bUnitConfiguration ->{
-            dtoList.add(buildDTOFromBUnitConfiguration(bUnitConfiguration));
-        } );
+        if(BUnitConfigurationList != null)
+            BUnitConfigurationList.forEach( bUnitConfiguration ->{
+                dtoList.add(buildDTOFromBUnitConfiguration(bUnitConfiguration));
+            } );
         return dtoList;
     }
 

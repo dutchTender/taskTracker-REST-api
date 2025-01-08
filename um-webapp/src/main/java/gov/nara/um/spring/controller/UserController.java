@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -127,7 +126,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody final UserDTO resource) {
-
         create(buildUserFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,16 +162,18 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     private HashSet<BusinessUnit> buildBUnitFromIDs(HashSet<Integer> bUnitIDs){
         HashSet<BusinessUnit> businessUnits = new HashSet<>();
-        bUnitIDs.forEach(bUnitID ->{
-            System.out.println("processing business unit ID for user DTO : " + bUnitID);
-            BusinessUnit bUnit = bUnitService.findOne(bUnitID);
-            businessUnits.add(bUnit);
-        });
+        if(bUnitIDs != null)
+            bUnitIDs.forEach(bUnitID ->{
+                System.out.println("processing business unit ID for user DTO : " + bUnitID);
+                BusinessUnit bUnit = bUnitService.findOne(bUnitID);
+                businessUnits.add(bUnit);
+            });
         System.out.println("BUnit set size after conversion" + businessUnits.size()); // assert that that size matches input bUnits
         return  businessUnits;
     }
     private UserDTO buildDTOFromUser(User user){
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
         userDTO.setBusiness_unitIDs(buildIDsFromBUnits(user.getBusinessUnits()));
@@ -181,18 +181,20 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     private HashSet<Integer> buildIDsFromBUnits(Set<BusinessUnit> bUnits){
         HashSet<Integer> BUnitIDs = new HashSet<>();
-        bUnits.forEach(bUnit ->{
-            System.out.println("processing business unit ID for user DTO : " + bUnit.getId());
-            BUnitIDs.add(bUnit.getId());
-        });
+        if(bUnits != null)
+            bUnits.forEach(bUnit ->{
+                System.out.println("processing business unit ID for user DTO : " + bUnit.getId());
+                BUnitIDs.add(bUnit.getId());
+            });
         System.out.println("BUnitDTO set size after conversion" + BUnitIDs.size()); // assert that that size matches input bUnits
         return  BUnitIDs;
     }
     private List<UserDTO> buildDTOListFromUsers(List<User> userList){
         List<UserDTO> DTOList = new ArrayList<>();
-        userList.forEach(user ->{
-            DTOList.add(buildDTOFromUser(user));
-        });
+        if(userList != null)
+            userList.forEach(user ->{
+                DTOList.add(buildDTOFromUser(user));
+            });
         return DTOList;
     }
     @Override
