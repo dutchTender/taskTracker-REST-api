@@ -33,8 +33,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @ResponseBody
     public List<TaskDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                       @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-           List<Task> bUnitList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-           return buildDTOListFromBUnits(bUnitList);
+           List<Task> taskList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+           return buildDTOListFromTasks(taskList);
     }
     @Override
 
@@ -44,8 +44,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     public List<TaskDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        List<Task> bUnitList = findAllPaginated(page, size);
-        return buildDTOListFromBUnits(bUnitList);
+        List<Task> taskList = findAllPaginated(page, size);
+        return buildDTOListFromTasks(taskList);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
     public List<TaskDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        List<Task> bUnitList = findAllSorted(sortBy, sortOrder);
-        return buildDTOListFromBUnits(bUnitList);
+        List<Task> taskList = findAllSorted(sortBy, sortOrder);
+        return buildDTOListFromTasks(taskList);
     }
     @Override
     public List<Task> findAll(final HttpServletRequest request) {
@@ -65,8 +65,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<TaskDTO> findAllDTO(final HttpServletRequest request) {
-        List<Task> bUnitList = findAllInternal(request);
-        return buildDTOListFromBUnits(bUnitList);
+        List<Task> taskList = findAllInternal(request);
+        return buildDTOListFromTasks(taskList);
     }
     public Task findOne(final Integer id) {
         return findOneInternal(id);
@@ -74,8 +74,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public TaskDTO findOneDTO(@PathVariable("id") final Integer id) {
-        Task bUnit = findOne(id);
-        return buildDTOFromTask(bUnit);
+        Task task = findOne(id);
+        return buildDTOFromTask(task);
     }
     public void create(@RequestBody final Task resource) {
         createInternal(resource);
@@ -83,8 +83,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody final TaskDTO resource) {
-        Task newUnit = buildBUnitFromDTO(resource);
-        create(newUnit);
+        Task newTask = buildTaskFromDTO(resource);
+        create(newTask);
     }
     public void update( final Integer id, final Task resource) {
         updateInternal(id, resource);
@@ -92,8 +92,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateDTO(@PathVariable("id") final Integer id, @RequestBody final TaskDTO resource) {
-           Task bUnit = buildBUnitFromDTO(resource);
-           update(id, bUnit);
+           Task task = buildTaskFromDTO(resource);
+           update(id, task);
     }
     @RequestMapping(value = "/addUser/{id}/{uid}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
@@ -114,7 +114,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
         getService().removerUser(id, uid);
     }
 
-    private Task buildBUnitFromDTO(TaskDTO taskDTO){
+    private Task buildTaskFromDTO(TaskDTO taskDTO){
         Task bUnit = new Task();
         bUnit.setName(taskDTO.getName());
         bUnit.setTaskTime(taskDTO.getTaskTime());
@@ -156,7 +156,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
             });
         return  BUnitConfigIDs;
     }
-    private List<TaskDTO> buildDTOListFromBUnits(List<Task> taskList){
+    private List<TaskDTO> buildDTOListFromTasks(List<Task> taskList){
         List<TaskDTO> DTOList = new ArrayList<>();
         if(taskList != null)
             taskList.forEach(task ->{

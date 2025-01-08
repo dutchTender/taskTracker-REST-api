@@ -32,7 +32,7 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     private IUserService userService;
 
     @Autowired
-    private ITaskService businessUnitService;
+    private ITaskService taskService;
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,9 +106,9 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     public void create(@RequestBody final UserTasksDTO resource) {
 
         Long userId = resource.getUser_id();
-        Integer businessUnitId = resource.getTask_id();
+        Integer taskId = resource.getTask_id();
         User user = userService.findOne(userId);
-        Task task = businessUnitService.findOne(businessUnitId);
+        Task task = taskService.findOne(taskId);
 
         if(user != null && task != null){
             user.addTask(task);
@@ -140,9 +140,9 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     public void update(@PathVariable("id") final Long id, @RequestBody final UserTasksDTO resource) {
 
         Long userId = id;
-        Integer businessUnitId = resource.getTask_id();
+        Integer taskId = resource.getTask_id();
         User user = userService.findOne(userId);
-        Task task = businessUnitService.findOne(businessUnitId);
+        Task task = taskService.findOne(taskId);
 
         if(user != null && task != null){
             if(user.getTasks().size() > 0){
