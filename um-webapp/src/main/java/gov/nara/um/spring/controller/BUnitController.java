@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(value = UmMappings.BUSINESSUNITS)
+@RequestMapping(value = UmMappings.TASKS)
 public class BUnitController extends AbstractController<BusinessUnit> implements ISortingController<BusinessUnit> {
 
     @Autowired

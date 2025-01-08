@@ -8,5 +8,5 @@ public class UserDTO implements ILongDto {
     private Long Id;
     private String user_name;
     private String user_type;
-    private HashSet<Integer> business_unitIDs;
+    private HashSet<Integer> taskIDs;
 }

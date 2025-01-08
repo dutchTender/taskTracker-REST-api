@@ -36,7 +36,7 @@ public class User implements ILongNameableEntity, ILongNameableDto {
             )
     )
     @OneToMany
-    private Set<BusinessUnit> businessUnits;
-    public BusinessUnit addBusinessUnit(BusinessUnit businessUnit){ businessUnits.add(businessUnit);return businessUnit; }
-    public void removeBusinessUnit(BusinessUnit businessUnit){ businessUnits.remove(businessUnit); }
+    private Set<BusinessUnit> tasks;
+    public BusinessUnit addBusinessUnit(BusinessUnit businessUnit){ tasks.add(businessUnit);return businessUnit; }
+    public void removeBusinessUnit(BusinessUnit businessUnit){ tasks.remove(businessUnit); }
 }

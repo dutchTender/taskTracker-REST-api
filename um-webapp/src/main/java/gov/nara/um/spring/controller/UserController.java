@@ -157,7 +157,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setBusinessUnits(buildBUnitFromIDs(dto.getBusiness_unitIDs()));
+        user.setTasks(buildBUnitFromIDs(dto.getTaskIDs()));
         return  user;
     }
     private HashSet<BusinessUnit> buildBUnitFromIDs(HashSet<Integer> bUnitIDs){
@@ -168,7 +168,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
                 BusinessUnit bUnit = bUnitService.findOne(bUnitID);
                 businessUnits.add(bUnit);
             });
-        System.out.println("BUnit set size after conversion" + businessUnits.size()); // assert that that size matches input bUnits
+        System.out.println("BUnit set size after conversion " + businessUnits.size()); // assert that that size matches input bUnits
         return  businessUnits;
     }
     private UserDTO buildDTOFromUser(User user){
@@ -176,7 +176,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
-        userDTO.setBusiness_unitIDs(buildIDsFromBUnits(user.getBusinessUnits()));
+        userDTO.setTaskIDs(buildIDsFromBUnits(user.getTasks()));
         return  userDTO;
     }
     private HashSet<Integer> buildIDsFromBUnits(Set<BusinessUnit> bUnits){
@@ -186,7 +186,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
                 System.out.println("processing business unit ID for user DTO : " + bUnit.getId());
                 BUnitIDs.add(bUnit.getId());
             });
-        System.out.println("BUnitDTO set size after conversion" + BUnitIDs.size()); // assert that that size matches input bUnits
+        System.out.println("BUnitDTO set size after conversion " + BUnitIDs.size()); // assert that that size matches input bUnits
         return  BUnitIDs;
     }
     private List<UserDTO> buildDTOListFromUsers(List<User> userList){

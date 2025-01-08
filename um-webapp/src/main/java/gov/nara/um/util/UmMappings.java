@@ -1,7 +1,7 @@
 package gov.nara.um.util;
 
 public final class UmMappings {
-    public static final String BUSINESSUNITS = "business-units";
+    public static final String TASKS = "tasks";
 
     public static final String USERS = "users";
 

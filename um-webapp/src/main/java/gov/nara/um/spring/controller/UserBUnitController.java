@@ -53,7 +53,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         // build return list by looping through all users
         for(Iterator<User> iterUser = userList.iterator(); iterUser.hasNext(); ) {
             User current = iterUser.next();
-            Set<BusinessUnit> businessUnitsList = current.getBusinessUnits();
+            Set<BusinessUnit> businessUnitsList = current.getTasks();
             for(Iterator<BusinessUnit> iterBU = businessUnitsList.iterator(); iterBU.hasNext(); ) {
                 BusinessUnit businessUnit = iterBU.next();
                 UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
@@ -80,7 +80,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
         User user = userService.findOne(id);
         if(user != null){
-            for(Iterator<BusinessUnit> iterBU =  user.getBusinessUnits().iterator(); iterBU.hasNext(); ) {
+            for(Iterator<BusinessUnit> iterBU =  user.getTasks().iterator(); iterBU.hasNext(); ) {
                 BusinessUnit businessUnit = iterBU.next();
                 UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
                 userBusinessUnitDTO.setBusiness_unit_id(businessUnit.getId());
@@ -145,9 +145,8 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         BusinessUnit businessUnit = businessUnitService.findOne(businessUnitId);
 
         if(user != null && businessUnit != null){
-            // remove existing mapping
-            if(user.getBusinessUnits().size() > 0){
-                user.getBusinessUnits().clear();;
+            if(user.getTasks().size() > 0){
+                user.getTasks().clear();;
             }
             user.addBusinessUnit(businessUnit);
             userService.update(user);
@@ -178,7 +177,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
 
         User user = userService.findOne(id);
         if(user != null){
-            user.getBusinessUnits().clear();
+            user.getTasks().clear();
             userService.update(user);
         }
         else {
