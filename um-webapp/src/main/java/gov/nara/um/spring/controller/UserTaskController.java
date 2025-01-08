@@ -8,7 +8,7 @@ import gov.nara.common.web.exception.MyBadRequestException;
 import gov.nara.common.web.exception.MyResourceNotFoundException;
 import gov.nara.um.persistence.model.Task;
 import gov.nara.um.persistence.model.User;
-import gov.nara.um.persistence.dto.UserBUnitDTO;
+import gov.nara.um.persistence.dto.UserTasksDTO;
 import gov.nara.um.service.ITaskService;
 import gov.nara.um.service.IUserService;
 import gov.nara.um.util.UmMappings;
@@ -45,8 +45,8 @@ public class UserTaskController extends AbstractLongIdController<User>  {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<UserBUnitDTO> findAll(final HttpServletRequest request) {
-        List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
+    public List<UserTasksDTO> findAll(final HttpServletRequest request) {
+        List<UserTasksDTO> returnList = new ArrayList<UserTasksDTO>();
         List<User>  userList = new ArrayList<User>();
         // nothing to extract from the request
         userList = userService.findAll();
@@ -56,8 +56,8 @@ public class UserTaskController extends AbstractLongIdController<User>  {
             Set<Task> businessUnitsList = current.getTasks();
             for(Iterator<Task> iterBU = businessUnitsList.iterator(); iterBU.hasNext(); ) {
                 Task task = iterBU.next();
-                UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
-                userBusinessUnitDTO.setBusiness_unit_id(task.getId());
+                UserTasksDTO userBusinessUnitDTO = new UserTasksDTO();
+                userBusinessUnitDTO.setTask_id(task.getId());
                 userBusinessUnitDTO.setUser_id(current.getId());
                 returnList.add(userBusinessUnitDTO);
             }
@@ -75,15 +75,15 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserBUnitDTO> findOne(@PathVariable("id") final Long id) {
+    public List<UserTasksDTO> findOne(@PathVariable("id") final Long id) {
 
-        List<UserBUnitDTO> returnList = new ArrayList<UserBUnitDTO>();
+        List<UserTasksDTO> returnList = new ArrayList<UserTasksDTO>();
         User user = userService.findOne(id);
         if(user != null){
             for(Iterator<Task> iterBU = user.getTasks().iterator(); iterBU.hasNext(); ) {
                 Task task = iterBU.next();
-                UserBUnitDTO userBusinessUnitDTO = new UserBUnitDTO();
-                userBusinessUnitDTO.setBusiness_unit_id(task.getId());
+                UserTasksDTO userBusinessUnitDTO = new UserTasksDTO();
+                userBusinessUnitDTO.setTask_id(task.getId());
                 userBusinessUnitDTO.setUser_id(user.getId());
                 returnList.add(userBusinessUnitDTO);
             }
@@ -103,10 +103,10 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody final UserBUnitDTO resource) {
+    public void create(@RequestBody final UserTasksDTO resource) {
 
         Long userId = resource.getUser_id();
-        Integer businessUnitId = resource.getBusiness_unit_id();
+        Integer businessUnitId = resource.getTask_id();
         User user = userService.findOne(userId);
         Task task = businessUnitService.findOne(businessUnitId);
 
@@ -137,10 +137,10 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final UserBUnitDTO resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody final UserTasksDTO resource) {
 
         Long userId = id;
-        Integer businessUnitId = resource.getBusiness_unit_id();
+        Integer businessUnitId = resource.getTask_id();
         User user = userService.findOne(userId);
         Task task = businessUnitService.findOne(businessUnitId);
 

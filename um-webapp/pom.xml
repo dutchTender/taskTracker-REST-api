@@ -8,7 +8,7 @@
 
     <parent>
         <groupId>gov.nara</groupId>
-        <artifactId>user-management-api-parent</artifactId>
+        <artifactId>TASK-TRACKER-api</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 

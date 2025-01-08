@@ -1,8 +1,8 @@
 package gov.nara.um.service.impl;
 
 import gov.nara.common.persistence.service.AbstractLongIdService;
-import gov.nara.um.persistence.dao.IBUnitConfigurationDAO;
-import gov.nara.um.persistence.model.BusinessUnitConfiguration;
+import gov.nara.um.persistence.dao.ITaskConfigurationDAO;
+import gov.nara.um.persistence.model.TaskConfiguration;
 import gov.nara.um.service.ITaskConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -11,22 +11,22 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class TaskConfigurationService extends AbstractLongIdService<BusinessUnitConfiguration> implements ITaskConfigurationService {
+public class TaskConfigurationService extends AbstractLongIdService<TaskConfiguration> implements ITaskConfigurationService {
 
     @Autowired
-    private IBUnitConfigurationDAO dao;
+    private ITaskConfigurationDAO dao;
     TaskConfigurationService(){super();}
 
     @Override
-    protected JpaSpecificationExecutor<BusinessUnitConfiguration> getSpecificationExecutor() {
+    protected JpaSpecificationExecutor<TaskConfiguration> getSpecificationExecutor() {
         return this.getSpecificationExecutor();
     }
     @Override
-    public BusinessUnitConfiguration findByName(String name) {
+    public TaskConfiguration findByName(String name) {
         return this.findByName(name);
     }
     @Override
-    public BusinessUnitConfiguration findOne(Long id) {
+    public TaskConfiguration findOne(Long id) {
         return this.findOne(id);
     }
     @Override
@@ -34,7 +34,7 @@ public class TaskConfigurationService extends AbstractLongIdService<BusinessUnit
          this.delete(id);
     }
     @Override
-    protected IBUnitConfigurationDAO getDao() {
+    protected ITaskConfigurationDAO getDao() {
         return this.dao;
     }
 }

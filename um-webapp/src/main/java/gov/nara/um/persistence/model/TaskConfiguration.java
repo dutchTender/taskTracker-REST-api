@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
-@Table(name = "business_unit_configuration")
-public class BusinessUnitConfiguration implements ILongNameableEntity, ILongNameableDto {
+@Table(name = "task_configuration")
+public class TaskConfiguration implements ILongNameableEntity, ILongNameableDto {
     @Id
     @Column(name = "configuration_id")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_conf_seq_gen")
@@ -23,7 +23,7 @@ public class BusinessUnitConfiguration implements ILongNameableEntity, ILongName
 
     @Column(name = "configuration_name", unique = true, nullable = false)
     private String name;
-    public BusinessUnitConfiguration(){
+    public TaskConfiguration(){
     }
 
 }

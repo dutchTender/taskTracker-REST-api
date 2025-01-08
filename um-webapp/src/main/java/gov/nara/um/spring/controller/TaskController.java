@@ -132,35 +132,35 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setTaskConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getTasksConfigurationPreferences()));
         return taskDTO;
     }
-    private List<TaskConfigurationPreference> buildBUnitConfigPreferencesFromIDs(List<Long> prefIDs, Integer bUnitID){
+    private List<TaskConfigurationPreference> buildBUnitConfigPreferencesFromIDs(List<Long> prefIDs, Integer taskID){
         ArrayList<TaskConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
         if(prefIDs != null)
             prefIDs.forEach(id ->{
                  TaskConfigurationPreference newConfigPref = new TaskConfigurationPreference();
-                 BusinessUnitConfiguration newConfig = new BusinessUnitConfiguration();
+                 TaskConfiguration newConfig = new TaskConfiguration();
                  newConfig.setId(id);
-                 BusinessUnitConfigurationID newConfigID = new BusinessUnitConfigurationID();
-                 newConfigID.setBusinessUnitConfigID(id);
-                 newConfigID.setTaskID(bUnitID);
+                 TaskConfigurationID newConfigID = new TaskConfigurationID();
+                 newConfigID.setTaskConfigID(id);
+                 newConfigID.setTaskID(taskID);
                  newConfigPref.setTaskConfigID(newConfig);
                  newConfigPref.setId(newConfigID);
                  bUnitConfigPrefs.add(newConfigPref);
             });
         return bUnitConfigPrefs;
     }
-    private ArrayList<Long> buildIDsFromBUConfigPreferences(List<TaskConfigurationPreference> bUnitConfigs){
+    private ArrayList<Long> buildIDsFromBUConfigPreferences(List<TaskConfigurationPreference> taskConfigs){
         ArrayList<Long> BUnitConfigIDs = new ArrayList<>();
-        if(bUnitConfigs != null)
-            bUnitConfigs.forEach(bUnitConfig ->{
-                BUnitConfigIDs.add(bUnitConfig.getId().getBusinessUnitConfigID());
+        if(taskConfigs != null)
+            taskConfigs.forEach(bUnitConfig ->{
+                BUnitConfigIDs.add(bUnitConfig.getId().getTaskConfigID());
             });
         return  BUnitConfigIDs;
     }
-    private List<TaskDTO> buildDTOListFromBUnits(List<Task> bUnitList){
+    private List<TaskDTO> buildDTOListFromBUnits(List<Task> taskList){
         List<TaskDTO> DTOList = new ArrayList<>();
-        if(bUnitList != null)
-            bUnitList.forEach(bUnit ->{
-                DTOList.add(buildDTOFromBUnit(bUnit));
+        if(taskList != null)
+            taskList.forEach(task ->{
+                DTOList.add(buildDTOFromBUnit(task));
             });
         return DTOList;
     }

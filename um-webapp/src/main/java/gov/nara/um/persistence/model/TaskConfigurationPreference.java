@@ -8,7 +8,7 @@ import javax.persistence.*;
 //@Table(name = "business_unit_config_values", schema = "oif_ods")
 public class TaskConfigurationPreference {
     @EmbeddedId
-    private BusinessUnitConfigurationID id = new BusinessUnitConfigurationID();
+    private TaskConfigurationID id = new TaskConfigurationID();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("taskID")
@@ -18,14 +18,14 @@ public class TaskConfigurationPreference {
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("businessUnitConfigID")
     @JoinColumn(name="task_config_id", nullable=false)
-    private BusinessUnitConfiguration taskConfigID;
+    private TaskConfiguration taskConfigID;
 
     @Column(name = "configuration_value")
     private String configurationValue;
 
     public TaskConfigurationPreference() {
     }
-    public TaskConfigurationPreference(Task taskID, BusinessUnitConfiguration businessUnitConfigID) {
+    public TaskConfigurationPreference(Task taskID, TaskConfiguration businessUnitConfigID) {
         this.taskID = taskID;
         this.taskConfigID = businessUnitConfigID;
     }
