@@ -10,9 +10,9 @@ public final class UmMappings {
     public static final String BUSINESS_UNITS_USERS = "/business-units/users";
 
 
-    public static final String BUSINESS_UNITS_CONFIGURATIONS = "/business-units/business-units-configurations";
+    public static final String BUSINESS_UNITS_CONFIGURATIONS = "/business-units-configurations";
 
-    public static final String BUSINESS_UNITS_CONFIGURATIONS_PREFERENCES = "/business-units/business-units-config-preferences";
+    public static final String BUSINESS_UNITS_CONFIGURATIONS_PREFERENCES = "/business-units-config-preferences";
     // discoverability
 
     public static final class Singular {

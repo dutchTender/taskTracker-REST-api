@@ -107,7 +107,6 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public BUnitConfigurationDTO findOneDTO(@PathVariable("id") final Long id) {
-
         return buildDTOFromBUnitConfiguration(findOne(id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,6 +158,12 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
         bUnitConfigDTO.setName(bUnitConfig.getName());
         return  bUnitConfigDTO;
     }
+    private BusinessUnitConfiguration buildBUnitConfigurationFromDTO(BUnitConfigurationDTO bUnitConfigurationDTO){
+        BusinessUnitConfiguration bUnitConfig = new BusinessUnitConfiguration();
+        bUnitConfig.setId(bUnitConfigurationDTO.getId());
+        bUnitConfig.setName(bUnitConfigurationDTO.getName());
+        return  bUnitConfig;
+    }
     private List<BUnitConfigurationDTO> buildDTOListFromConfigurationList( List<BusinessUnitConfiguration> BUnitConfigurationList ){
         List<BUnitConfigurationDTO> dtoList = new ArrayList<>();
         BUnitConfigurationList.forEach( bUnitConfiguration ->{
@@ -166,12 +171,7 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
         } );
         return dtoList;
     }
-    private BusinessUnitConfiguration buildBUnitConfigurationFromDTO(BUnitConfigurationDTO bUnitConfigurationDTO){
-        BusinessUnitConfiguration bUnitConfig = new BusinessUnitConfiguration();
-        bUnitConfig.setId(bUnitConfigurationDTO.getId());
-        bUnitConfig.setName(bUnitConfigurationDTO.getName());
-        return  bUnitConfig;
-    }
+
     @Override
     protected final IBUnitConfigurationService getService() {
         return service;

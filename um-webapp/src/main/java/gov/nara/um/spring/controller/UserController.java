@@ -120,10 +120,15 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
+
     public void create(@RequestBody final User resource) {
         createInternal(resource);
+    }
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createDTO(@RequestBody final UserDTO resource) {
+
+        create(buildUserFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
