@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = UmMappings.BUSINESS_UNITS_CONFIGURATIONS)
+@RequestMapping(value = UmMappings.TASKS_CONFIGURATIONS)
 public class TaskConfigurationController extends AbstractLongIdController<BusinessUnitConfiguration> implements ILongIdSortingController<BusinessUnitConfiguration> {
 
     @Autowired

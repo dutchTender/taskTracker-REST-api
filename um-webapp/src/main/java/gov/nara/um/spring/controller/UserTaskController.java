@@ -25,7 +25,7 @@ import java.util.Set;
 
 
 @Controller
-@RequestMapping(value = UmMappings.USERS_BUSINESSUNITS)
+@RequestMapping(value = UmMappings.USER_TASKS)
 public class UserTaskController extends AbstractLongIdController<User>  {
 
     @Autowired
