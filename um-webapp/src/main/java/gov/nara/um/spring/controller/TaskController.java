@@ -75,7 +75,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @ResponseBody
     public TaskDTO findOneDTO(@PathVariable("id") final Integer id) {
         Task bUnit = findOne(id);
-        return buildDTOFromBUnit(bUnit);
+        return buildDTOFromTask(bUnit);
     }
     public void create(@RequestBody final Task resource) {
         createInternal(resource);
@@ -97,7 +97,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     }
     @RequestMapping(value = "/addUser/{id}/{uid}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void addUserToBusinessUnit(@PathVariable("id") final String id, @PathVariable("uid") final String uid) {
+    public void addUserToTask(@PathVariable("id") final String id, @PathVariable("uid") final String uid) {
         getService().addUser(id, uid);
 
     }
@@ -110,7 +110,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     // remove user from business unit
     @RequestMapping(value = "/removeUser/{id}/{uid}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void removeUserFromBusinessUnit(@PathVariable("id") final String id, @PathVariable("uid") final String uid) {
+    public void removeUserFromTask(@PathVariable("id") final String id, @PathVariable("uid") final String uid) {
         getService().removerUser(id, uid);
     }
 
@@ -120,19 +120,19 @@ public class TaskController extends AbstractController<Task> implements ISorting
         bUnit.setTaskTime(taskDTO.getTaskTime());
         bUnit.setTaskDescription(taskDTO.getTaskDescription());
         bUnit.setId(taskDTO.getId());
-        bUnit.setTasksConfigurationPreferences(buildBUnitConfigPreferencesFromIDs(taskDTO.getTaskConfigurationIDs(), taskDTO.getId()));
+        bUnit.setTasksConfigurationPreferences(buildTaskConfigPreferencesFromIDs(taskDTO.getTaskConfigurationIDs(), taskDTO.getId()));
         return bUnit;
     }
-    private TaskDTO buildDTOFromBUnit(Task bUnit){
+    private TaskDTO buildDTOFromTask(Task bUnit){
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setId(bUnit.getId());
         taskDTO.setName(bUnit.getName());
         taskDTO.setTaskDescription(bUnit.getTaskDescription());
         taskDTO.setTaskTime(bUnit.getTaskTime());
-        taskDTO.setTaskConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getTasksConfigurationPreferences()));
+        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(bUnit.getTasksConfigurationPreferences()));
         return taskDTO;
     }
-    private List<TaskConfigurationPreference> buildBUnitConfigPreferencesFromIDs(List<Long> prefIDs, Integer taskID){
+    private List<TaskConfigurationPreference> buildTaskConfigPreferencesFromIDs(List<Long> prefIDs, Integer taskID){
         ArrayList<TaskConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
         if(prefIDs != null)
             prefIDs.forEach(id ->{
@@ -148,7 +148,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
             });
         return bUnitConfigPrefs;
     }
-    private ArrayList<Long> buildIDsFromBUConfigPreferences(List<TaskConfigurationPreference> taskConfigs){
+    private ArrayList<Long> buildIDsFromTaskConfigPreferences(List<TaskConfigurationPreference> taskConfigs){
         ArrayList<Long> BUnitConfigIDs = new ArrayList<>();
         if(taskConfigs != null)
             taskConfigs.forEach(bUnitConfig ->{
@@ -160,7 +160,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
         List<TaskDTO> DTOList = new ArrayList<>();
         if(taskList != null)
             taskList.forEach(task ->{
-                DTOList.add(buildDTOFromBUnit(task));
+                DTOList.add(buildDTOFromTask(task));
             });
         return DTOList;
     }

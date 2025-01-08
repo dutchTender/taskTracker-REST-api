@@ -107,7 +107,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public TaskConfigurationDTO findOneDTO(@PathVariable("id") final Long id) {
-        return buildDTOFromBUnitConfiguration(findOne(id));
+        return buildDTOFromTaskConfiguration(findOne(id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -123,7 +123,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody final TaskConfigurationDTO resource) {
-        create(buildBUnitConfigurationFromDTO(resource));
+        create(buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -138,7 +138,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateDTO(@PathVariable("id") final Long id, @RequestBody final TaskConfigurationDTO resource) {
-        update(id, buildBUnitConfigurationFromDTO(resource));
+        update(id, buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -152,23 +152,23 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
-    private TaskConfigurationDTO buildDTOFromBUnitConfiguration(TaskConfiguration bUnitConfig){
+    private TaskConfigurationDTO buildDTOFromTaskConfiguration(TaskConfiguration bUnitConfig){
         TaskConfigurationDTO bUnitConfigDTO = new TaskConfigurationDTO();
         bUnitConfigDTO.setId(bUnitConfig.getId());
         bUnitConfigDTO.setName(bUnitConfig.getName());
         return  bUnitConfigDTO;
     }
-    private TaskConfiguration buildBUnitConfigurationFromDTO(TaskConfigurationDTO taskConfigurationDTO){
+    private TaskConfiguration buildTaskConfigurationFromDTO(TaskConfigurationDTO taskConfigurationDTO){
         TaskConfiguration bUnitConfig = new TaskConfiguration();
         bUnitConfig.setId(taskConfigurationDTO.getId());
         bUnitConfig.setName(taskConfigurationDTO.getName());
         return  bUnitConfig;
     }
-    private List<TaskConfigurationDTO> buildDTOListFromConfigurationList(List<TaskConfiguration> BUnitConfigurationList ){
+    private List<TaskConfigurationDTO> buildDTOListFromConfigurationList(List<TaskConfiguration> taskConfigurationList ){
         List<TaskConfigurationDTO> dtoList = new ArrayList<>();
-        if(BUnitConfigurationList != null)
-            BUnitConfigurationList.forEach( bUnitConfiguration ->{
-                dtoList.add(buildDTOFromBUnitConfiguration(bUnitConfiguration));
+        if(taskConfigurationList != null)
+            taskConfigurationList.forEach( taskConfiguration ->{
+                dtoList.add(buildDTOFromTaskConfiguration(taskConfiguration));
             } );
         return dtoList;
     }

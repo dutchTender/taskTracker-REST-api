@@ -50,7 +50,6 @@ public class UserTaskTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(200)).andDo(print());
             // A 200 is needed to verify that th eurl handling works
-
         }
         catch (Exception ex){
             System.out.println("exception occurred: "+ex);
@@ -87,7 +86,6 @@ public class UserTaskTest {
                     .contentType(MediaType.APPLICATION_JSON).content(json_payLoad))
                     .andExpect(status().is(400)).andDo(print());
             // A 201 is needed to verify post request that the url handling works
-
         }
         catch (Exception ex){
             System.out.println("exception occurred: "+ex);
@@ -109,7 +107,6 @@ public class UserTaskTest {
                     .contentType(MediaType.APPLICATION_JSON).content(json_payLoad))
                     .andExpect(status().is(400)).andDo(print());
             // A 201 is needed to verify post request that the url handling works
-
         }
         catch (Exception ex){
             System.out.println("exception occurred: "+ex);
@@ -126,7 +123,6 @@ public class UserTaskTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(400)).andDo(print());
             // A 202 is needed to verify delete request that the url handling works
-
         }
         catch (Exception ex){
             System.out.println("exception occurred: "+ex);
