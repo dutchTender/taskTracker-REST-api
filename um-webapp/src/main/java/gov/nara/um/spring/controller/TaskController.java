@@ -3,7 +3,7 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.ISortingController;
-import gov.nara.um.persistence.dto.BUnitDTO;
+import gov.nara.um.persistence.dto.TaskDTO;
 import gov.nara.um.persistence.model.*;
 import gov.nara.um.service.ITaskService;
 import gov.nara.um.util.UmMappings;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = UmMappings.TASKS)
-public class BUnitController extends AbstractController<Task> implements ISortingController<Task> {
+public class TaskController extends AbstractController<Task> implements ISortingController<Task> {
 
     @Autowired
     private ITaskService service;
@@ -31,8 +31,8 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<BUnitDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                        @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public List<TaskDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                      @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
            List<Task> bUnitList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
            return buildDTOListFromBUnits(bUnitList);
     }
@@ -43,7 +43,7 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<BUnitDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+    public List<TaskDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<Task> bUnitList = findAllPaginated(page, size);
         return buildDTOListFromBUnits(bUnitList);
     }
@@ -54,7 +54,7 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<BUnitDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public List<TaskDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> bUnitList = findAllSorted(sortBy, sortOrder);
         return buildDTOListFromBUnits(bUnitList);
     }
@@ -64,7 +64,7 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<BUnitDTO> findAllDTO(final HttpServletRequest request) {
+    public List<TaskDTO> findAllDTO(final HttpServletRequest request) {
         List<Task> bUnitList = findAllInternal(request);
         return buildDTOListFromBUnits(bUnitList);
     }
@@ -73,7 +73,7 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public BUnitDTO findOneDTO(@PathVariable("id") final Integer id) {
+    public TaskDTO findOneDTO(@PathVariable("id") final Integer id) {
         Task bUnit = findOne(id);
         return buildDTOFromBUnit(bUnit);
     }
@@ -82,7 +82,7 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody final BUnitDTO resource) {
+    public void createDTO(@RequestBody final TaskDTO resource) {
         Task newUnit = buildBUnitFromDTO(resource);
         create(newUnit);
     }
@@ -91,7 +91,7 @@ public class BUnitController extends AbstractController<Task> implements ISortin
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDTO(@PathVariable("id") final Integer id, @RequestBody final BUnitDTO resource) {
+    public void updateDTO(@PathVariable("id") final Integer id, @RequestBody final TaskDTO resource) {
            Task bUnit = buildBUnitFromDTO(resource);
            update(id, bUnit);
     }
@@ -114,23 +114,23 @@ public class BUnitController extends AbstractController<Task> implements ISortin
         getService().removerUser(id, uid);
     }
 
-    private Task buildBUnitFromDTO(BUnitDTO bUnitDTO){
+    private Task buildBUnitFromDTO(TaskDTO taskDTO){
         Task bUnit = new Task();
-        bUnit.setName(bUnitDTO.getName());
-        bUnit.setTaskTime(bUnitDTO.getTaskTime());
-        bUnit.setTaskDescription(bUnitDTO.getTaskDescription());
-        bUnit.setId(bUnitDTO.getId());
-        bUnit.setTasksConfigurationPreferences(buildBUnitConfigPreferencesFromIDs(bUnitDTO.getTaskConfigurationIDs(), bUnitDTO.getId()));
+        bUnit.setName(taskDTO.getName());
+        bUnit.setTaskTime(taskDTO.getTaskTime());
+        bUnit.setTaskDescription(taskDTO.getTaskDescription());
+        bUnit.setId(taskDTO.getId());
+        bUnit.setTasksConfigurationPreferences(buildBUnitConfigPreferencesFromIDs(taskDTO.getTaskConfigurationIDs(), taskDTO.getId()));
         return bUnit;
     }
-    private BUnitDTO buildDTOFromBUnit(Task bUnit){
-        BUnitDTO bUnitDTO = new BUnitDTO();
-        bUnitDTO.setId(bUnit.getId());
-        bUnitDTO.setName(bUnit.getName());
-        bUnitDTO.setTaskDescription(bUnit.getTaskDescription());
-        bUnitDTO.setTaskTime(bUnit.getTaskTime());
-        bUnitDTO.setTaskConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getTasksConfigurationPreferences()));
-        return  bUnitDTO;
+    private TaskDTO buildDTOFromBUnit(Task bUnit){
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(bUnit.getId());
+        taskDTO.setName(bUnit.getName());
+        taskDTO.setTaskDescription(bUnit.getTaskDescription());
+        taskDTO.setTaskTime(bUnit.getTaskTime());
+        taskDTO.setTaskConfigurationIDs(buildIDsFromBUConfigPreferences(bUnit.getTasksConfigurationPreferences()));
+        return taskDTO;
     }
     private List<TaskConfigurationPreference> buildBUnitConfigPreferencesFromIDs(List<Long> prefIDs, Integer bUnitID){
         ArrayList<TaskConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
@@ -156,8 +156,8 @@ public class BUnitController extends AbstractController<Task> implements ISortin
             });
         return  BUnitConfigIDs;
     }
-    private List<BUnitDTO> buildDTOListFromBUnits(List<Task> bUnitList){
-        List<BUnitDTO> DTOList = new ArrayList<>();
+    private List<TaskDTO> buildDTOListFromBUnits(List<Task> bUnitList){
+        List<TaskDTO> DTOList = new ArrayList<>();
         if(bUnitList != null)
             bUnitList.forEach(bUnit ->{
                 DTOList.add(buildDTOFromBUnit(bUnit));

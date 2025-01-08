@@ -5,7 +5,7 @@ import java.util.List;
 
 
 @Data
-public class BUnitDTO implements IDto {
+public class TaskDTO implements IDto {
     private Integer Id;
     private String name;
     private String taskTime;

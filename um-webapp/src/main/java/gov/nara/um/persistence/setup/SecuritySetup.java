@@ -80,7 +80,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         User user2 = iUserService.findByName(user.getName());
 
 
-        user2.addBusinessUnit(task);
+        user2.addTask(task);
         iUserService.update(user2);
 
 

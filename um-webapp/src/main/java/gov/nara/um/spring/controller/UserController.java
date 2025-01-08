@@ -186,7 +186,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
                 System.out.println("processing business unit ID for user DTO : " + bUnit.getId());
                 BUnitIDs.add(bUnit.getId());
             });
-        System.out.println("BUnitDTO set size after conversion " + BUnitIDs.size()); // assert that that size matches input bUnits
+        System.out.println("TaskDTO set size after conversion " + BUnitIDs.size()); // assert that that size matches input bUnits
         return  BUnitIDs;
     }
     private List<UserDTO> buildDTOListFromUsers(List<User> userList){

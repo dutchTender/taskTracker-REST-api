@@ -5,7 +5,7 @@ import gov.nara.um.persistence.dto.UserBUnitDTO;
 import gov.nara.um.service.ITaskService;
 
 import gov.nara.um.service.IUserService;
-import gov.nara.um.spring.controller.UserBUnitController;
+import gov.nara.um.spring.controller.UserTaskController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(UserBUnitController.class)
+@WebMvcTest(UserTaskController.class)
 @AutoConfigureMockMvc
 public class UserTaskTest {
 

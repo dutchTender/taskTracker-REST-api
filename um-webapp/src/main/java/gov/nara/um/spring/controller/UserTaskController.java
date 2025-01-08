@@ -26,7 +26,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping(value = UmMappings.USERS_BUSINESSUNITS)
-public class UserBUnitController extends AbstractLongIdController<User>  {
+public class UserTaskController extends AbstractLongIdController<User>  {
 
     @Autowired
     private IUserService userService;
@@ -111,7 +111,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
         Task task = businessUnitService.findOne(businessUnitId);
 
         if(user != null && task != null){
-            user.addBusinessUnit(task);
+            user.addTask(task);
             userService.update(user);
         }
         else {
@@ -148,7 +148,7 @@ public class UserBUnitController extends AbstractLongIdController<User>  {
             if(user.getTasks().size() > 0){
                 user.getTasks().clear();;
             }
-            user.addBusinessUnit(task);
+            user.addTask(task);
             userService.update(user);
         }
         else {

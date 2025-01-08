@@ -5,7 +5,7 @@ import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
 import gov.nara.um.persistence.dto.BUnitConfigurationDTO;
 import gov.nara.um.persistence.model.BusinessUnitConfiguration;
-import gov.nara.um.service.IBUnitConfigurationService;
+import gov.nara.um.service.ITaskConfigurationService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = UmMappings.BUSINESS_UNITS_CONFIGURATIONS)
-public class BUnitConfigurationController extends AbstractLongIdController<BusinessUnitConfiguration> implements ILongIdSortingController<BusinessUnitConfiguration> {
+public class TaskConfigurationController extends AbstractLongIdController<BusinessUnitConfiguration> implements ILongIdSortingController<BusinessUnitConfiguration> {
 
     @Autowired
-    private IBUnitConfigurationService service;
+    private ITaskConfigurationService service;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ public class BUnitConfigurationController extends AbstractLongIdController<Busin
     }
 
     @Override
-    protected final IBUnitConfigurationService getService() {
+    protected final ITaskConfigurationService getService() {
         return service;
     }
 
