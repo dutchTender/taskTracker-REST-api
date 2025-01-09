@@ -6,6 +6,7 @@ import gov.nara.um.service.ITaskService;
 
 import gov.nara.um.service.IUserService;
 import gov.nara.um.spring.controller.UserTaskController;
+import gov.nara.um.util.UmMappings;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserTaskController.class)
 @AutoConfigureMockMvc
-public class UserTaskTest {
+public class UserTasksIntegrationTest {
 
     @MockBean
     private ITaskService businessUnitService;
@@ -46,7 +47,7 @@ public class UserTaskTest {
     public final void check_userBusiness_unit_controller_ListAll_200_status_OK() throws Exception {
 
         try {
-            mvc.perform(get("/users/businessunits")
+            mvc.perform(get(UmMappings.USER_TASKS)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(200)).andDo(print());
             // A 200 is needed to verify that th eurl handling works
@@ -61,7 +62,7 @@ public class UserTaskTest {
     public final void check_userBusiness_unit_controller_ListOne_404_status_customException() throws Exception {
 
         try {
-            mvc.perform(get("/users/businessunits/1")
+            mvc.perform(get(UmMappings.USER_TASKS+"/1")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(404)).andDo(print());
             // A 200 is needed to verify that the url handling works
@@ -82,7 +83,7 @@ public class UserTaskTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String json_payLoad = objectMapper.writeValueAsString(test_unit);
         try {
-            mvc.perform(post("/users/businessunits/")
+            mvc.perform(post(UmMappings.USER_TASKS)
                     .contentType(MediaType.APPLICATION_JSON).content(json_payLoad))
                     .andExpect(status().is(400)).andDo(print());
             // A 201 is needed to verify post request that the url handling works
@@ -103,7 +104,7 @@ public class UserTaskTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String json_payLoad = objectMapper.writeValueAsString(test_unit);
         try {
-            mvc.perform(put("/users/businessunits/2")
+            mvc.perform(put(UmMappings.USER_TASKS+"/2")
                     .contentType(MediaType.APPLICATION_JSON).content(json_payLoad))
                     .andExpect(status().is(400)).andDo(print());
             // A 201 is needed to verify post request that the url handling works
@@ -119,7 +120,7 @@ public class UserTaskTest {
     public final void check_Business_unit_controller_deleteOne_204_status_OK() throws Exception {
 
         try {
-            mvc.perform(delete("/users/businessunits/2")
+            mvc.perform(delete(UmMappings.USER_TASKS+"/2")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(400)).andDo(print());
             // A 202 is needed to verify delete request that the url handling works

@@ -1,7 +1,5 @@
 package gov.nara.um.spring.controller;
 
-
-
 import gov.nara.common.persistence.service.ILongRawService;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.exception.MyBadRequestException;
@@ -22,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-
 @Controller
 @RequestMapping(value = UmMappings.USER_TASKS)
 public class UserTaskController extends AbstractLongIdController<User>  {
@@ -42,7 +38,6 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     // Unit testing  : NA
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<UserTasksDTO> findAll(final HttpServletRequest request) {

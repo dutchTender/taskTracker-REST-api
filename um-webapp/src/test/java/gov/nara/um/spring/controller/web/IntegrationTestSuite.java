@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ // @formatter:off
-    TaskSpringIntegrationTest.class,
+    TaskIntegrationTest.class,
     ServiceSpringIntegrationTest.class,
     WebSpringIntegrationTest.class
 }) // @formatter:on
