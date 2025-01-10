@@ -1,7 +1,7 @@
 package gov.nara.um.service.impl;
 
 import gov.nara.common.persistence.service.AbstractLongIdService;
-import gov.nara.um.persistence.dao.ITaskConfigurationDAO;
+import gov.nara.um.persistence.dao.ITaskRewardsDAO;
 import gov.nara.um.persistence.model.TaskReward;
 import gov.nara.um.service.ITaskConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 public class TaskConfigurationService extends AbstractLongIdService<TaskReward> implements ITaskConfigurationService {
 
     @Autowired
-    private ITaskConfigurationDAO dao;
+    private ITaskRewardsDAO dao;
     TaskConfigurationService(){super();}
 
     @Override
@@ -34,7 +34,7 @@ public class TaskConfigurationService extends AbstractLongIdService<TaskReward> 
          this.delete(id);
     }
     @Override
-    protected ITaskConfigurationDAO getDao() {
+    protected ITaskRewardsDAO getDao() {
         return this.dao;
     }
 }
