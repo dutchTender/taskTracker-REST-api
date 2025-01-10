@@ -38,17 +38,17 @@ public class Task implements INameableEntity, INameableDto {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskConfigurationPreference> tasksConfigurationPreferences = new ArrayList<>();
+    private List<TaskRewardConfig> taskRewards = new ArrayList<>();
     public Task(){
     }
-    public TaskConfigurationPreference addTasksConfigurationPreference(TaskConfigurationPreference taskConfigurationPreference){
-        tasksConfigurationPreferences.add(taskConfigurationPreference);
-        return taskConfigurationPreference;
+    public TaskRewardConfig addTaskRewardConfiguration(TaskRewardConfig taskRewardConfig){
+        taskRewards.add(taskRewardConfig);
+        return taskRewardConfig;
     }
-    public void removeTasksConfigurationPreference( TaskConfigurationPreference taskConfigurationPreference){
-        for(Iterator<TaskConfigurationPreference> iterBUCP = tasksConfigurationPreferences.iterator(); iterBUCP.hasNext(); ) {
-            TaskConfigurationPreference current = iterBUCP.next();
-            if(current.equals(taskConfigurationPreference)){
+    public void removeTaskRewardConfiguration( TaskRewardConfig taskRewardConfig){
+        for(Iterator<TaskRewardConfig> iterBUCP = taskRewards.iterator(); iterBUCP.hasNext(); ) {
+            TaskRewardConfig current = iterBUCP.next();
+            if(current.equals(taskRewardConfig)){
                 iterBUCP.remove();
             }
         }

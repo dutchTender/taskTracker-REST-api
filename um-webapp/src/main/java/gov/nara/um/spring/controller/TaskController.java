@@ -121,7 +121,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
         bUnit.setTaskTime(taskDTO.getTaskTime());
         bUnit.setTaskDescription(taskDTO.getTaskDescription());
         bUnit.setId(taskDTO.getId());
-        bUnit.setTasksConfigurationPreferences(buildTaskConfigPreferencesFromIDs(Optional.ofNullable(taskDTO.getTaskConfigurationIDs()), taskDTO.getId()));
+        bUnit.setTaskRewards(buildTaskConfigPreferencesFromIDs(Optional.ofNullable(taskDTO.getTaskConfigurationIDs()), taskDTO.getId()));
         return bUnit;
     }
     private TaskDTO buildDTOFromTask(Task bUnit){
@@ -130,18 +130,18 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setName(bUnit.getName());
         taskDTO.setTaskDescription(bUnit.getTaskDescription());
         taskDTO.setTaskTime(bUnit.getTaskTime());
-        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTasksConfigurationPreferences())));
+        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewards())));
         return taskDTO;
     }
-    private List<TaskConfigurationPreference> buildTaskConfigPreferencesFromIDs(Optional<List<Long>> prefIDs, Integer taskID){
-        ArrayList<TaskConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
+    private List<TaskRewardConfig> buildTaskConfigPreferencesFromIDs(Optional<List<Long>> prefIDs, Integer taskID){
+        ArrayList<TaskRewardConfig> bUnitConfigPrefs = new ArrayList<>();
         prefIDs.ifPresent(
                 ids->{
                     ids.forEach(id ->{
-                        TaskConfigurationPreference newConfigPref = new TaskConfigurationPreference();
-                        TaskConfiguration newConfig = new TaskConfiguration();
+                        TaskRewardConfig newConfigPref = new TaskRewardConfig();
+                        TaskReward newConfig = new TaskReward();
                         newConfig.setId(id);
-                        TaskConfigurationID newConfigID = new TaskConfigurationID();
+                        TaskRewardsConfigID newConfigID = new TaskRewardsConfigID();
                         newConfigID.setTaskConfigID(id);
                         newConfigID.setTaskID(taskID);
                         newConfigPref.setTaskConfigID(newConfig);
@@ -153,7 +153,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
 
         return bUnitConfigPrefs;
     }
-    private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskConfigurationPreference>> taskConfigs){
+    private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskRewardConfig>> taskConfigs){
         ArrayList<Long> taskConfigIDs = new ArrayList<>();
         taskConfigs.ifPresent(
                 configs->{

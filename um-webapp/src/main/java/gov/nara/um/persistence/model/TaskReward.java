@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
 @Table(name = "task_configuration")
-public class TaskConfiguration implements ILongNameableEntity, ILongNameableDto {
+public class TaskReward implements ILongNameableEntity, ILongNameableDto {
     @Id
     @Column(name = "configuration_id")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_conf_seq_gen")
@@ -33,20 +33,20 @@ public class TaskConfiguration implements ILongNameableEntity, ILongNameableDto 
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskConfigurationPreference> tasksConfigurationPreferences = new ArrayList<>();
-    public TaskConfigurationPreference addTasksConfigurationPreference(TaskConfigurationPreference taskConfigurationPreference){
-        tasksConfigurationPreferences.add(taskConfigurationPreference);
-        return taskConfigurationPreference;
+    private List<TaskRewardConfig> taskRewards = new ArrayList<>();
+    public TaskRewardConfig addTaskRewardConfiguration(TaskRewardConfig taskRewardConfig){
+        taskRewards.add(taskRewardConfig);
+        return taskRewardConfig;
     }
-    public void removeTasksConfigurationPreference( TaskConfigurationPreference taskConfigurationPreference){
-        for(Iterator<TaskConfigurationPreference> iterBUCP = tasksConfigurationPreferences.iterator(); iterBUCP.hasNext(); ) {
-            TaskConfigurationPreference current = iterBUCP.next();
-            if(current.equals(taskConfigurationPreference)){
+    public void removeTaskRewardConfiguration( TaskRewardConfig taskRewardConfig){
+        for(Iterator<TaskRewardConfig> iterBUCP = taskRewards.iterator(); iterBUCP.hasNext(); ) {
+            TaskRewardConfig current = iterBUCP.next();
+            if(current.equals(taskRewardConfig)){
                 iterBUCP.remove();
             }
         }
     }
-    public TaskConfiguration(){
+    public TaskReward(){
     }
 
 }
