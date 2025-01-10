@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = UmMappings.TASKS_CONFIGURATIONS)
-public class TaskConfigurationController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
+public class TaskRewardController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
 
     @Autowired
     private ITaskConfigurationService service;
@@ -109,7 +109,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public TaskRewardDTO findOneDTO(@PathVariable("id") final Long id) {
-        return buildDTOFromTaskConfiguration(findOne(id));
+        return buildDTOFromTaskReward(findOne(id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -154,24 +154,24 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
-    private TaskRewardDTO buildDTOFromTaskConfiguration(TaskReward bUnitConfig){
-        TaskRewardDTO taskConfigDTO = new TaskRewardDTO();
-        taskConfigDTO.setId(bUnitConfig.getId());
-        taskConfigDTO.setName(bUnitConfig.getName());
-        return  taskConfigDTO;
+    private TaskRewardDTO buildDTOFromTaskReward(TaskReward reward){
+        TaskRewardDTO taskRewardDTO = new TaskRewardDTO();
+        taskRewardDTO.setId(reward.getId());
+        taskRewardDTO.setName(reward.getName());
+        return  taskRewardDTO;
     }
     private TaskReward buildTaskConfigurationFromDTO(TaskRewardDTO taskRewardDTO){
-        TaskReward bUnitConfig = new TaskReward();
-        bUnitConfig.setId(taskRewardDTO.getId());
-        bUnitConfig.setName(taskRewardDTO.getName());
-        return  bUnitConfig;
+        TaskReward taskReward = new TaskReward();
+        taskReward.setId(taskRewardDTO.getId());
+        taskReward.setName(taskRewardDTO.getName());
+        return  taskReward;
     }
-    private List<TaskRewardDTO> buildDTOListFromConfigurationList(Optional<List<TaskReward>> taskConfigurationList ){
+    private List<TaskRewardDTO> buildDTOListFromConfigurationList(Optional<List<TaskReward>> taskRewardList ){
         List<TaskRewardDTO> dtoList = new ArrayList<>();
-        taskConfigurationList.ifPresent(
-                configList->{
-                    configList.forEach( taskConfiguration ->{
-                        dtoList.add(buildDTOFromTaskConfiguration(taskConfiguration));
+        taskRewardList.ifPresent(
+                rList->{
+                    rList.forEach( taskReward ->{
+                        dtoList.add(buildDTOFromTaskReward(taskReward));
                     } );
                 }
         );
