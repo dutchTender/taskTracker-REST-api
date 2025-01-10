@@ -23,6 +23,7 @@ public class User implements ILongNameableEntity, ILongNameableDto {
     @Column(name = "user_name")
     private String name;
     private String user_type;
+    private String email;
 
     @JoinTable(
             name = "user_tasks",                     // table name for the user-tasks relational table

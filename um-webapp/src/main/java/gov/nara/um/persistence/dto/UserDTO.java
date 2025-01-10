@@ -1,6 +1,9 @@
 package gov.nara.um.persistence.dto;
 import gov.nara.common.interfaces.ILongDto;
 import lombok.Data;
+import org.checkerframework.common.aliasing.qual.Unique;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 
@@ -11,5 +14,7 @@ public class UserDTO implements ILongDto {
     private String user_name;
     @NotNull
     private String user_type;
+    @Email
+    private String email;
     private HashSet<Integer> taskIDs;
 }
