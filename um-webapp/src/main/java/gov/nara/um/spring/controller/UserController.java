@@ -43,7 +43,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public List<UserDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return buildDTOListFromUsers(Optional.of(userList));
+        return buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -62,7 +62,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
-        return buildDTOListFromUsers(Optional.of(userList));
+        return buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -79,7 +79,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllSorted(sortBy, sortOrder);
-        return buildDTOListFromUsers(Optional.of(userList));
+        return buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -96,7 +96,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-        return buildDTOListFromUsers(Optional.of(userList));
+        return buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -158,7 +158,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setTasks(buildTaskFromIDs(Optional.of(dto.getTaskIDs())));
+        user.setTasks(buildTaskFromIDs(Optional.ofNullable(dto.getTaskIDs())));
         return  user;
     }
     private HashSet<Task> buildTaskFromIDs(Optional<HashSet<Integer>> bUnitIDs){
@@ -177,7 +177,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
-        userDTO.setTaskIDs(buildIDsFromTasks(Optional.of(user.getTasks())));
+        userDTO.setTaskIDs(buildIDsFromTasks(Optional.ofNullable(user.getTasks())));
         return  userDTO;
     }
     private HashSet<Integer> buildIDsFromTasks(Optional<Set<Task>> bUnits){
