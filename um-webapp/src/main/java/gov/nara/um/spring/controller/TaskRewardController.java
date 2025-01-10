@@ -5,7 +5,7 @@ import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
 import gov.nara.um.persistence.dto.TaskRewardDTO;
 import gov.nara.um.persistence.model.TaskReward;
-import gov.nara.um.service.ITaskConfigurationService;
+import gov.nara.um.service.ITaskRewardService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class TaskRewardController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
 
     @Autowired
-    private ITaskConfigurationService service;
+    private ITaskRewardService service;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,7 +178,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         return dtoList;
     }
     @Override
-    protected final ITaskConfigurationService getService() {
+    protected final ITaskRewardService getService() {
         return service;
     }
 
