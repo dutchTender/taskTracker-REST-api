@@ -180,15 +180,15 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setTaskIDs(buildIDsFromTasks(Optional.ofNullable(user.getTasks())));
         return  userDTO;
     }
-    private HashSet<Integer> buildIDsFromTasks(Optional<Set<Task>> bUnits){
-        HashSet<Integer> BUnitIDs = new HashSet<>();
-        bUnits.ifPresent(
+    private HashSet<Integer> buildIDsFromTasks(Optional<Set<Task>> tasks){
+        HashSet<Integer> taskIDs = new HashSet<>();
+        tasks.ifPresent(
                 units->{
-                    units.forEach(bUnit ->{
-                        BUnitIDs.add(bUnit.getId());
+                    units.forEach(task ->{
+                        taskIDs.add(task.getId());
                     });
         });
-        return  BUnitIDs;
+        return  taskIDs;
     }
     private List<UserDTO> buildDTOListFromUsers(Optional<List<User>> userList){
         List<UserDTO> DTOList = new ArrayList<>();
