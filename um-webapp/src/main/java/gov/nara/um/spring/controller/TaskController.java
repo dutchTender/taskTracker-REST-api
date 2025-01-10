@@ -134,24 +134,24 @@ public class TaskController extends AbstractController<Task> implements ISorting
         return taskDTO;
     }
     private List<TaskRewardConfig> buildTaskConfigPreferencesFromIDs(Optional<List<Long>> prefIDs, Integer taskID){
-        ArrayList<TaskRewardConfig> bUnitConfigPrefs = new ArrayList<>();
+        ArrayList<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
         prefIDs.ifPresent(
                 ids->{
                     ids.forEach(id ->{
                         TaskRewardConfig newConfigPref = new TaskRewardConfig();
-                        TaskReward newConfig = new TaskReward();
-                        newConfig.setId(id);
+                        TaskReward newReward = new TaskReward();
+                        newReward.setId(id);
                         TaskRewardsConfigID newConfigID = new TaskRewardsConfigID();
                         newConfigID.setTaskConfigID(id);
                         newConfigID.setTaskID(taskID);
-                        newConfigPref.setTaskConfigID(newConfig);
+                        newConfigPref.setTaskRewardID(newReward);
                         newConfigPref.setId(newConfigID);
-                        bUnitConfigPrefs.add(newConfigPref);
+                        taskRewardConfigs.add(newConfigPref);
                     });
                 }
         );
 
-        return bUnitConfigPrefs;
+        return taskRewardConfigs;
     }
     private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskRewardConfig>> taskConfigs){
         ArrayList<Long> taskConfigIDs = new ArrayList<>();

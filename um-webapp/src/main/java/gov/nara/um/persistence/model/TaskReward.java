@@ -18,18 +18,18 @@ import java.util.List;
 @Table(name = "task_rewards")
 public class TaskReward implements ILongNameableEntity, ILongNameableDto {
     @Id
-    @Column(name = "configuration_id")
+    @Column(name = "reward_id")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_conf_seq_gen")
     @SequenceGenerator(name = "bu_conf_seq_gen", sequenceName = "oif_ods.business_unit_configuration_configuration_id_seq", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(hidden = true)
     private Long id;
 
-    @Column(name = "configuration_name", unique = true, nullable = false)
+    @Column(name = "reward_name", unique = true, nullable = false)
     private String name;
 
     @OneToMany(
-            mappedBy = "taskConfigID",
+            mappedBy = "taskRewardID",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

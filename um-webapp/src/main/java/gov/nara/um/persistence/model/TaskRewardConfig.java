@@ -16,17 +16,17 @@ public class TaskRewardConfig {
     private Task taskID;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("taskConfigID")
-    @JoinColumn(name="task_config_id", nullable=false)
-    private TaskReward taskConfigID;
+    @MapsId("taskRewardID")
+    @JoinColumn(name="task_reward_id", nullable=false)
+    private TaskReward taskRewardID;
 
-    @Column(name = "configuration_value")
-    private String configurationValue;
+    @Column(name = "task_reward_value")
+    private String taskRewardValue;
 
     public TaskRewardConfig() {
     }
     public TaskRewardConfig(Task taskID, TaskReward taskConfigID) {
         this.taskID = taskID;
-        this.taskConfigID = taskConfigID;
+        this.taskRewardID = taskConfigID;
     }
 }

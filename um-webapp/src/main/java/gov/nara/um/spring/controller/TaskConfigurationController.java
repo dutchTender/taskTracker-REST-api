@@ -3,7 +3,7 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
-import gov.nara.um.persistence.dto.TaskConfigurationDTO;
+import gov.nara.um.persistence.dto.TaskRewardDTO;
 import gov.nara.um.persistence.model.TaskReward;
 import gov.nara.um.service.ITaskConfigurationService;
 import gov.nara.um.util.UmMappings;
@@ -38,8 +38,8 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskConfigurationDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                                   @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public List<TaskRewardDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                            @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<TaskReward> bUnitConfigList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         return buildDTOListFromConfigurationList(Optional.ofNullable(bUnitConfigList));
 
@@ -57,7 +57,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskConfigurationDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+    public List<TaskRewardDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<TaskReward> taskConfigList = findAllPaginated(page, size);
         return buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
@@ -74,7 +74,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskConfigurationDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public List<TaskRewardDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<TaskReward> taskConfigList =  findAllSorted(sortBy, sortOrder);
         return buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
@@ -91,7 +91,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskConfigurationDTO> findAllDTO(final HttpServletRequest request) {
+    public List<TaskRewardDTO> findAllDTO(final HttpServletRequest request) {
         List<TaskReward> taskConfigList = findAll(request);
         return buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
@@ -108,7 +108,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public TaskConfigurationDTO findOneDTO(@PathVariable("id") final Long id) {
+    public TaskRewardDTO findOneDTO(@PathVariable("id") final Long id) {
         return buildDTOFromTaskConfiguration(findOne(id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody @Valid final TaskConfigurationDTO resource) {
+    public void createDTO(@RequestBody @Valid final TaskRewardDTO resource) {
         create(buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskConfigurationDTO resource) {
+    public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskRewardDTO resource) {
         update(id, buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,20 +154,20 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskRe
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
-    private TaskConfigurationDTO buildDTOFromTaskConfiguration(TaskReward bUnitConfig){
-        TaskConfigurationDTO taskConfigDTO = new TaskConfigurationDTO();
+    private TaskRewardDTO buildDTOFromTaskConfiguration(TaskReward bUnitConfig){
+        TaskRewardDTO taskConfigDTO = new TaskRewardDTO();
         taskConfigDTO.setId(bUnitConfig.getId());
         taskConfigDTO.setName(bUnitConfig.getName());
         return  taskConfigDTO;
     }
-    private TaskReward buildTaskConfigurationFromDTO(TaskConfigurationDTO taskConfigurationDTO){
+    private TaskReward buildTaskConfigurationFromDTO(TaskRewardDTO taskRewardDTO){
         TaskReward bUnitConfig = new TaskReward();
-        bUnitConfig.setId(taskConfigurationDTO.getId());
-        bUnitConfig.setName(taskConfigurationDTO.getName());
+        bUnitConfig.setId(taskRewardDTO.getId());
+        bUnitConfig.setName(taskRewardDTO.getName());
         return  bUnitConfig;
     }
-    private List<TaskConfigurationDTO> buildDTOListFromConfigurationList(Optional<List<TaskReward>> taskConfigurationList ){
-        List<TaskConfigurationDTO> dtoList = new ArrayList<>();
+    private List<TaskRewardDTO> buildDTOListFromConfigurationList(Optional<List<TaskReward>> taskConfigurationList ){
+        List<TaskRewardDTO> dtoList = new ArrayList<>();
         taskConfigurationList.ifPresent(
                 configList->{
                     configList.forEach( taskConfiguration ->{

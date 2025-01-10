@@ -4,7 +4,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class TaskConfigurationDTO implements ILongDto {
+public class TaskRewardDTO implements ILongDto {
     private Long Id;
     @NotNull
     private String name;
