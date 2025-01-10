@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody final TaskDTO resource) {
+    public void createDTO(@RequestBody @Valid final TaskDTO resource) {
         Task newTask = buildTaskFromDTO(resource);
         create(newTask);
     }
@@ -91,7 +92,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDTO(@PathVariable("id") final Integer id, @RequestBody final TaskDTO resource) {
+    public void updateDTO(@PathVariable("id") final Integer id, @RequestBody @Valid final TaskDTO resource) {
            Task task = buildTaskFromDTO(resource);
            update(id, task);
     }
