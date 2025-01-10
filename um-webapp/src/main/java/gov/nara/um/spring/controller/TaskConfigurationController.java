@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody final TaskConfigurationDTO resource) {
+    public void createDTO(@RequestBody @Valid final TaskConfigurationDTO resource) {
         create(buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +138,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDTO(@PathVariable("id") final Long id, @RequestBody final TaskConfigurationDTO resource) {
+    public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskConfigurationDTO resource) {
         update(id, buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
