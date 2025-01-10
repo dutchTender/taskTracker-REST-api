@@ -16,7 +16,7 @@ public class TaskConfigurationPreference {
     private Task taskID;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("businessUnitConfigID")
+    @MapsId("taskConfigID")
     @JoinColumn(name="task_config_id", nullable=false)
     private TaskConfiguration taskConfigID;
 

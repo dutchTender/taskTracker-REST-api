@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = UmMappings.TASKS_CONFIGURATIONS)
@@ -40,7 +41,7 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     public List<TaskConfigurationDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<TaskConfiguration> bUnitConfigList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return buildDTOListFromConfigurationList(bUnitConfigList);
+        return buildDTOListFromConfigurationList(Optional.ofNullable(bUnitConfigList));
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,8 +58,8 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     public List<TaskConfigurationDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        List<TaskConfiguration> bUnitConfigList = findAllPaginated(page, size);
-        return buildDTOListFromConfigurationList(bUnitConfigList);
+        List<TaskConfiguration> taskConfigList = findAllPaginated(page, size);
+        return buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -74,8 +75,8 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
     public List<TaskConfigurationDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        List<TaskConfiguration> bUnitConfigList =  findAllSorted(sortBy, sortOrder);
-        return buildDTOListFromConfigurationList(bUnitConfigList);
+        List<TaskConfiguration> taskConfigList =  findAllSorted(sortBy, sortOrder);
+        return buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -91,8 +92,8 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<TaskConfigurationDTO> findAllDTO(final HttpServletRequest request) {
-        List<TaskConfiguration> bUnitConfigList = findAll(request);
-        return buildDTOListFromConfigurationList(bUnitConfigList);
+        List<TaskConfiguration> taskConfigList = findAll(request);
+        return buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -154,10 +155,10 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
         deleteByIdInternal(id);
     }
     private TaskConfigurationDTO buildDTOFromTaskConfiguration(TaskConfiguration bUnitConfig){
-        TaskConfigurationDTO bUnitConfigDTO = new TaskConfigurationDTO();
-        bUnitConfigDTO.setId(bUnitConfig.getId());
-        bUnitConfigDTO.setName(bUnitConfig.getName());
-        return  bUnitConfigDTO;
+        TaskConfigurationDTO taskConfigDTO = new TaskConfigurationDTO();
+        taskConfigDTO.setId(bUnitConfig.getId());
+        taskConfigDTO.setName(bUnitConfig.getName());
+        return  taskConfigDTO;
     }
     private TaskConfiguration buildTaskConfigurationFromDTO(TaskConfigurationDTO taskConfigurationDTO){
         TaskConfiguration bUnitConfig = new TaskConfiguration();
@@ -165,15 +166,17 @@ public class TaskConfigurationController extends AbstractLongIdController<TaskCo
         bUnitConfig.setName(taskConfigurationDTO.getName());
         return  bUnitConfig;
     }
-    private List<TaskConfigurationDTO> buildDTOListFromConfigurationList(List<TaskConfiguration> taskConfigurationList ){
+    private List<TaskConfigurationDTO> buildDTOListFromConfigurationList(Optional<List<TaskConfiguration>> taskConfigurationList ){
         List<TaskConfigurationDTO> dtoList = new ArrayList<>();
-        if(taskConfigurationList != null)
-            taskConfigurationList.forEach( taskConfiguration ->{
-                dtoList.add(buildDTOFromTaskConfiguration(taskConfiguration));
-            } );
+        taskConfigurationList.ifPresent(
+                configList->{
+                    configList.forEach( taskConfiguration ->{
+                        dtoList.add(buildDTOFromTaskConfiguration(taskConfiguration));
+                    } );
+                }
+        );
         return dtoList;
     }
-
     @Override
     protected final ITaskConfigurationService getService() {
         return service;

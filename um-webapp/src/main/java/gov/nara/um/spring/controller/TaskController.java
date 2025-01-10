@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Controller
@@ -121,7 +121,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
         bUnit.setTaskTime(taskDTO.getTaskTime());
         bUnit.setTaskDescription(taskDTO.getTaskDescription());
         bUnit.setId(taskDTO.getId());
-        bUnit.setTasksConfigurationPreferences(buildTaskConfigPreferencesFromIDs(taskDTO.getTaskConfigurationIDs(), taskDTO.getId()));
+        bUnit.setTasksConfigurationPreferences(buildTaskConfigPreferencesFromIDs(Optional.ofNullable(taskDTO.getTaskConfigurationIDs()), taskDTO.getId()));
         return bUnit;
     }
     private TaskDTO buildDTOFromTask(Task bUnit){
@@ -130,32 +130,40 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setName(bUnit.getName());
         taskDTO.setTaskDescription(bUnit.getTaskDescription());
         taskDTO.setTaskTime(bUnit.getTaskTime());
-        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(bUnit.getTasksConfigurationPreferences()));
+        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTasksConfigurationPreferences())));
         return taskDTO;
     }
-    private List<TaskConfigurationPreference> buildTaskConfigPreferencesFromIDs(List<Long> prefIDs, Integer taskID){
+    private List<TaskConfigurationPreference> buildTaskConfigPreferencesFromIDs(Optional<List<Long>> prefIDs, Integer taskID){
         ArrayList<TaskConfigurationPreference> bUnitConfigPrefs = new ArrayList<>();
-        if(prefIDs != null)
-            prefIDs.forEach(id ->{
-                 TaskConfigurationPreference newConfigPref = new TaskConfigurationPreference();
-                 TaskConfiguration newConfig = new TaskConfiguration();
-                 newConfig.setId(id);
-                 TaskConfigurationID newConfigID = new TaskConfigurationID();
-                 newConfigID.setTaskConfigID(id);
-                 newConfigID.setTaskID(taskID);
-                 newConfigPref.setTaskConfigID(newConfig);
-                 newConfigPref.setId(newConfigID);
-                 bUnitConfigPrefs.add(newConfigPref);
-            });
+        prefIDs.ifPresent(
+                ids->{
+                    ids.forEach(id ->{
+                        TaskConfigurationPreference newConfigPref = new TaskConfigurationPreference();
+                        TaskConfiguration newConfig = new TaskConfiguration();
+                        newConfig.setId(id);
+                        TaskConfigurationID newConfigID = new TaskConfigurationID();
+                        newConfigID.setTaskConfigID(id);
+                        newConfigID.setTaskID(taskID);
+                        newConfigPref.setTaskConfigID(newConfig);
+                        newConfigPref.setId(newConfigID);
+                        bUnitConfigPrefs.add(newConfigPref);
+                    });
+                }
+        );
+
         return bUnitConfigPrefs;
     }
-    private ArrayList<Long> buildIDsFromTaskConfigPreferences(List<TaskConfigurationPreference> taskConfigs){
-        ArrayList<Long> BUnitConfigIDs = new ArrayList<>();
-        if(taskConfigs != null)
-            taskConfigs.forEach(bUnitConfig ->{
-                BUnitConfigIDs.add(bUnitConfig.getId().getTaskConfigID());
-            });
-        return  BUnitConfigIDs;
+    private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskConfigurationPreference>> taskConfigs){
+        ArrayList<Long> taskConfigIDs = new ArrayList<>();
+        taskConfigs.ifPresent(
+                configs->{
+                    configs.forEach(taskConfig ->{
+                        taskConfigIDs.add(taskConfig.getId().getTaskConfigID());
+                    });
+                }
+        );
+
+        return  taskConfigIDs;
     }
     private List<TaskDTO> buildDTOListFromTasks(List<Task> taskList){
         List<TaskDTO> DTOList = new ArrayList<>();

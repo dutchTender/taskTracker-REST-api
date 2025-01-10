@@ -25,14 +25,14 @@ public class User implements ILongNameableEntity, ILongNameableDto {
     private String user_type;
 
     @JoinTable(
-            name = "user_business_unit",
+            name = "user_tasks",                     // table name for the user-tasks relational table
             joinColumns = @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "user_id"
+                    name = "user_id",                // user-tasks relational table column name
+                    referencedColumnName = "user_id" // column name to be mapped   to be mapped to column   (on the user db table)
             ),
             inverseJoinColumns = @JoinColumn(
-                    name = "business_unit_id",
-                    referencedColumnName = "id"
+                    name = "task_id",                // user-tasks relational table column name
+                    referencedColumnName = "id"      // column name to be mapped (on the task db table)
             )
     )
     @OneToMany
