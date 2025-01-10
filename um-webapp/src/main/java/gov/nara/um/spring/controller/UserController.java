@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.*;
 
 
@@ -93,7 +94,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDTO> findAllDTO(final HttpServletRequest request) {
+    public List<UserDTO> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
         return buildDTOListFromUsers(userList);
     }
@@ -125,7 +126,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody final UserDTO resource) {
+    public void createDTO(@RequestBody @Valid final UserDTO resource) {
         create(buildUserFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +138,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final UserDTO resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
         updateInternal(id, buildUserFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,10 +158,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setTasks(buildBUnitFromIDs(dto.getTaskIDs()));
+        user.setTasks(buildTaskFromIDs(dto.getTaskIDs()));
         return  user;
     }
-    private HashSet<Task> buildBUnitFromIDs(HashSet<Integer> bUnitIDs){
+    private HashSet<Task> buildTaskFromIDs(HashSet<Integer> bUnitIDs){
         HashSet<Task> tasks = new HashSet<>();
         if(bUnitIDs != null)
             bUnitIDs.forEach(bUnitID ->{
@@ -176,10 +177,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
-        userDTO.setTaskIDs(buildIDsFromBUnits(user.getTasks()));
+        userDTO.setTaskIDs(buildIDsFromTasks(user.getTasks()));
         return  userDTO;
     }
-    private HashSet<Integer> buildIDsFromBUnits(Set<Task> bUnits){
+    private HashSet<Integer> buildIDsFromTasks(Set<Task> bUnits){
         HashSet<Integer> BUnitIDs = new HashSet<>();
         if(bUnits != null)
             bUnits.forEach(bUnit ->{

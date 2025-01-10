@@ -44,10 +44,10 @@ public class UserTasksIntegrationTest {
 
     // List all unit test
     @Test
-    public final void check_userBusiness_unit_controller_ListAll_200_status_OK() throws Exception {
+    public final void check_userTasks_controller_ListAll_200_status_OK() throws Exception {
 
         try {
-            mvc.perform(get(UmMappings.USER_TASKS)
+            mvc.perform(get("http://localhost:8082/"+UmMappings.USER_TASKS)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(200)).andDo(print());
             // A 200 is needed to verify that th eurl handling works
@@ -59,10 +59,10 @@ public class UserTasksIntegrationTest {
 
     //list 1 unit test
     @Test
-    public final void check_userBusiness_unit_controller_ListOne_404_status_customException() throws Exception {
+    public final void check_userTasks_controller_ListOne_404_status_customException() throws Exception {
 
         try {
-            mvc.perform(get(UmMappings.USER_TASKS+"/1")
+            mvc.perform(get("http://localhost:8082/"+UmMappings.USER_TASKS+"/1")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(404)).andDo(print());
             // A 200 is needed to verify that the url handling works
@@ -75,7 +75,7 @@ public class UserTasksIntegrationTest {
 
     // add 1 unit test
     @Test
-    public final void check_userBusiness_unit_controller_AddOne_400_status_customException() throws Exception {
+    public final void check_userTasks_controller_AddOne_400_status_customException() throws Exception {
 
         UserTasksDTO test_unit = new UserTasksDTO();
         test_unit.setTask_id(1);
@@ -83,7 +83,7 @@ public class UserTasksIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String json_payLoad = objectMapper.writeValueAsString(test_unit);
         try {
-            mvc.perform(post(UmMappings.USER_TASKS)
+            mvc.perform(post("http://localhost:8082/"+UmMappings.USER_TASKS)
                     .contentType(MediaType.APPLICATION_JSON).content(json_payLoad))
                     .andExpect(status().is(400)).andDo(print());
             // A 201 is needed to verify post request that the url handling works
@@ -95,7 +95,7 @@ public class UserTasksIntegrationTest {
 
     // update 1 unit test
     @Test
-    public final void check_Business_unit_controller_updateOne_400_status_customException() throws Exception {
+    public final void check_userTasks_controller_updateOne_400_status_customException() throws Exception {
 
         UserTasksDTO test_unit = new UserTasksDTO();
         test_unit.setTask_id(1);
@@ -104,7 +104,7 @@ public class UserTasksIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String json_payLoad = objectMapper.writeValueAsString(test_unit);
         try {
-            mvc.perform(put(UmMappings.USER_TASKS+"/2")
+            mvc.perform(put("http://localhost:8082/"+UmMappings.USER_TASKS+"/2")
                     .contentType(MediaType.APPLICATION_JSON).content(json_payLoad))
                     .andExpect(status().is(400)).andDo(print());
             // A 201 is needed to verify post request that the url handling works
@@ -117,10 +117,10 @@ public class UserTasksIntegrationTest {
 
     // delete unit test
     @Test
-    public final void check_Business_unit_controller_deleteOne_204_status_OK() throws Exception {
+    public final void check_userTasks_deleteOne_204_status_OK() throws Exception {
 
         try {
-            mvc.perform(delete(UmMappings.USER_TASKS+"/2")
+            mvc.perform(delete("http://localhost:8082/"+UmMappings.USER_TASKS+"/2")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(400)).andDo(print());
             // A 202 is needed to verify delete request that the url handling works

@@ -5,7 +5,7 @@ public final class UmMappings {
 
     public static final String USERS = "users";
 
-    public static final String USER_TASKS = "user/tasks";
+    public static final String USER_TASKS = "users/tasks";
 
     public static final String TASK_USERS = "/task/users";
 
