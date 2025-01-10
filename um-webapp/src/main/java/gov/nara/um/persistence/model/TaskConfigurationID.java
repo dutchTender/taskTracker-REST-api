@@ -13,10 +13,6 @@ public class TaskConfigurationID implements Serializable {
     private Integer taskID;
     @Column( name = "task_config_id")
     private Long taskConfigID;
-    public TaskConfigurationID(Integer taskID, Long taskConfigID) {
-        this.taskID = taskID;
-        this.taskConfigID = taskConfigID;
-    }
     public TaskConfigurationID() {
     }
 

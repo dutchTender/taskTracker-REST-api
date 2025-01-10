@@ -25,8 +25,8 @@ public class TaskConfigurationPreference {
 
     public TaskConfigurationPreference() {
     }
-    public TaskConfigurationPreference(Task taskID, TaskConfiguration businessUnitConfigID) {
+    public TaskConfigurationPreference(Task taskID, TaskConfiguration taskConfigID) {
         this.taskID = taskID;
-        this.taskConfigID = businessUnitConfigID;
+        this.taskConfigID = taskConfigID;
     }
 }

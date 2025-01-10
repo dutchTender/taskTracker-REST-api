@@ -1,7 +1,6 @@
 package gov.nara.um.persistence.dto;
 import gov.nara.common.interfaces.ILongDto;
 import lombok.Data;
-import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

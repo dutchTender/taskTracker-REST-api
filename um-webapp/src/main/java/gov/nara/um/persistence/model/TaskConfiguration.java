@@ -7,6 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 @Entity
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -23,6 +27,25 @@ public class TaskConfiguration implements ILongNameableEntity, ILongNameableDto 
 
     @Column(name = "configuration_name", unique = true, nullable = false)
     private String name;
+
+    @OneToMany(
+            mappedBy = "taskConfigID",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<TaskConfigurationPreference> tasksConfigurationPreferences = new ArrayList<>();
+    public TaskConfigurationPreference addTasksConfigurationPreference(TaskConfigurationPreference taskConfigurationPreference){
+        tasksConfigurationPreferences.add(taskConfigurationPreference);
+        return taskConfigurationPreference;
+    }
+    public void removeTasksConfigurationPreference( TaskConfigurationPreference taskConfigurationPreference){
+        for(Iterator<TaskConfigurationPreference> iterBUCP = tasksConfigurationPreferences.iterator(); iterBUCP.hasNext(); ) {
+            TaskConfigurationPreference current = iterBUCP.next();
+            if(current.equals(taskConfigurationPreference)){
+                iterBUCP.remove();
+            }
+        }
+    }
     public TaskConfiguration(){
     }
 
