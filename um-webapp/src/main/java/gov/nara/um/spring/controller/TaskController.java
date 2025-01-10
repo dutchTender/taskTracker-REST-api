@@ -121,7 +121,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
         bUnit.setTaskTime(taskDTO.getTaskTime());
         bUnit.setTaskDescription(taskDTO.getTaskDescription());
         bUnit.setId(taskDTO.getId());
-        bUnit.setTaskRewards(buildTaskConfigPreferencesFromIDs(Optional.ofNullable(taskDTO.getTaskConfigurationIDs()), taskDTO.getId()));
+        bUnit.setTaskRewardConfigs(buildTaskConfigPreferencesFromIDs(Optional.ofNullable(taskDTO.getTaskConfigurationIDs()), taskDTO.getId()));
         return bUnit;
     }
     private TaskDTO buildDTOFromTask(Task bUnit){
@@ -130,7 +130,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setName(bUnit.getName());
         taskDTO.setTaskDescription(bUnit.getTaskDescription());
         taskDTO.setTaskTime(bUnit.getTaskTime());
-        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewards())));
+        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewardConfigs())));
         return taskDTO;
     }
     private List<TaskRewardConfig> buildTaskConfigPreferencesFromIDs(Optional<List<Long>> prefIDs, Integer taskID){

@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
-@Table(name = "task_configuration")
+@Table(name = "task_rewards")
 public class TaskReward implements ILongNameableEntity, ILongNameableDto {
     @Id
     @Column(name = "configuration_id")
@@ -33,13 +33,13 @@ public class TaskReward implements ILongNameableEntity, ILongNameableDto {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskRewardConfig> taskRewards = new ArrayList<>();
-    public TaskRewardConfig addTaskRewardConfiguration(TaskRewardConfig taskRewardConfig){
-        taskRewards.add(taskRewardConfig);
+    private List<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
+    public TaskRewardConfig addTaskRewardConfig(TaskRewardConfig taskRewardConfig){
+        taskRewardConfigs.add(taskRewardConfig);
         return taskRewardConfig;
     }
-    public void removeTaskRewardConfiguration( TaskRewardConfig taskRewardConfig){
-        for(Iterator<TaskRewardConfig> iterBUCP = taskRewards.iterator(); iterBUCP.hasNext(); ) {
+    public void removeTaskRewardConfig( TaskRewardConfig taskRewardConfig){
+        for(Iterator<TaskRewardConfig> iterBUCP = taskRewardConfigs.iterator(); iterBUCP.hasNext(); ) {
             TaskRewardConfig current = iterBUCP.next();
             if(current.equals(taskRewardConfig)){
                 iterBUCP.remove();

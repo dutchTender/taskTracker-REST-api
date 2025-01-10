@@ -38,15 +38,15 @@ public class Task implements INameableEntity, INameableDto {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskRewardConfig> taskRewards = new ArrayList<>();
+    private List<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
     public Task(){
     }
     public TaskRewardConfig addTaskRewardConfiguration(TaskRewardConfig taskRewardConfig){
-        taskRewards.add(taskRewardConfig);
+        taskRewardConfigs.add(taskRewardConfig);
         return taskRewardConfig;
     }
     public void removeTaskRewardConfiguration( TaskRewardConfig taskRewardConfig){
-        for(Iterator<TaskRewardConfig> iterBUCP = taskRewards.iterator(); iterBUCP.hasNext(); ) {
+        for(Iterator<TaskRewardConfig> iterBUCP = taskRewardConfigs.iterator(); iterBUCP.hasNext(); ) {
             TaskRewardConfig current = iterBUCP.next();
             if(current.equals(taskRewardConfig)){
                 iterBUCP.remove();
