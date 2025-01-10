@@ -43,7 +43,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public List<UserDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return buildDTOListFromUsers(userList);
+        return buildDTOListFromUsers(Optional.of(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -62,7 +62,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
-        return buildDTOListFromUsers(userList);
+        return buildDTOListFromUsers(Optional.of(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -79,7 +79,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllSorted(sortBy, sortOrder);
-        return buildDTOListFromUsers(userList);
+        return buildDTOListFromUsers(Optional.of(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -96,7 +96,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-        return buildDTOListFromUsers(userList);
+        return buildDTOListFromUsers(Optional.of(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -158,18 +158,18 @@ public class UserController extends AbstractLongIdController<User> implements IL
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setTasks(buildTaskFromIDs(dto.getTaskIDs()));
+        user.setTasks(buildTaskFromIDs(Optional.of(dto.getTaskIDs())));
         return  user;
     }
-    private HashSet<Task> buildTaskFromIDs(HashSet<Integer> bUnitIDs){
+    private HashSet<Task> buildTaskFromIDs(Optional<HashSet<Integer>> bUnitIDs){
         HashSet<Task> tasks = new HashSet<>();
-        if(bUnitIDs != null)
-            bUnitIDs.forEach(bUnitID ->{
-                System.out.println("processing business unit ID for user DTO : " + bUnitID);
-                Task bUnit = bUnitService.findOne(bUnitID);
-                tasks.add(bUnit);
+            bUnitIDs.ifPresent(
+                    ids->{
+                       ids.forEach(bUnitID ->{
+                            Task bUnit = bUnitService.findOne(bUnitID);
+                            tasks.add(bUnit);
+                        });
             });
-        System.out.println("BUnit set size after conversion " + tasks.size()); // assert that that size matches input bUnits
         return tasks;
     }
     private UserDTO buildDTOFromUser(User user){
@@ -177,25 +177,28 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
-        userDTO.setTaskIDs(buildIDsFromTasks(user.getTasks()));
+        userDTO.setTaskIDs(buildIDsFromTasks(Optional.of(user.getTasks())));
         return  userDTO;
     }
-    private HashSet<Integer> buildIDsFromTasks(Set<Task> bUnits){
+    private HashSet<Integer> buildIDsFromTasks(Optional<Set<Task>> bUnits){
         HashSet<Integer> BUnitIDs = new HashSet<>();
-        if(bUnits != null)
-            bUnits.forEach(bUnit ->{
-                System.out.println("processing business unit ID for user DTO : " + bUnit.getId());
-                BUnitIDs.add(bUnit.getId());
-            });
-        System.out.println("TaskDTO set size after conversion " + BUnitIDs.size()); // assert that that size matches input bUnits
+        bUnits.ifPresent(
+                units->{
+                    units.forEach(bUnit ->{
+                        BUnitIDs.add(bUnit.getId());
+                    });
+        });
         return  BUnitIDs;
     }
-    private List<UserDTO> buildDTOListFromUsers(List<User> userList){
+    private List<UserDTO> buildDTOListFromUsers(Optional<List<User>> userList){
         List<UserDTO> DTOList = new ArrayList<>();
-        if(userList != null)
-            userList.forEach(user ->{
-                DTOList.add(buildDTOFromUser(user));
-            });
+        userList.ifPresent(
+                users-> {
+                    users.forEach(user ->{
+                        DTOList.add(buildDTOFromUser(user));
+                    });
+        });
+
         return DTOList;
     }
     @Override

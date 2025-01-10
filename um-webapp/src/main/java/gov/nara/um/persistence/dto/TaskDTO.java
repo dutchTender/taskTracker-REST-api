@@ -1,7 +1,6 @@
 package gov.nara.um.persistence.dto;
 import gov.nara.common.interfaces.IDto;
 import lombok.Data;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
