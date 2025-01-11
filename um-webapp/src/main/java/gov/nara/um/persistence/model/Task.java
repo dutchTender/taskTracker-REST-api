@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import gov.nara.common.interfaces.INameableDto;
 import gov.nara.common.persistence.model.INameableEntity;
+import gov.nara.um.persistence.dto.TaskDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.persistence.*;
@@ -40,6 +41,12 @@ public class Task implements INameableEntity, INameableDto {
     )
     private List<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
     public Task(){
+    }
+    public Task(TaskDTO taskDTO){
+             name = taskDTO.getName();
+             taskTime = taskDTO.getTaskTime();
+             taskDescription = taskDTO.getTaskDescription();
+             id = taskDTO.getId();
     }
     public TaskRewardConfig addTaskRewardConfiguration(TaskRewardConfig taskRewardConfig){
         taskRewardConfigs.add(taskRewardConfig);

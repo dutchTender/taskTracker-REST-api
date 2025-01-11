@@ -20,13 +20,13 @@ public class TaskRewardConfig {
     @JoinColumn(name="task_reward_id", nullable=false)
     private TaskReward taskRewardID;
 
-    @Column(name = "task_reward_value")
-    private String taskRewardValue;
+    @Column(name = "task_reward_points")
+    private String taskRewardPoints;
 
     public TaskRewardConfig() {
     }
-    public TaskRewardConfig(Task taskID, TaskReward taskConfigID) {
-        this.taskID = taskID;
-        this.taskRewardID = taskConfigID;
+    public TaskRewardConfig(Task task, TaskReward taskReward) {
+        this.taskID = task;
+        this.taskRewardID = taskReward;
     }
 }

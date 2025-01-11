@@ -10,7 +10,7 @@ public final class UmMappings {
     public static final String TASK_USERS = "/task/users";
 
 
-    public static final String TASKS_CONFIGURATIONS = "/task-configurations";
+    public static final String TASKS_REWARDS = "/task-rewards";
 
     public static final String BUSINESS_UNITS_CONFIGURATIONS_PREFERENCES = "/task-config-preferences";
     // discoverability

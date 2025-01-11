@@ -26,7 +26,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     private IUserService userService;
 
     @Autowired
-    private ITaskService bUnitService;
+    private ITaskService taskService;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,17 +158,15 @@ public class UserController extends AbstractLongIdController<User> implements IL
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setTasks(buildTaskFromIDs(Optional.ofNullable(dto.getTaskIDs())));
+        user.setTasks(buildTaskFromIDs(dto.getTaskIDs()));
         return  user;
     }
-    private HashSet<Task> buildTaskFromIDs(Optional<HashSet<Integer>> bUnitIDs){
+    private HashSet<Task> buildTaskFromIDs(HashSet<Integer> taskIDs){
         HashSet<Task> tasks = new HashSet<>();
-            bUnitIDs.ifPresent(
-                    ids->{
-                       ids.forEach(bUnitID ->{
-                            Task bUnit = bUnitService.findOne(bUnitID);
-                            tasks.add(bUnit);
-                        });
+        if(taskIDs != null)
+           taskIDs.forEach(taskID ->{
+                Task bUnit = taskService.findOne(taskID);
+                tasks.add(bUnit);
             });
         return tasks;
     }
@@ -177,16 +175,14 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
-        userDTO.setTaskIDs(buildIDsFromTasks(Optional.ofNullable(user.getTasks())));
+        userDTO.setTaskIDs(buildIDsFromTasks(user.getTasks()));
         return  userDTO;
     }
-    private HashSet<Integer> buildIDsFromTasks(Optional<Set<Task>> tasks){
+    private HashSet<Integer> buildIDsFromTasks(Set<Task> tasks){
         HashSet<Integer> taskIDs = new HashSet<>();
-        tasks.ifPresent(
-                units->{
-                    units.forEach(task ->{
-                        taskIDs.add(task.getId());
-                    });
+        if(tasks != null)
+        tasks.forEach( task -> {
+            taskIDs.add(task.getId());
         });
         return  taskIDs;
     }

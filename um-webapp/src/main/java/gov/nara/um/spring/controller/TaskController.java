@@ -93,6 +93,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateDTO(@PathVariable("id") final Integer id, @RequestBody @Valid final TaskDTO resource) {
+           resource.setId(id);
            Task task = buildTaskFromDTO(resource);
            update(id, task);
     }
@@ -116,13 +117,25 @@ public class TaskController extends AbstractController<Task> implements ISorting
     }
 
     private Task buildTaskFromDTO(TaskDTO taskDTO){
-        Task bUnit = new Task();
-        bUnit.setName(taskDTO.getName());
-        bUnit.setTaskTime(taskDTO.getTaskTime());
-        bUnit.setTaskDescription(taskDTO.getTaskDescription());
-        bUnit.setId(taskDTO.getId());
-        bUnit.setTaskRewardConfigs(buildTaskConfigPreferencesFromIDs(Optional.ofNullable(taskDTO.getTaskConfigurationIDs()), taskDTO.getId()));
-        return bUnit;
+        Task task;
+        if(taskDTO.getId() != null){
+            task = service.findOne(taskDTO.getId());
+            task.setName(taskDTO.getName());
+            task.setTaskTime(taskDTO.getTaskTime());
+            task.setTaskDescription(taskDTO.getTaskDescription());
+        }
+        else {
+            task = new Task(taskDTO);
+        }
+        if (task.getId() != null) {
+            task.setTaskRewardConfigs(buildTaskRewardConfigsFromIDs(taskDTO.getTaskConfigurationIDs(), taskDTO.getId()));
+        }
+
+        System.out.println(task.getTaskTime());
+        System.out.println(task.getTaskRewardConfigs().size());
+        System.out.println(task.getTaskDescription());
+
+        return task;
     }
     private TaskDTO buildDTOFromTask(Task bUnit){
         TaskDTO taskDTO = new TaskDTO();
@@ -133,24 +146,21 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewardConfigs())));
         return taskDTO;
     }
-    private List<TaskRewardConfig> buildTaskConfigPreferencesFromIDs(Optional<List<Long>> prefIDs, Integer taskID){
+    private List<TaskRewardConfig> buildTaskRewardConfigsFromIDs(List<Long> rewardIDs, Integer taskID){
         ArrayList<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
-        prefIDs.ifPresent(
-                ids->{
-                    ids.forEach(id ->{
+               if(rewardIDs != null)
+                   rewardIDs.forEach( rewardId ->{
                         TaskRewardConfig newConfigPref = new TaskRewardConfig();
                         TaskReward newReward = new TaskReward();
-                        newReward.setId(id);
-                        TaskRewardsConfigID newConfigID = new TaskRewardsConfigID();
-                        newConfigID.setTaskConfigID(id);
-                        newConfigID.setTaskID(taskID);
+                        newReward.setId(rewardId);
+                        TaskRewardsConfigID taskRewardsConfigID = new TaskRewardsConfigID();
+                        taskRewardsConfigID.setTaskRewardID(rewardId);
+                        taskRewardsConfigID.setTaskID(taskID);
                         newConfigPref.setTaskRewardID(newReward);
-                        newConfigPref.setId(newConfigID);
+                        newConfigPref.setTaskID(service.findOne(taskID));
+                        newConfigPref.setId(taskRewardsConfigID);
                         taskRewardConfigs.add(newConfigPref);
                     });
-                }
-        );
-
         return taskRewardConfigs;
     }
     private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskRewardConfig>> taskConfigs){
@@ -158,11 +168,10 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskConfigs.ifPresent(
                 configs->{
                     configs.forEach(taskConfig ->{
-                        taskConfigIDs.add(taskConfig.getId().getTaskConfigID());
+                        taskConfigIDs.add(taskConfig.getId().getTaskRewardID());
                     });
                 }
         );
-
         return  taskConfigIDs;
     }
     private List<TaskDTO> buildDTOListFromTasks(List<Task> taskList){

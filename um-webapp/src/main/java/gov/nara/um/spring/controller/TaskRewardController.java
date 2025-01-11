@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = UmMappings.TASKS_CONFIGURATIONS)
+@RequestMapping(value = UmMappings.TASKS_REWARDS)
 public class TaskRewardController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
 
     @Autowired
@@ -32,7 +32,6 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     // Integration testing : NA
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-
     public List<TaskReward> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
     }
