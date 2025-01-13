@@ -20,7 +20,7 @@ public abstract class AbstractController<T extends INameableEntity> extends Abst
         // the resource pay load will never have the id for a put call
         // the id is passed though via parameters and hooked into the id parameter for this function
         // check if payload has an id.
-        RestPreconditions.checkRequestState(resource.getId() == null);
+        //RestPreconditions.checkRequestState(resource.getId() == null);
         ////////////////////////////////////////////////////////////////////////////////////////////
         RestPreconditions.checkNotNull(getService().findOne(id));
         getService().update(resource);

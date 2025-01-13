@@ -5,6 +5,7 @@ import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.ISortingController;
 import gov.nara.um.persistence.dto.TaskDTO;
 import gov.nara.um.persistence.model.*;
+import gov.nara.um.service.ITaskRewardService;
 import gov.nara.um.service.ITaskService;
 import gov.nara.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ import java.util.Optional;
 public class TaskController extends AbstractController<Task> implements ISortingController<Task> {
 
     @Autowired
-    private ITaskService service;
+    private ITaskService taskService;
+    @Autowired
+    private ITaskRewardService rewardService;
     // API
     // find - all/paginated
     @Override
@@ -119,7 +122,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     private Task buildTaskFromDTO(TaskDTO taskDTO){
         Task task;
         if(taskDTO.getId() != null){
-            task = service.findOne(taskDTO.getId());
+            task = taskService.findOne(taskDTO.getId());
             task.setName(taskDTO.getName());
             task.setTaskTime(taskDTO.getTaskTime());
             task.setTaskDescription(taskDTO.getTaskDescription());
@@ -128,13 +131,16 @@ public class TaskController extends AbstractController<Task> implements ISorting
             task = new Task(taskDTO);
         }
         if (task.getId() != null) {
-            task.setTaskRewardConfigs(buildTaskRewardConfigsFromIDs(taskDTO.getTaskConfigurationIDs(), taskDTO.getId()));
-        }
+            if(taskDTO.getTaskConfigurationIDs().size() > 0){
+                taskDTO.getTaskConfigurationIDs().forEach(taskRewardId ->{
+                    task.addTaskRewardConfiguration(buildTaskRewardConfigsFromID(taskRewardId, task));
+                });
+            }
 
+        }
         System.out.println(task.getTaskTime());
         System.out.println(task.getTaskRewardConfigs().size());
         System.out.println(task.getTaskDescription());
-
         return task;
     }
     private TaskDTO buildDTOFromTask(Task bUnit){
@@ -146,22 +152,26 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewardConfigs())));
         return taskDTO;
     }
-    private List<TaskRewardConfig> buildTaskRewardConfigsFromIDs(List<Long> rewardIDs, Integer taskID){
-        ArrayList<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
-               if(rewardIDs != null)
-                   rewardIDs.forEach( rewardId ->{
-                        TaskRewardConfig newConfigPref = new TaskRewardConfig();
-                        TaskReward newReward = new TaskReward();
-                        newReward.setId(rewardId);
+    private TaskRewardConfig buildTaskRewardConfigsFromID(Long rewardId, Task task){
+
+                        //  retrieve reward object
+                        TaskReward taskReward = rewardService.findOne(rewardId);
+                        // create task reward config object
+                        TaskRewardConfig taskRewardConfig = new TaskRewardConfig();
+                        // create embeded ID
                         TaskRewardsConfigID taskRewardsConfigID = new TaskRewardsConfigID();
+                        taskRewardsConfigID.setTaskID(task.getId());
                         taskRewardsConfigID.setTaskRewardID(rewardId);
-                        taskRewardsConfigID.setTaskID(taskID);
-                        newConfigPref.setTaskRewardID(newReward);
-                        newConfigPref.setTaskID(service.findOne(taskID));
-                        newConfigPref.setId(taskRewardsConfigID);
-                        taskRewardConfigs.add(newConfigPref);
-                    });
-        return taskRewardConfigs;
+                        // initialize taskRewardConfig object
+                        taskRewardConfig.setId(taskRewardsConfigID);
+                        taskRewardConfig.setTaskRewardID(taskReward);
+                        taskRewardConfig.setTaskID(task);
+
+                        // add new task reward config to owner objects. task and task reward
+                        task.addTaskRewardConfiguration(taskRewardConfig);
+                        taskReward.addTaskRewardConfig(taskRewardConfig);
+
+                        return taskRewardConfig;
     }
     private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskRewardConfig>> taskConfigs){
         ArrayList<Long> taskConfigIDs = new ArrayList<>();
@@ -184,7 +194,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     }
     @Override
     protected final ITaskService getService() {
-        return service;
+        return taskService;
     }
 
 }

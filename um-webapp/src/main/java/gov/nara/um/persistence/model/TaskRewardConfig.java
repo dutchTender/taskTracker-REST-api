@@ -25,8 +25,4 @@ public class TaskRewardConfig {
 
     public TaskRewardConfig() {
     }
-    public TaskRewardConfig(Task task, TaskReward taskReward) {
-        this.taskID = task;
-        this.taskRewardID = taskReward;
-    }
 }
