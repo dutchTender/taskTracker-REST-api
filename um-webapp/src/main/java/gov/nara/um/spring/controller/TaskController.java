@@ -38,7 +38,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     public List<TaskDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                       @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
            List<Task> taskList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-           return buildDTOListFromTasks(taskList);
+           return buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
     @Override
 
@@ -49,7 +49,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @ResponseBody
     public List<TaskDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<Task> taskList = findAllPaginated(page, size);
-        return buildDTOListFromTasks(taskList);
+        return buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @ResponseBody
     public List<TaskDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> taskList = findAllSorted(sortBy, sortOrder);
-        return buildDTOListFromTasks(taskList);
+        return buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
     @Override
     public List<Task> findAll(final HttpServletRequest request) {
@@ -70,7 +70,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     @ResponseBody
     public List<TaskDTO> findAllDTO(final HttpServletRequest request) {
         List<Task> taskList = findAllInternal(request);
-        return buildDTOListFromTasks(taskList);
+        return buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
     public Task findOne(final Integer id) {
         return findOneInternal(id);
@@ -131,8 +131,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
             task = new Task(taskDTO);
         }
         if (task.getId() != null) {
-            if(taskDTO.getTaskConfigurationIDs().size() > 0){
-                taskDTO.getTaskConfigurationIDs().forEach(taskRewardId ->{
+            if(taskDTO.getTaskRewards().size() > 0){
+                taskDTO.getTaskRewards().forEach(taskRewardId ->{
                     TaskReward taskReward = rewardService.findOne(taskRewardId);
                     task.addTaskRewardConfiguration(buildTaskRewardConfigsFromID(taskReward, task));
                 });
@@ -147,42 +147,45 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setName(bUnit.getName());
         taskDTO.setTaskDescription(bUnit.getTaskDescription());
         taskDTO.setTaskTime(bUnit.getTaskTime());
-        taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewardConfigs())));
+        taskDTO.setTaskRewards(buildIDsFromTaskRewardPreferences(Optional.ofNullable(bUnit.getTaskRewardPreferences())));
         return taskDTO;
     }
-    private TaskRewardConfig buildTaskRewardConfigsFromID(TaskReward taskReward, Task task){
+    private TaskRewardPreference buildTaskRewardConfigsFromID(TaskReward taskReward, Task task){
 
-                        TaskRewardConfig taskRewardConfig = new TaskRewardConfig();
+                        TaskRewardPreference taskRewardPreference = new TaskRewardPreference();
                         // create embeded ID
-                        TaskRewardsConfigID taskRewardsConfigID = new TaskRewardsConfigID();
-                        taskRewardsConfigID.setTaskID(task.getId());
-                        taskRewardsConfigID.setTaskRewardID(taskReward.getId());
+                        TaskRewardsPreferenceID taskRewardsPreferenceID = new TaskRewardsPreferenceID();
+                        taskRewardsPreferenceID.setTaskID(task.getId());
+                        taskRewardsPreferenceID.setTaskRewardID(taskReward.getId());
                         // initialize taskRewardConfig object
-                        taskRewardConfig.setId(taskRewardsConfigID);
-                        taskRewardConfig.setTaskRewardID(taskReward);
-                        taskRewardConfig.setTaskID(task);
-                        taskReward.addTaskRewardConfig(taskRewardConfig);
+                        taskRewardPreference.setId(taskRewardsPreferenceID);
+                        taskRewardPreference.setTaskRewardID(taskReward);
+                        taskRewardPreference.setTaskID(task);
+                        taskReward.addTaskRewardConfig(taskRewardPreference);
                         rewardService.update(taskReward);
 
-                        return taskRewardConfig;
+                        return taskRewardPreference;
     }
-    private ArrayList<Long> buildIDsFromTaskConfigPreferences(Optional<List<TaskRewardConfig>> taskConfigs){
-        ArrayList<Long> taskConfigIDs = new ArrayList<>();
+    private ArrayList<Long> buildIDsFromTaskRewardPreferences(Optional<List<TaskRewardPreference>> taskConfigs){
+        ArrayList<Long> taskRewardIDs = new ArrayList<>();
         taskConfigs.ifPresent(
                 configs->{
                     configs.forEach(taskConfig ->{
-                        taskConfigIDs.add(taskConfig.getId().getTaskRewardID());
+                        taskRewardIDs.add(taskConfig.getId().getTaskRewardID());
                     });
                 }
         );
-        return  taskConfigIDs;
+        return  taskRewardIDs;
     }
-    private List<TaskDTO> buildDTOListFromTasks(List<Task> taskList){
+    private List<TaskDTO> buildDTOListFromTasks(Optional<List<Task>> taskList){
         List<TaskDTO> DTOList = new ArrayList<>();
-        if(taskList != null)
-            taskList.forEach(task ->{
-                DTOList.add(buildDTOFromTask(task));
-            });
+        taskList.ifPresent(
+                tasks -> {
+                    tasks.forEach(task ->{
+                        DTOList.add(buildDTOFromTask(task));
+                    });
+                }
+        );
         return DTOList;
     }
     @Override

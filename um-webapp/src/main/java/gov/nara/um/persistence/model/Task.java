@@ -39,7 +39,7 @@ public class Task implements INameableEntity, INameableDto {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
+    private List<TaskRewardPreference> taskRewardPreferences = new ArrayList<>();
     public Task(){
     }
     public Task(TaskDTO taskDTO){
@@ -48,14 +48,14 @@ public class Task implements INameableEntity, INameableDto {
              taskDescription = taskDTO.getTaskDescription();
              id = taskDTO.getId();
     }
-    public TaskRewardConfig addTaskRewardConfiguration(TaskRewardConfig taskRewardConfig){
-        taskRewardConfigs.add(taskRewardConfig);
-        return taskRewardConfig;
+    public TaskRewardPreference addTaskRewardConfiguration(TaskRewardPreference taskRewardPreference){
+        taskRewardPreferences.add(taskRewardPreference);
+        return taskRewardPreference;
     }
-    public void removeTaskRewardConfiguration( TaskRewardConfig taskRewardConfig){
-        for(Iterator<TaskRewardConfig> iterBUCP = taskRewardConfigs.iterator(); iterBUCP.hasNext(); ) {
-            TaskRewardConfig current = iterBUCP.next();
-            if(current.equals(taskRewardConfig)){
+    public void removeTaskRewardConfiguration( TaskRewardPreference taskRewardPreference){
+        for(Iterator<TaskRewardPreference> iterBUCP = taskRewardPreferences.iterator(); iterBUCP.hasNext(); ) {
+            TaskRewardPreference current = iterBUCP.next();
+            if(current.equals(taskRewardPreference)){
                 iterBUCP.remove();
             }
         }

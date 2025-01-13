@@ -7,13 +7,13 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class TaskRewardsConfigID implements Serializable {
+public class TaskRewardsPreferenceID implements Serializable {
 
     @Column( name = "task_id")
     private Integer taskID;
     @Column( name = "task_reward_id")
     private Long taskRewardID;
-    public TaskRewardsConfigID() {
+    public TaskRewardsPreferenceID() {
     }
 
 

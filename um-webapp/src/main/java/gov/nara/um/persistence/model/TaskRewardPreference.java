@@ -6,9 +6,9 @@ import javax.persistence.*;
 @Entity
 @Data
 //@Table(name = "business_unit_config_values", schema = "oif_ods")
-public class TaskRewardConfig {
+public class TaskRewardPreference {
     @EmbeddedId
-    private TaskRewardsConfigID id = new TaskRewardsConfigID();
+    private TaskRewardsPreferenceID id = new TaskRewardsPreferenceID();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("taskID")
@@ -24,6 +24,6 @@ public class TaskRewardConfig {
     @Column(name = "task_reward_points")
     private String taskRewardPoints;
 
-    public TaskRewardConfig() {
+    public TaskRewardPreference() {
     }
 }

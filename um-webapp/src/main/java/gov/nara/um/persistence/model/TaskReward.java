@@ -33,15 +33,15 @@ public class TaskReward implements ILongNameableEntity, ILongNameableDto {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskRewardConfig> taskRewardConfigs = new ArrayList<>();
-    public TaskRewardConfig addTaskRewardConfig(TaskRewardConfig taskRewardConfig){
-        taskRewardConfigs.add(taskRewardConfig);
-        return taskRewardConfig;
+    private List<TaskRewardPreference> taskRewardPreferences = new ArrayList<>();
+    public TaskRewardPreference addTaskRewardConfig(TaskRewardPreference taskRewardPreference){
+        taskRewardPreferences.add(taskRewardPreference);
+        return taskRewardPreference;
     }
-    public void removeTaskRewardConfig( TaskRewardConfig taskRewardConfig){
-        for(Iterator<TaskRewardConfig> iterBUCP = taskRewardConfigs.iterator(); iterBUCP.hasNext(); ) {
-            TaskRewardConfig current = iterBUCP.next();
-            if(current.equals(taskRewardConfig)){
+    public void removeTaskRewardConfig( TaskRewardPreference taskRewardPreference){
+        for(Iterator<TaskRewardPreference> iterBUCP = taskRewardPreferences.iterator(); iterBUCP.hasNext(); ) {
+            TaskRewardPreference current = iterBUCP.next();
+            if(current.equals(taskRewardPreference)){
                 iterBUCP.remove();
             }
         }
