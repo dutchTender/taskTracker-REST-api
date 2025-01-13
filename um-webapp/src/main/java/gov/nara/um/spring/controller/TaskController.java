@@ -161,10 +161,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
                         taskRewardConfig.setId(taskRewardsConfigID);
                         taskRewardConfig.setTaskRewardID(taskReward);
                         taskRewardConfig.setTaskID(task);
-
-                        // add new task reward config to owner objects. task and task reward
-                        task.addTaskRewardConfiguration(taskRewardConfig);
                         taskReward.addTaskRewardConfig(taskRewardConfig);
+                        rewardService.update(taskReward);
 
                         return taskRewardConfig;
     }
