@@ -155,7 +155,10 @@ public class TaskController extends AbstractController<Task> implements ISorting
     private TaskRewardConfig buildTaskRewardConfigsFromID(Long rewardId, Task task){
 
                         //  retrieve reward object
-                        TaskReward taskReward = rewardService.findOne(rewardId);
+                        //TaskReward taskReward = rewardService.findOne(rewardId);
+                        TaskReward taskReward = new TaskReward();
+                        taskReward.setId(rewardId);
+                        taskReward.setName("reward test");
                         // create task reward config object
                         TaskRewardConfig taskRewardConfig = new TaskRewardConfig();
                         // create embeded ID
