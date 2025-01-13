@@ -1,5 +1,6 @@
 package gov.nara.um.persistence.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import gov.nara.common.interfaces.ILongNameableDto;
 import gov.nara.common.persistence.model.ILongNameableEntity;
@@ -27,6 +28,8 @@ public class TaskReward implements ILongNameableEntity, ILongNameableDto {
 
     @Column(name = "reward_name", unique = true, nullable = false)
     private String name;
+
+
 
     @OneToMany(
             mappedBy = "taskRewardID",

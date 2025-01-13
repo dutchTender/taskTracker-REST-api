@@ -1,4 +1,5 @@
 package gov.nara.um.persistence.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class TaskRewardConfig {
     @MapsId("taskID")
     @JoinColumn(name="task_id", nullable=false)
     private Task taskID;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("taskRewardID")
