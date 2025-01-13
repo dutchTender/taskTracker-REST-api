@@ -23,11 +23,11 @@ public class TaskRewardService extends AbstractLongIdService<TaskReward> impleme
     }
     @Override
     public TaskReward findByName(String name) {
-        return this.findByName(name);
+        return  dao.findByName(name);
     }
     @Override
     public TaskReward findOne(Long id) {
-        return this.findOne(id);
+        return dao.findById(id).get();
     }
     @Override
     public void delete(Long id) {

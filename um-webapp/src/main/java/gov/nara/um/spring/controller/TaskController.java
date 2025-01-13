@@ -133,14 +133,12 @@ public class TaskController extends AbstractController<Task> implements ISorting
         if (task.getId() != null) {
             if(taskDTO.getTaskConfigurationIDs().size() > 0){
                 taskDTO.getTaskConfigurationIDs().forEach(taskRewardId ->{
-                    task.addTaskRewardConfiguration(buildTaskRewardConfigsFromID(taskRewardId, task));
+                    TaskReward taskReward = rewardService.findOne(taskRewardId);
+                    task.addTaskRewardConfiguration(buildTaskRewardConfigsFromID(taskReward, task));
                 });
             }
 
         }
-        System.out.println(task.getTaskTime());
-        System.out.println(task.getTaskRewardConfigs().size());
-        System.out.println(task.getTaskDescription());
         return task;
     }
     private TaskDTO buildDTOFromTask(Task bUnit){
@@ -152,19 +150,13 @@ public class TaskController extends AbstractController<Task> implements ISorting
         taskDTO.setTaskConfigurationIDs(buildIDsFromTaskConfigPreferences(Optional.ofNullable(bUnit.getTaskRewardConfigs())));
         return taskDTO;
     }
-    private TaskRewardConfig buildTaskRewardConfigsFromID(Long rewardId, Task task){
+    private TaskRewardConfig buildTaskRewardConfigsFromID(TaskReward taskReward, Task task){
 
-                        //  retrieve reward object
-                        //TaskReward taskReward = rewardService.findOne(rewardId);
-                        TaskReward taskReward = new TaskReward();
-                        taskReward.setId(rewardId);
-                        taskReward.setName("reward test");
-                        // create task reward config object
                         TaskRewardConfig taskRewardConfig = new TaskRewardConfig();
                         // create embeded ID
                         TaskRewardsConfigID taskRewardsConfigID = new TaskRewardsConfigID();
                         taskRewardsConfigID.setTaskID(task.getId());
-                        taskRewardsConfigID.setTaskRewardID(rewardId);
+                        taskRewardsConfigID.setTaskRewardID(taskReward.getId());
                         // initialize taskRewardConfig object
                         taskRewardConfig.setId(taskRewardsConfigID);
                         taskRewardConfig.setTaskRewardID(taskReward);
