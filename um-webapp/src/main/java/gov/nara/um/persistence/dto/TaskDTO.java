@@ -13,5 +13,5 @@ public class TaskDTO implements IDto {
     private String taskTime;
     @NotNull
     private String taskDescription;
-    private List<Long> taskRewards;
+    private List<TaskRewardDTO> taskRewards;
 }

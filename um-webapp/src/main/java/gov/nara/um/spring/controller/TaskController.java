@@ -4,6 +4,7 @@ import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractController;
 import gov.nara.common.web.controller.ISortingController;
 import gov.nara.um.persistence.dto.TaskDTO;
+import gov.nara.um.persistence.dto.TaskRewardDTO;
 import gov.nara.um.persistence.model.*;
 import gov.nara.um.service.ITaskRewardService;
 import gov.nara.um.service.ITaskService;
@@ -132,8 +133,8 @@ public class TaskController extends AbstractController<Task> implements ISorting
         }
         if (task.getId() != null) {
             if(taskDTO.getTaskRewards().size() > 0){
-                taskDTO.getTaskRewards().forEach(taskRewardId ->{
-                    TaskReward taskReward = rewardService.findOne(taskRewardId);
+                taskDTO.getTaskRewards().forEach(reward ->{
+                    TaskReward taskReward = rewardService.findOne(reward.getId());
                     task.addTaskRewardConfiguration(buildTaskRewardConfigsFromID(taskReward, task));
                 });
             }
@@ -166,16 +167,21 @@ public class TaskController extends AbstractController<Task> implements ISorting
 
                         return taskRewardPreference;
     }
-    private ArrayList<Long> buildIDsFromTaskRewardPreferences(Optional<List<TaskRewardPreference>> taskConfigs){
-        ArrayList<Long> taskRewardIDs = new ArrayList<>();
-        taskConfigs.ifPresent(
-                configs->{
-                    configs.forEach(taskConfig ->{
-                        taskRewardIDs.add(taskConfig.getId().getTaskRewardID());
+    private ArrayList<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<List<TaskRewardPreference>> taskRewardPreferences){
+        ArrayList<TaskRewardDTO> taskRewardDTOs = new ArrayList<>();
+        taskRewardPreferences.ifPresent(
+                rewardPreferences->{
+                    rewardPreferences.forEach(rewardPreference->{
+                        TaskReward reward = rewardPreference.getTaskRewardID();
+                        // build TaskReward DTO from reward
+                        TaskRewardDTO dto = new TaskRewardDTO();
+                        dto.setId(reward.getId());
+                        dto.setName(reward.getName());
+                        taskRewardDTOs.add(dto);
                     });
                 }
         );
-        return  taskRewardIDs;
+        return  taskRewardDTOs;
     }
     private List<TaskDTO> buildDTOListFromTasks(Optional<List<Task>> taskList){
         List<TaskDTO> DTOList = new ArrayList<>();
