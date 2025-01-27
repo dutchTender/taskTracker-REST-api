@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = UmMappings.TASKS)
+@CrossOrigin(origins = "*")
 public class TaskController extends AbstractController<Task> implements ISortingController<Task> {
 
     @Autowired

@@ -20,6 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = UmMappings.USERS)
+@CrossOrigin(origins = "*")
 public class UserController extends AbstractLongIdController<User> implements ILongIdSortingController<User> {
 
     @Autowired

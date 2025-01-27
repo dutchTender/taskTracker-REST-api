@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = UmMappings.TASKS_REWARDS)
+@CrossOrigin(origins = "*")
 public class TaskRewardController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
 
     @Autowired

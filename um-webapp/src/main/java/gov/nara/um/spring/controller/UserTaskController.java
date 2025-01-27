@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 @Controller
 @RequestMapping(value = UmMappings.USER_TASKS)
+@CrossOrigin(origins = "*")
 public class UserTaskController extends AbstractLongIdController<User>  {
 
     @Autowired
