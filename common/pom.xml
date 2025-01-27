@@ -11,9 +11,7 @@
 	</parent>
 
 	<dependencies>
-
 		<!-- util -->
-
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
