@@ -111,8 +111,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public UserDTO findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
-        UserDTO userDTO = buildDTOFromUser(user);
-        return userDTO;
+        return buildDTOFromUser(user);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -162,7 +161,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         user.setTasks(buildTaskFromIDs(dto.getTaskIDs()));
         return  user;
     }
-    private HashSet<Task> buildTaskFromIDs(HashSet<Integer> taskIDs){
+    private HashSet<Task> buildTaskFromIDs(HashSet<Long> taskIDs){
         HashSet<Task> tasks = new HashSet<>();
         if(taskIDs != null)
            taskIDs.forEach(taskID ->{
@@ -179,10 +178,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setTaskIDs(buildIDsFromTasks(user.getTasks()));
         return  userDTO;
     }
-    private HashSet<Integer> buildIDsFromTasks(Set<Task> tasks){
-        HashSet<Integer> taskIDs = new HashSet<>();
+    private HashSet<Long> buildIDsFromTasks(Set<Task> tasks){
+        HashSet<Long> taskIDs = new HashSet<>();
         if(tasks != null)
-        tasks.forEach( task -> {
+            tasks.forEach( task -> {
             taskIDs.add(task.getId());
         });
         return  taskIDs;

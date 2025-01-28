@@ -1,12 +1,12 @@
 package gov.nara.um.persistence.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import gov.nara.common.interfaces.INameableDto;
-import gov.nara.common.persistence.model.INameableEntity;
+import gov.nara.common.persistence.model.ILongNameableEntity;
 import gov.nara.um.persistence.dto.TaskDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_catalog", schema = "oif_ods")
 @Table(name = "tasks")
-public class Task implements INameableEntity, INameableDto {
+public class Task implements  Serializable, ILongNameableEntity{
 
     @Id
     @Column(name = "id")
@@ -23,7 +23,7 @@ public class Task implements INameableEntity, INameableDto {
     @SequenceGenerator(name = "bu_seq_gen", sequenceName = "oif_ods.business_unit_seq", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(hidden = true)
-    private Integer id;
+    private Long id;
 
     @Column(unique = true)
     private String name;

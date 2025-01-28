@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class TaskRewardsPreferenceID implements Serializable {
 
     @Column( name = "task_id")
-    private Integer taskID;
+    private Long taskID;
     @Column( name = "task_reward_id")
     private Long taskRewardID;
     public TaskRewardsPreferenceID() {

@@ -15,5 +15,5 @@ public class UserDTO implements ILongDto {
     private String user_type;
     @Email
     private String email;
-    private HashSet<Integer> taskIDs;
+    private HashSet<Long> taskIDs;
 }

@@ -1,8 +1,9 @@
 package gov.nara.um.spring.controller;
 
+
 import gov.nara.common.util.QueryConstants;
-import gov.nara.common.web.controller.AbstractController;
-import gov.nara.common.web.controller.ISortingController;
+import gov.nara.common.web.controller.AbstractLongIdController;
+import gov.nara.common.web.controller.ILongIdSortingController;
 import gov.nara.um.persistence.dto.TaskDTO;
 import gov.nara.um.persistence.dto.TaskRewardDTO;
 import gov.nara.um.persistence.model.*;
@@ -23,7 +24,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping(value = UmMappings.TASKS)
 @CrossOrigin(origins = "*")
-public class TaskController extends AbstractController<Task> implements ISortingController<Task> {
+public class TaskController extends AbstractLongIdController<Task> implements ILongIdSortingController<Task> {
 
     @Autowired
     private ITaskService taskService;
@@ -74,12 +75,12 @@ public class TaskController extends AbstractController<Task> implements ISorting
         List<Task> taskList = findAllInternal(request);
         return buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
-    public Task findOne(final Integer id) {
+    public Task findOne(final Long id) {
         return findOneInternal(id);
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public TaskDTO findOneDTO(@PathVariable("id") final Integer id) {
+    public TaskDTO findOneDTO(@PathVariable("id") final Long id) {
         Task task = findOne(id);
         return buildDTOFromTask(task);
     }
@@ -92,12 +93,12 @@ public class TaskController extends AbstractController<Task> implements ISorting
         Task newTask = buildTaskFromDTO(resource);
         create(newTask);
     }
-    public void update( final Integer id, final Task resource) {
+    public void update( final Long id, final Task resource) {
         updateInternal(id, resource);
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDTO(@PathVariable("id") final Integer id, @RequestBody @Valid final TaskDTO resource) {
+    public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
            resource.setId(id);
            Task task = buildTaskFromDTO(resource);
            update(id, task);
@@ -110,7 +111,7 @@ public class TaskController extends AbstractController<Task> implements ISorting
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") final Integer id) {
+    public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
 

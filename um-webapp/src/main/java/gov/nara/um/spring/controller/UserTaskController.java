@@ -102,7 +102,7 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     public void create(@RequestBody final UserTasksDTO resource) {
 
         Long userId = resource.getUser_id();
-        Integer taskId = resource.getTask_id();
+        Long taskId = resource.getTask_id();
         User user = userService.findOne(userId);
         Task task = taskService.findOne(taskId);
 
@@ -136,7 +136,7 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     public void update(@PathVariable("id") final Long id, @RequestBody final UserTasksDTO resource) {
 
         Long userId = id;
-        Integer taskId = resource.getTask_id();
+        Long taskId = resource.getTask_id();
         User user = userService.findOne(userId);
         Task task = taskService.findOne(taskId);
 

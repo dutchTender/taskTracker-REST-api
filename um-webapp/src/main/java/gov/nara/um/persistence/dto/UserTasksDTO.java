@@ -3,6 +3,6 @@ import lombok.Data;
 @Data
 public class UserTasksDTO {
     private Long user_id;
-    private Integer task_id;
+    private Long task_id;
 
 }
