@@ -3,8 +3,12 @@ package gov.nara.um.spring.controller;
 import gov.nara.common.util.QueryConstants;
 import gov.nara.common.web.controller.AbstractLongIdController;
 import gov.nara.common.web.controller.ILongIdSortingController;
+import gov.nara.um.persistence.dto.TaskDTO;
+import gov.nara.um.persistence.dto.TaskRewardDTO;
 import gov.nara.um.persistence.dto.UserDTO;
 import gov.nara.um.persistence.model.Task;
+import gov.nara.um.persistence.model.TaskReward;
+import gov.nara.um.persistence.model.TaskRewardPreference;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.ITaskService;
 import gov.nara.um.service.IUserService;
@@ -158,14 +162,15 @@ public class UserController extends AbstractLongIdController<User> implements IL
         User user = new User();
         user.setName(dto.getUser_name());
         user.setUser_type(dto.getUser_type());
-        user.setTasks(buildTaskFromIDs(dto.getTaskIDs()));
+        user.setEmail(dto.getEmail());
+        user.setTasks(buildTaskFromDTOs(dto.getTasks()));
         return  user;
     }
-    private HashSet<Task> buildTaskFromIDs(HashSet<Long> taskIDs){
+    private HashSet<Task> buildTaskFromDTOs(HashSet<TaskDTO> taskDTOs){
         HashSet<Task> tasks = new HashSet<>();
-        if(taskIDs != null)
-           taskIDs.forEach(taskID ->{
-                Task bUnit = taskService.findOne(taskID);
+        if(taskDTOs != null)
+            taskDTOs.forEach(taskDTO ->{
+                Task bUnit = taskService.findOne(taskDTO.getId());
                 tasks.add(bUnit);
             });
         return tasks;
@@ -175,16 +180,17 @@ public class UserController extends AbstractLongIdController<User> implements IL
         userDTO.setId(user.getId());
         userDTO.setUser_name(user.getName());
         userDTO.setUser_type(user.getUser_type());
-        userDTO.setTaskIDs(buildIDsFromTasks(user.getTasks()));
+        userDTO.setTasks(buildDTOsFromTasks(user.getTasks()));
+        userDTO.setEmail(user.getEmail());
         return  userDTO;
     }
-    private HashSet<Long> buildIDsFromTasks(Set<Task> tasks){
-        HashSet<Long> taskIDs = new HashSet<>();
+    private HashSet<TaskDTO> buildDTOsFromTasks(Set<Task> tasks){
+        HashSet<TaskDTO> taskDTOs = new HashSet<>();
         if(tasks != null)
             tasks.forEach( task -> {
-            taskIDs.add(task.getId());
+                taskDTOs.add(buildDTOFromTask(task));
         });
-        return  taskIDs;
+        return  taskDTOs;
     }
     private List<UserDTO> buildDTOListFromUsers(Optional<List<User>> userList){
         List<UserDTO> DTOList = new ArrayList<>();
@@ -196,6 +202,31 @@ public class UserController extends AbstractLongIdController<User> implements IL
         });
 
         return DTOList;
+    }
+    private TaskDTO buildDTOFromTask(Task bUnit){
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(bUnit.getId());
+        taskDTO.setName(bUnit.getName());
+        taskDTO.setTaskDescription(bUnit.getTaskDescription());
+        taskDTO.setTaskTime(bUnit.getTaskTime());
+        taskDTO.setTaskRewards(buildIDsFromTaskRewardPreferences(Optional.ofNullable(bUnit.getTaskRewardPreferences())));
+        return taskDTO;
+    }
+    private ArrayList<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<List<TaskRewardPreference>> taskRewardPreferences){
+        ArrayList<TaskRewardDTO> taskRewardDTOs = new ArrayList<>();
+        taskRewardPreferences.ifPresent(
+                rewardPreferences->{
+                    rewardPreferences.forEach(rewardPreference->{
+                        TaskReward reward = rewardPreference.getTaskRewardID();
+                        // build TaskReward DTO from reward
+                        TaskRewardDTO dto = new TaskRewardDTO();
+                        dto.setId(reward.getId());
+                        dto.setName(reward.getName());
+                        taskRewardDTOs.add(dto);
+                    });
+                }
+        );
+        return  taskRewardDTOs;
     }
     @Override
     protected final IUserService getService() {

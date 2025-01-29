@@ -6,6 +6,7 @@ import gov.nara.common.persistence.model.ILongNameableEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -37,7 +38,7 @@ public class User implements ILongNameableEntity, ILongNameableDto {
             )
     )
     @OneToMany
-    private Set<Task> tasks;
+    private Set<Task> tasks = new HashSet<>();
     public Task addTask(Task task){ tasks.add(task);return task; }
     public void removeTask(Task task){ tasks.remove(task); }
 }
