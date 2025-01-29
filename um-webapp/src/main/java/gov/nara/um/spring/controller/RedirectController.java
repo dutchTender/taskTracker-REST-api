@@ -17,7 +17,7 @@ public class RedirectController {
         super();
     }
     @RequestMapping(value = UmMappings.Singular.TASK )
-    public ResponseEntity<Void> businessUnitToBusinessUnits(final HttpServletRequest request) {
+    public ResponseEntity<Void> userToUsers(final HttpServletRequest request) {
         return singularToPlural(request);
     }
     private final ResponseEntity<Void> singularToPlural(final HttpServletRequest request) {

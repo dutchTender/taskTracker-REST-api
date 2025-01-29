@@ -40,6 +40,7 @@ public class Task implements  Serializable, ILongNameableEntity{
             orphanRemoval = true
     )
     private List<TaskRewardPreference> taskRewardPreferences = new ArrayList<>();
+
     public Task(){
     }
     public Task(TaskDTO taskDTO){
