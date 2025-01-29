@@ -7,9 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -39,7 +41,7 @@ public class Task implements  Serializable, ILongNameableEntity{
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskRewardPreference> taskRewardPreferences = new ArrayList<>();
+    private Set<TaskRewardPreference> taskRewardPreferences = new HashSet<>();
 
     public Task(){
     }
@@ -60,5 +62,17 @@ public class Task implements  Serializable, ILongNameableEntity{
                 iterBUCP.remove();
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(getId(), task.getId()) && Objects.equals(getName(), task.getName()) && Objects.equals(getTaskTime(), task.getTaskTime()) && Objects.equals(getTaskDescription(), task.getTaskDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getTaskTime(), getTaskDescription());
     }
 }

@@ -212,8 +212,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
         taskDTO.setTaskRewards(buildIDsFromTaskRewardPreferences(Optional.ofNullable(bUnit.getTaskRewardPreferences())));
         return taskDTO;
     }
-    private ArrayList<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<List<TaskRewardPreference>> taskRewardPreferences){
-        ArrayList<TaskRewardDTO> taskRewardDTOs = new ArrayList<>();
+    private HashSet<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<Set<TaskRewardPreference>> taskRewardPreferences){
+        HashSet<TaskRewardDTO> taskRewardDTOs = new HashSet<>();
         taskRewardPreferences.ifPresent(
                 rewardPreferences->{
                     rewardPreferences.forEach(rewardPreference->{

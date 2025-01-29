@@ -16,9 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -169,8 +167,8 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
 
                         return taskRewardPreference;
     }
-    private ArrayList<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<List<TaskRewardPreference>> taskRewardPreferences){
-        ArrayList<TaskRewardDTO> taskRewardDTOs = new ArrayList<>();
+    private HashSet<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<Set<TaskRewardPreference>> taskRewardPreferences){
+        HashSet<TaskRewardDTO> taskRewardDTOs = new HashSet<>();
         taskRewardPreferences.ifPresent(
                 rewardPreferences->{
                     rewardPreferences.forEach(rewardPreference->{

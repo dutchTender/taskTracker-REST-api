@@ -7,16 +7,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
 @Table(name = "task_rewards")
-public class TaskReward implements ILongNameableEntity, ILongNameableDto {
+public class TaskReward implements Serializable, ILongNameableEntity{
     @Id
     @Column(name = "reward_id")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_conf_seq_gen")
@@ -33,7 +32,8 @@ public class TaskReward implements ILongNameableEntity, ILongNameableDto {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskRewardPreference> taskRewardPreferences = new ArrayList<>();
+    private Set<TaskRewardPreference> taskRewardPreferences = new HashSet<>();
+
     public TaskRewardPreference addTaskRewardConfig(TaskRewardPreference taskRewardPreference){
         taskRewardPreferences.add(taskRewardPreference);
         return taskRewardPreference;
@@ -46,7 +46,16 @@ public class TaskReward implements ILongNameableEntity, ILongNameableDto {
             }
         }
     }
-    public TaskReward(){
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskReward that = (TaskReward) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
+    }
 }
