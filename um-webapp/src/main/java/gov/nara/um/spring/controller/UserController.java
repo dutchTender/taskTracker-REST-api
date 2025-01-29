@@ -160,7 +160,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
     private User buildUserFromDTO(UserDTO dto){
         User user = new User();
-        user.setName(dto.getUser_name());
+        user.setName(dto.getName());
         user.setUser_type(dto.getUser_type());
         user.setEmail(dto.getEmail());
         user.setTasks(buildTaskFromDTOs(dto.getTasks()));
@@ -178,7 +178,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     private UserDTO buildDTOFromUser(User user){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
-        userDTO.setUser_name(user.getName());
+        userDTO.setName(user.getName());
         userDTO.setUser_type(user.getUser_type());
         userDTO.setTasks(buildDTOsFromTasks(user.getTasks()));
         userDTO.setEmail(user.getEmail());

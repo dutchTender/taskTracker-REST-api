@@ -1,5 +1,5 @@
 package gov.nara.um.persistence.dto;
-import gov.nara.common.interfaces.ILongDto;
+import gov.nara.common.interfaces.ILongNameableDto;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 
 @Data
-public class UserDTO implements ILongDto {
+public class UserDTO implements ILongNameableDto {
     private Long Id;
     @NotNull
-    private String user_name;
+    private String name;
     @NotNull
     private String user_type;
     @Email
