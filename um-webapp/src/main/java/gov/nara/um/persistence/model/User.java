@@ -39,6 +39,9 @@ public class User implements ILongNameableEntity, ILongNameableDto {
     )
     @OneToMany
     private Set<Task> tasks = new HashSet<>();
+
+
+
     public Task addTask(Task task){ tasks.add(task);return task; }
     public void removeTask(Task task){ tasks.remove(task); }
 }
