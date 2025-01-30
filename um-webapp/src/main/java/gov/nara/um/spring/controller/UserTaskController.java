@@ -117,7 +117,7 @@ public class UserTaskController extends AbstractLongIdController<User>  {
                 message = "user_id ";
             }
             else {
-                message= "business_unit_id ";
+                message= "tasl_id ";
             }
             message += "value is not valid";
             throw new MyBadRequestException(message);
@@ -154,7 +154,7 @@ public class UserTaskController extends AbstractLongIdController<User>  {
                 message = "user_id ";
             }
             else {
-                message= "business_unit_id ";
+                message= "task_id ";
             }
             message += "value in the API payload is not valid.";
             throw new MyBadRequestException(message);

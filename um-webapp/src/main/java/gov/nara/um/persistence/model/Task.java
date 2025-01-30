@@ -50,6 +50,7 @@ public class Task implements  Serializable, ILongNameableEntity{
              taskTime = taskDTO.getTaskTime();
              taskDescription = taskDTO.getTaskDescription();
              id = taskDTO.getId();
+
     }
     public TaskRewardPreference addTaskRewardConfiguration(TaskRewardPreference taskRewardPreference){
         taskRewardPreferences.add(taskRewardPreference);
