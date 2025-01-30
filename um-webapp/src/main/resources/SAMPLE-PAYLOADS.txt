@@ -1,0 +1,20 @@
+{
+  
+   "name": "pick up cat food from amazon",
+    "taskTime": "tooday after noon",
+    "taskDescription":"tikicat + instinct patte",
+    "taskConfigurationIDs": [2]
+}
+  
+ 
+
+
+[ 
+  {
+    "name":"1 bitCoin"
+}
+,
+{
+    "name":"1 sneakers bar"
+}
+]
