@@ -1,1 +1,4 @@
-task manager REST API implememented using springboot
+task manager REST API implemented using springboot
+- HAS DEFAULT SAMPLE DATA LOADED FOR api
+- UP COMING ROADMAPS
+  - ADD oAUTH2 SUPPORT VIA AUTHORIZATION AND RESOURCE SERVER SUPPORT
