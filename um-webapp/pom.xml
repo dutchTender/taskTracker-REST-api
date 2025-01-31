@@ -15,7 +15,6 @@
     <dependencies>
 
         <!-- internal -->
-
         <dependency>
             <groupId>gov.nara</groupId>
             <artifactId>common-um</artifactId>
@@ -23,7 +22,6 @@
         </dependency>
 
         <!-- web -->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -70,14 +68,14 @@
         </dependency>
 
         <!--documentation swagger -->
-
+<!--
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.2.2</version>
 
         </dependency>
-
+-->
 
 
     </dependencies>

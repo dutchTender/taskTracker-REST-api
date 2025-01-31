@@ -147,7 +147,8 @@ public abstract class AbstractLongIdRawService<T extends IWithName> implements I
     protected final Sort constructSort(final String sortBy, final String sortOrder) {
         Sort sortInfo = null;
         if (sortBy != null) {
-            sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
+            //sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
+            sortInfo = Sort.by(Direction.fromString(sortOrder), sortBy);
         }
         return sortInfo;
     }

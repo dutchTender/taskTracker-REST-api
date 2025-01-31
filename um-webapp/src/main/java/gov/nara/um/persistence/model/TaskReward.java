@@ -1,9 +1,9 @@
 package gov.nara.um.persistence.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import gov.nara.common.interfaces.ILongNameableDto;
+
 import gov.nara.common.persistence.model.ILongNameableEntity;
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,7 +21,7 @@ public class TaskReward implements Serializable, ILongNameableEntity{
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bu_conf_seq_gen")
     @SequenceGenerator(name = "bu_conf_seq_gen", sequenceName = "oif_ods.business_unit_configuration_configuration_id_seq", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private Long id;
 
     @Column(name = "reward_name", unique = true, nullable = false)

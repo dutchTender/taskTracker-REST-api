@@ -9,11 +9,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+//import springfox.documentation.builders.PathSelectors;
+//import springfox.documentation.builders.RequestHandlerSelectors;
+//import springfox.documentation.spi.DocumentationType;
+//import springfox.documentation.spring.web.plugins.Docket;
+//import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @Configuration
 @ComponentScan({"gov.nara.um.spring.controller"})
 @EnableWebMvc
-@EnableSwagger2
+//@EnableSwagger2
 public class UmWebConfig implements WebMvcConfigurer {
 
     public UmWebConfig() {
@@ -30,6 +30,7 @@ public class UmWebConfig implements WebMvcConfigurer {
     }
 
     // swagger configuration
+    /*
     @Bean
     public Docket swagConfig(){ // @formatter:off
         return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
@@ -40,6 +41,8 @@ public class UmWebConfig implements WebMvcConfigurer {
                 .genericModelSubstitutes(ResponseEntity.class)
                 ;
     }// @formatter:on
+    */
+
     // custom http message converter
     @Override
     public void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
