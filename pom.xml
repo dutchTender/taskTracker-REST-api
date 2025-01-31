@@ -35,10 +35,7 @@
 
 	</dependencies>
 
-
-
 	<build>
-
 		<pluginManagement>
 			<plugins>
 				<plugin>

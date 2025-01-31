@@ -78,7 +78,7 @@ public class UserTasksIntegrationTest {
     public final void check_userTasks_controller_AddOne_400_status_customException() throws Exception {
 
         UserTasksDTO test_unit = new UserTasksDTO();
-        test_unit.setTask_id(1);
+        test_unit.setTask_id(1L);
         test_unit.setUser_id(new Long(2));
         ObjectMapper objectMapper = new ObjectMapper();
         String json_payLoad = objectMapper.writeValueAsString(test_unit);
@@ -98,7 +98,7 @@ public class UserTasksIntegrationTest {
     public final void check_userTasks_controller_updateOne_400_status_customException() throws Exception {
 
         UserTasksDTO test_unit = new UserTasksDTO();
-        test_unit.setTask_id(1);
+        test_unit.setTask_id(1L);
         test_unit.setUser_id(Long.valueOf(2));
 
         ObjectMapper objectMapper = new ObjectMapper();

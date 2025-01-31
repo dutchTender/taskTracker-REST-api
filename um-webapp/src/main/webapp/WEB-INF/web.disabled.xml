@@ -11,8 +11,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            com.baeldung.um.spring,
-            com.baeldung.common.spring
+            gov.nara.um.spring,
+            gov.nara.common.spring
         </param-value>
     </context-param>
     
