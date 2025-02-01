@@ -13,8 +13,6 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
         super();
     }
 
-    //
-
     /**
      * Sets the active profile.
      */

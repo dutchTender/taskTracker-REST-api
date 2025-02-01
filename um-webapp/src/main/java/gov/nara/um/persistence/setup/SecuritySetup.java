@@ -27,7 +27,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
 
     @Autowired
-    private ITaskService iBusinessUnitService;
+    private ITaskService iTaskService;
 
     @Autowired
     private  IUserService iUserService;
@@ -50,10 +50,6 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
             logger.info("Executing Setup");
 
              CrateUser();
-
-
-
-
             setupDone = true;
             logger.info("Setup Done");
         }
@@ -66,23 +62,18 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         User user = new User();
         user.setName("Li.zhang");
         user.setUser_type("ERA");
-
         iUserService.create(user);
 
         Task task = new Task();
         task.setName("ADIS");
         task.setTaskTime("every day");
         task.setTaskDescription("ADIS");
-        iBusinessUnitService.create(task);
-
+        iTaskService.create(task);
 
 
         User user2 = iUserService.findByName(user.getName());
-
-
         user2.addTask(task);
         iUserService.update(user2);
-
 
     }
 

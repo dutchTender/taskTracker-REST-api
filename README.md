@@ -10,3 +10,10 @@ http://localhost:8082/api/console/info
 http://localhost:8082/api/console/health
 
 http://localhost:8082/api/console/metrics
+
+
+main CRUD end points:
+
+localhost:8082/api/users/
+
+localhost:8082/api/tasks/
