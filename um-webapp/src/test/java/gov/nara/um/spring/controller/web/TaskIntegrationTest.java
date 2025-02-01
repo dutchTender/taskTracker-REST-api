@@ -1,6 +1,7 @@
 package gov.nara.um.spring.controller.web;
 
 import gov.nara.um.persistence.dao.ITaskDAO;
+import gov.nara.um.persistence.dto.TaskDTOInterface;
 import gov.nara.um.persistence.model.Task;
 import gov.nara.um.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
@@ -43,6 +44,7 @@ public class TaskIntegrationTest {
 
         //when
         Task task1 = businessUnitDao.findByName(task.getName());
+        //TaskDTOInterface task2 = businessUnitDao.findById(task1.getId()).orElseThrow();
 
         // verify that we can find the entity that was just added
         assertThat(task1.getName()).isEqualTo(task.getName());
@@ -57,6 +59,7 @@ public class TaskIntegrationTest {
         //given
         Task task = new Task();
         task.setName("xxxx");
+        //task.setId(6L);
         task.setTaskDescription("xxxxxxxxx");
         task.setTaskTime("apex");
         entityManager.persist(task);
