@@ -5,7 +5,6 @@ import gov.nara.um.persistence.dao.IUserDAO;
 import gov.nara.um.persistence.model.Task;
 import gov.nara.um.persistence.model.User;
 import gov.nara.um.service.ITaskService;
-import gov.nara.um.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
