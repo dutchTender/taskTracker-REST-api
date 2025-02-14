@@ -1,7 +1,11 @@
+Java - 17.x
+Spring Boot - 2.7.12
 REST API for a Angular application
 
 - UPCOMING ROADMAPS
-  - ADD oAUTH2 SUPPORT VIA AUTHORIZATION AND RESOURCE SERVER SUPPORT
+  - oAUTH2 SUPPORT VIA AUTHORIZATION AND RESOURCE SERVER SUPPORT
+  - Idempotent implementation
+  - Docker compose support
 
 spring actuator URLs
 
