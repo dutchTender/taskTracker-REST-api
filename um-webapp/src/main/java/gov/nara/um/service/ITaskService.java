@@ -8,5 +8,5 @@ public interface ITaskService extends ILongIdService<Task> {
     public Task addUser(final String unitId, final String userId);
 
     public Task removerUser(final String unitId, final String userId);
-
+    public Task findTaskReference(final Long taskId);
 }

@@ -1,12 +1,31 @@
 {
   
-   "name": "pick up cat food from amazon",
-    "taskTime": "tooday after noon",
-    "taskDescription":"tikicat + instinct patte",
-    "taskConfigurationIDs": [2]
+   "name": "angular app development",
+    "taskTime": "11:11 am",
+    "taskDescription":"task tracker application",
+    "taskRewards": []
 }
   
- 
+  {
+         "name": "dutchTender",
+         "user_type": "admin",
+         "email": "lzhang422@gmail.com",
+         "tasks": []
+   }
+
+{
+        "name": "Li.zhang",
+        "user_type": "ERA",
+        "email": null,
+        "tasks": [
+            {
+               "id": 2
+
+            }
+        ]
+
+}
+
 
 
 [ 

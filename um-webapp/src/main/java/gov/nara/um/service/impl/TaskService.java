@@ -34,6 +34,11 @@ public class TaskService extends AbstractLongIdService<Task> implements ITaskSer
     // other
     // remove user
     // Spring
+    public Task findTaskReference(final Long Id) {
+             return dao.getReferenceById(Id);
+    }
+
+
     @Override
     protected final ITaskDAO getDao() {
         return dao;

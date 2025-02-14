@@ -163,14 +163,14 @@ public class UserController extends AbstractLongIdController<User> implements IL
         user.setName(dto.getName());
         user.setUser_type(dto.getUser_type());
         user.setEmail(dto.getEmail());
-        user.setTasks(buildTaskFromDTOs(dto.getTasks()));
+        user.setTasks(buildTasksFromDTOs(dto.getTasks()));
         return  user;
     }
-    private HashSet<Task> buildTaskFromDTOs(HashSet<TaskDTO> taskDTOs){
+    private HashSet<Task> buildTasksFromDTOs(HashSet<TaskDTO> taskDTOs){
         HashSet<Task> tasks = new HashSet<>();
         if(taskDTOs != null)
             taskDTOs.forEach(taskDTO ->{
-                Task bUnit = taskService.findOne(taskDTO.getId());
+                Task bUnit = taskService.findTaskReference(taskDTO.getId());
                 tasks.add(bUnit);
             });
         return tasks;
