@@ -3,6 +3,7 @@ Spring Boot - 2.7.12
 REST API for a Angular application
 
 - UPCOMING ROADMAPS
+- - DTO projection support
   - oAUTH2 SUPPORT VIA AUTHORIZATION AND RESOURCE SERVER SUPPORT
   - Idempotent implementation
   - Docker compose support

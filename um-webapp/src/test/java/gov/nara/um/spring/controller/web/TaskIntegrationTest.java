@@ -25,7 +25,7 @@ public class TaskIntegrationTest {
 
 
     @Autowired
-    private ITaskDAO businessUnitDao;
+    private ITaskDAO taskDAO;
     @Autowired
     private TestEntityManager entityManager;
 
@@ -43,7 +43,7 @@ public class TaskIntegrationTest {
         entityManager.flush();
 
         //when
-        Task task1 = businessUnitDao.findByName(task.getName());
+        Task task1 = taskDAO.findByName(task.getName());
         //TaskDTOInterface task2 = businessUnitDao.findById(task1.getId()).orElseThrow();
 
         // verify that we can find the entity that was just added
@@ -66,11 +66,14 @@ public class TaskIntegrationTest {
         entityManager.flush();
 
         //when
-        Task task1 = businessUnitDao.findByName(task.getName());
-        entityManager.remove(task1);
+        TaskDTOInterface task1 = taskDAO.findByNameIgnoreCase(task.getName());
+        System.out.println("################################################");
+        System.out.println(task1);
+        System.out.println("################################################");
+        entityManager.remove(task);
         entityManager.flush();
 
-        Task task2 = businessUnitDao.findByName(task.getName());
+        Task task2 = taskDAO.findByName(task.getName());
 
         // verify that we can find the entity that was just added
         assertThat(task2).isEqualTo(null);

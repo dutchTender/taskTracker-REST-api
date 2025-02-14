@@ -8,7 +8,6 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -52,17 +51,11 @@ public class Task implements  Serializable, ILongNameableEntity{
              id = taskDTO.getId();
 
     }
-    public TaskRewardPreference addTaskRewardConfiguration(TaskRewardPreference taskRewardPreference){
+    public void addTaskRewardConfiguration(TaskRewardPreference taskRewardPreference){
         taskRewardPreferences.add(taskRewardPreference);
-        return taskRewardPreference;
     }
     public void removeTaskRewardConfiguration( TaskRewardPreference taskRewardPreference){
-        for(Iterator<TaskRewardPreference> iterBUCP = taskRewardPreferences.iterator(); iterBUCP.hasNext(); ) {
-            TaskRewardPreference current = iterBUCP.next();
-            if(current.equals(taskRewardPreference)){
-                iterBUCP.remove();
-            }
-        }
+        taskRewardPreferences.removeIf(current -> current.equals(taskRewardPreference));
     }
 
     @Override
