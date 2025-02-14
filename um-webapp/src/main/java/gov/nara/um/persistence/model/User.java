@@ -38,6 +38,7 @@ public class User implements ILongNameableEntity, ILongNameableDto {
                     referencedColumnName = "id"      // column name to be mapped (on the task db table)
             )
     )
+
     @OneToMany
     private Set<Task> tasks = new HashSet<>();
 

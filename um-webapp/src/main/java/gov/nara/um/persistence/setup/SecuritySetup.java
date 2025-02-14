@@ -72,8 +72,11 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
 
         User user2 = iUserService.findByName(user.getName());
-        user2.addTask(task);
+       // user2.addTask(iTaskService.findTaskReference(task.getId()));
+
+
         iUserService.update(user2);
+
 
     }
 

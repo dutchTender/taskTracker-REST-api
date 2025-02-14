@@ -131,7 +131,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody @Valid final UserDTO resource) {
-        create(buildUserFromDTO(resource));
+        create(buildUserFromDTO(resource, 0L));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -143,7 +143,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
-        updateInternal(id, buildUserFromDTO(resource));
+        updateInternal(id, buildUserFromDTO(resource, id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -158,8 +158,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
         deleteByIdInternal(id);
     }
 
-    private User buildUserFromDTO(UserDTO dto){
+    private User buildUserFromDTO(UserDTO dto, Long id){
         User user = new User();
+        if(id != 0)
+            user.setId(id);
         user.setName(dto.getName());
         user.setUser_type(dto.getUser_type());
         user.setEmail(dto.getEmail());
