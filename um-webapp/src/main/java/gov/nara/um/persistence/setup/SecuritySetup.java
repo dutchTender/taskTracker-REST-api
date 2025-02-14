@@ -49,7 +49,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         if (!setupDone) {
             logger.info("Executing Setup");
 
-             CrateUser();
+            // CrateUser();
             setupDone = true;
             logger.info("Setup Done");
         }
