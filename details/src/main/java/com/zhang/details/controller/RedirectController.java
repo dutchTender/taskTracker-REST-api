@@ -1,4 +1,4 @@
-package com.zhang.details.spring.controller;
+package com.zhang.details.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

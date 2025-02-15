@@ -1,4 +1,4 @@
-package com.zhang.details.service.impl;
+package com.zhang.details.service;
 
 import com.zhang.common.persistence.service.AbstractLongIdService;
 

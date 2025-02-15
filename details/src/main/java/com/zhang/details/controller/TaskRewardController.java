@@ -1,4 +1,4 @@
-package com.zhang.details.spring.controller;
+package com.zhang.details.controller;
 
 import com.zhang.common.util.QueryConstants;
 import com.zhang.common.web.controller.AbstractLongIdController;
