@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Configuration
-@ComponentScan({"com.zhang.details.spring.controller"})
+@ComponentScan({"com.zhang.details.controller"})
 @EnableWebMvc
 //@EnableSwagger2
 public class UmWebConfig implements WebMvcConfigurer {
