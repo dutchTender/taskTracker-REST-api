@@ -100,7 +100,7 @@
 		<module>common</module>
 		<module>core</module>
 		<module>details</module>
-
+		<module>app</module>
 	</modules>
 
 </project>
