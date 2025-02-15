@@ -1,6 +1,6 @@
 package com.zhang.app.spring.controller.web;
 
-import com.zhang.details.persistence.dao.IUserDAO;
+import com.zhang.core.persistence.dao.IUserDAO;
 import com.zhang.core.persistence.model.User;
 import com.zhang.app.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
