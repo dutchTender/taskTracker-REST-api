@@ -2,9 +2,9 @@ package com.zhang.app.spring.controller.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhang.core.persistence.dto.UserTasksDTO;
-import com.zhang.details.service.ITaskService;
+import com.zhang.core.service.ITaskService;
 
-import com.zhang.details.service.IUserService;
+import com.zhang.core.service.IUserService;
 import com.zhang.details.spring.controller.UserTaskController;
 import com.zhang.details.util.UmMappings;
 import org.junit.Test;
