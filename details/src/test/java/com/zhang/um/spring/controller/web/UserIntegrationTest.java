@@ -1,8 +1,8 @@
 package com.zhang.um.spring.controller.web;
 
-import com.zhang.um.persistence.dao.IUserDAO;
-import com.zhang.um.persistence.model.User;
-import com.zhang.um.spring.UmPersistenceJpaConfig;
+import com.zhang.details.persistence.dao.IUserDAO;
+import com.zhang.details.persistence.model.User;
+import com.zhang.details.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

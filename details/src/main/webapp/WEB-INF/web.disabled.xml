@@ -27,7 +27,7 @@
     
     <context-param>
         <param-name>contextInitializerClasses</param-name>
-        <param-value>com.zhang.um.persistence.setup.MyApplicationContextInitializer</param-value>
+        <param-value>com.zhang.details.persistence.setup.MyApplicationContextInitializer</param-value>
     </context-param>
 
     <servlet>
