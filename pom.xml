@@ -100,6 +100,7 @@
 	
 	<modules>
 		<module>common</module>
+		<module>core</module>
 		<module>details</module>
 	</modules>
 
