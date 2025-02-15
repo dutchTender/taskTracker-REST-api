@@ -1,4 +1,4 @@
-package com.zhang.details.spring;
+package com.zhang.app.spring;
 import com.zhang.details.persistence.setup.MyApplicationContextInitializer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;

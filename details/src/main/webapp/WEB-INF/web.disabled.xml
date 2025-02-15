@@ -11,7 +11,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            com.zhang.um.spring,
+            com.zhang.details.spring,
             com.zhang.common.spring
         </param-value>
     </context-param>

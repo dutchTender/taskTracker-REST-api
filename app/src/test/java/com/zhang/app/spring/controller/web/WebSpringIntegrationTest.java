@@ -1,9 +1,9 @@
-package com.zhang.um.spring.controller.web;
+package com.zhang.app.spring.controller.web;
 
-import com.zhang.details.spring.UmContextConfig;
-import com.zhang.details.spring.UmPersistenceJpaConfig;
-import com.zhang.details.spring.UmServiceConfig;
-import com.zhang.details.spring.UmWebConfig;
+import com.zhang.app.spring.UmContextConfig;
+import com.zhang.app.spring.UmPersistenceJpaConfig;
+import com.zhang.app.spring.UmServiceConfig;
+import com.zhang.app.spring.UmWebConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

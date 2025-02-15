@@ -1,5 +1,6 @@
-package com.zhang.details.spring;
+package com.zhang.app.spring;
 
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -49,7 +50,7 @@ public class UmPersistenceJpaConfig {
     @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("jdbc.driverClassName")));
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.username"));
         dataSource.setPassword(env.getProperty("jdbc.password"));

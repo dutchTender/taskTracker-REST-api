@@ -1,9 +1,8 @@
-package com.zhang.um.spring.controller.web;
+package com.zhang.app.spring.controller.web;
 
-import com.zhang.details.persistence.dao.ITaskDAO;
-import com.zhang.details.persistence.dto.TaskDTOInterface;
-import com.zhang.details.persistence.model.Task;
-import com.zhang.details.spring.UmPersistenceJpaConfig;
+import com.zhang.details.persistence.dao.IUserDAO;
+import com.zhang.details.persistence.model.User;
+import com.zhang.app.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @ContextConfiguration(classes = {UmPersistenceJpaConfig.class})
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-public class TaskIntegrationTest {
+public class UserIntegrationTest {
 // we are going to modify this to do a dataJPA test for integration testing
 
 
     @Autowired
-    private ITaskDAO taskDAO;
+    private IUserDAO userJpaDao;
     @Autowired
     private TestEntityManager entityManager;
 
@@ -35,19 +34,17 @@ public class TaskIntegrationTest {
     @Test
     public final void whenFindByName_thenReturnBusinessUnit() {
         //given
-        Task task = new Task();
-        task.setName("xxxx");
-        task.setTaskTime("xxxxxxxxx");
-        task.setTaskDescription("apex");
-        entityManager.persist(task);
+        User user = new User();
+        user.setName("li");
+        user.setUser_type("NARA");
+        entityManager.persist(user);
         entityManager.flush();
 
         //when
-        Task task1 = taskDAO.findByName(task.getName());
-        //TaskDTOInterface task2 = businessUnitDao.findById(task1.getId()).orElseThrow();
+        User user1 = userJpaDao.findByName(user.getName());
 
         // verify that we can find the entity that was just added
-        assertThat(task1.getName()).isEqualTo(task.getName());
+        assertThat(user1.getName()).isEqualTo(user.getName());
     }
 
 
@@ -57,26 +54,21 @@ public class TaskIntegrationTest {
     @Test
     public final void whenFindByName_thenReturnBusinessUnit_then_verifyDelete() {
         //given
-        Task task = new Task();
-        task.setName("xxxx");
-        //task.setId(6L);
-        task.setTaskDescription("xxxxxxxxx");
-        task.setTaskTime("apex");
-        entityManager.persist(task);
+        User user = new User();
+        user.setName("li");
+        user.setUser_type("NARA");
+        entityManager.persist(user);
         entityManager.flush();
 
         //when
-        TaskDTOInterface task1 = taskDAO.findByNameIgnoreCase(task.getName());
-        System.out.println("################################################");
-        System.out.println(task1);
-        System.out.println("################################################");
-        entityManager.remove(task);
+        User user1 = userJpaDao.findByName(user.getName());
+        entityManager.remove(user1);
         entityManager.flush();
 
-        Task task2 = taskDAO.findByName(task.getName());
+        User user2 = userJpaDao.findByName(user.getName());
 
         // verify that we can find the entity that was just added
-        assertThat(task2).isEqualTo(null);
+        assertThat(user2).isEqualTo(null);
     }
 
 

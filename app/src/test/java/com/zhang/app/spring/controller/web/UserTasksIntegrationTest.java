@@ -1,4 +1,4 @@
-package com.zhang.um.spring.controller.web;
+package com.zhang.app.spring.controller.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhang.details.persistence.dto.UserTasksDTO;

@@ -1,0 +1,39 @@
+{
+  
+   "name": "angular app development",
+    "taskTime": "11:11 am",
+    "taskDescription":"task tracker application",
+    "taskRewards": []
+}
+  
+  {
+         "name": "dutchTender",
+         "user_type": "admin",
+         "email": "lzhang422@gmail.com",
+         "tasks": []
+   }
+
+{
+        "name": "Li.zhang",
+        "user_type": "ERA",
+        "email": null,
+        "tasks": [
+            {
+               "id": 2
+
+            }
+        ]
+
+}
+
+
+
+[ 
+  {
+    "name":"1 bitCoin"
+}
+,
+{
+    "name":"1 sneakers bar"
+}
+]

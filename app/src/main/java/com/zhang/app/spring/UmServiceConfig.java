@@ -1,4 +1,4 @@
-package com.zhang.details.spring;
+package com.zhang.app.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

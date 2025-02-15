@@ -1,4 +1,4 @@
-package com.zhang.details.spring;
+package com.zhang.app.spring;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.ComponentScan;
