@@ -2,9 +2,9 @@ package com.zhang.details.service.impl;
 
 import com.zhang.common.persistence.service.AbstractLongIdService;
 
-import com.zhang.details.persistence.dao.IUserDAO;
-import com.zhang.details.persistence.model.User;
-import com.zhang.details.service.IUserService;
+import com.zhang.core.persistence.dao.IUserDAO;
+import com.zhang.core.persistence.model.User;
+import com.zhang.core.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;

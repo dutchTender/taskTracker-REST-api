@@ -1,7 +1,7 @@
-package com.zhang.details.service;
+package com.zhang.core.service;
 
 import com.zhang.common.persistence.service.ILongIdService;
-import com.zhang.details.persistence.model.Task;
+import com.zhang.core.persistence.model.Task;
 
 public interface ITaskService extends ILongIdService<Task> {
 

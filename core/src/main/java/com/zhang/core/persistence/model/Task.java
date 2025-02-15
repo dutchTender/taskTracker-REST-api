@@ -1,8 +1,8 @@
-package com.zhang.details.persistence.model;
+package com.zhang.core.persistence.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.zhang.common.persistence.model.ILongNameableEntity;
-import com.zhang.details.persistence.dto.TaskDTO;
+import com.zhang.core.persistence.dto.TaskDTO;
 //import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.persistence.*;

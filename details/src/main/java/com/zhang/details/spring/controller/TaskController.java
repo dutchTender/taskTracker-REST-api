@@ -1,17 +1,17 @@
 package com.zhang.details.spring.controller;
 
 
-import com.zhang.details.persistence.model.Task;
-import com.zhang.details.persistence.model.TaskReward;
-import com.zhang.details.persistence.model.TaskRewardPreference;
-import com.zhang.details.persistence.model.TaskRewardsPreferenceID;
+import com.zhang.core.persistence.model.Task;
+import com.zhang.core.persistence.model.TaskReward;
+import com.zhang.core.persistence.model.TaskRewardPreference;
+import com.zhang.core.persistence.model.TaskRewardsPreferenceID;
 import com.zhang.common.util.QueryConstants;
 import com.zhang.common.web.controller.AbstractLongIdController;
 import com.zhang.common.web.controller.ILongIdSortingController;
-import com.zhang.details.persistence.dto.TaskDTO;
-import com.zhang.details.persistence.dto.TaskRewardDTO;
-import com.zhang.details.service.ITaskRewardService;
-import com.zhang.details.service.ITaskService;
+import com.zhang.core.persistence.dto.TaskDTO;
+import com.zhang.core.persistence.dto.TaskRewardDTO;
+import com.zhang.core.service.ITaskRewardService;
+import com.zhang.core.service.ITaskService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

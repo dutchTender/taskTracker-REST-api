@@ -1,4 +1,4 @@
-package com.zhang.details.persistence.dto;
+package com.zhang.core.persistence.dto;
 import com.zhang.common.interfaces.ILongNameableDto;
 
 import lombok.Data;

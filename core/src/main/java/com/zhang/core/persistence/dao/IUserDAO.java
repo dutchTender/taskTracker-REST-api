@@ -1,7 +1,7 @@
-package com.zhang.details.persistence.dao;
+package com.zhang.core.persistence.dao;
 
 import com.zhang.common.interfaces.IByNameApi;
-import com.zhang.details.persistence.model.User;
+import com.zhang.core.persistence.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

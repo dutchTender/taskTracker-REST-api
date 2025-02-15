@@ -1,8 +1,8 @@
 package com.zhang.app.spring.controller.web;
 
-import com.zhang.details.persistence.dao.ITaskDAO;
-import com.zhang.details.persistence.dto.TaskDTOInterface;
-import com.zhang.details.persistence.model.Task;
+import com.zhang.core.persistence.dao.ITaskDAO;
+import com.zhang.core.persistence.dto.TaskDTOInterface;
+import com.zhang.core.persistence.model.Task;
 import com.zhang.app.spring.UmPersistenceJpaConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;

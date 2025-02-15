@@ -1,7 +1,7 @@
 package com.zhang.app.spring.controller.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhang.details.persistence.dto.UserTasksDTO;
+import com.zhang.core.persistence.dto.UserTasksDTO;
 import com.zhang.details.service.ITaskService;
 
 import com.zhang.details.service.IUserService;

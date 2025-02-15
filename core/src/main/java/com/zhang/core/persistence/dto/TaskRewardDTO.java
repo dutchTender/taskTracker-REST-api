@@ -1,4 +1,4 @@
-package com.zhang.details.persistence.dto;
+package com.zhang.core.persistence.dto;
 import lombok.Data;
 import javax.validation.constraints.NotNull;
 

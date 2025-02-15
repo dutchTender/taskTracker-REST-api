@@ -21,10 +21,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "com.zhang.details.persistence" })
+@ComponentScan({ "com.zhang.core.persistence" })
 //@PropertySource({ "classpath:persistence-${persistenceTarget:postgres}.properties" })
 @PropertySource({ "classpath:persistence-h2.properties" })
-@EnableJpaRepositories(basePackages = "com.zhang.details.persistence.dao")
+@EnableJpaRepositories(basePackages = "com.zhang.core.persistence.dao")
 public class UmPersistenceJpaConfig {
 
     @Autowired
@@ -40,7 +40,7 @@ public class UmPersistenceJpaConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.zhang.details" });
+        em.setPackagesToScan(new String[] { "com.zhang.core" });
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

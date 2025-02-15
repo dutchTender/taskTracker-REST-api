@@ -1,4 +1,4 @@
-package com.zhang.details.persistence.model;
+package com.zhang.core.persistence.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 

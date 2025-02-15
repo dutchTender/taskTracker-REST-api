@@ -1,9 +1,9 @@
 package com.zhang.details.persistence.setup;
 
-import com.zhang.details.persistence.model.Task;
-import com.zhang.details.persistence.model.User;
-import com.zhang.details.service.ITaskService;
-import com.zhang.details.service.IUserService;
+import com.zhang.core.persistence.model.Task;
+import com.zhang.core.persistence.model.User;
+import com.zhang.core.service.ITaskService;
+import com.zhang.core.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

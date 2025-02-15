@@ -1,9 +1,9 @@
 package com.zhang.details.service.impl;
 
 import com.zhang.common.persistence.service.AbstractLongIdService;
-import com.zhang.details.persistence.dao.ITaskRewardsDAO;
-import com.zhang.details.persistence.model.TaskReward;
-import com.zhang.details.service.ITaskRewardService;
+import com.zhang.core.persistence.dao.ITaskRewardsDAO;
+import com.zhang.core.persistence.model.TaskReward;
+import com.zhang.core.service.ITaskRewardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
