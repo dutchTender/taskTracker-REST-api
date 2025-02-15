@@ -12,32 +12,14 @@
     </parent>
 
     <dependencies>
-
         <!-- internal -->
         <dependency>
             <groupId>com.zhang</groupId>
             <artifactId>common</artifactId>
             <version>1.1.1</version>
         </dependency>
-
-
         <!-- web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>8.5.34</version>
-            <scope>provided</scope>
-        </dependency>
         <!--db access -->
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
         <!--
@@ -52,20 +34,7 @@
         <!-- test scoped -->
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
         <!--documentation swagger -->
         <!--
                 <dependency>
