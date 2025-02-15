@@ -11,8 +11,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            gov.nara.um.spring,
-            gov.nara.common.spring
+            com.zhang.um.spring,
+            com.zhang.common.spring
         </param-value>
     </context-param>
     
@@ -27,7 +27,7 @@
     
     <context-param>
         <param-name>contextInitializerClasses</param-name>
-        <param-value>gov.nara.um.persistence.setup.MyApplicationContextInitializer</param-value>
+        <param-value>com.zhang.um.persistence.setup.MyApplicationContextInitializer</param-value>
     </context-param>
 
     <servlet>

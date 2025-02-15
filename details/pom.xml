@@ -7,16 +7,16 @@
     <parent>
         <groupId>com.zhang</groupId>
         <artifactId>TASK-TRACKER-api</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>1.1.1</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
-
         <!-- internal -->
         <dependency>
             <groupId>com.zhang</groupId>
             <artifactId>common</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>1.1.1</version>
         </dependency>
 
         <!-- web -->

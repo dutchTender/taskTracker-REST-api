@@ -15,8 +15,8 @@
 	<logger name="org.springframework.web.servlet.mvc" level="INFO" /> <!-- some serialization issues are at trace level here: org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod -->
 
 	<!-- our service -->
-	<logger name="gov.nara.um" level="INFO" />
-	<logger name="gov.nara.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
+	<logger name="com.zhang.um" level="INFO" />
+	<logger name="com.zhang.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
