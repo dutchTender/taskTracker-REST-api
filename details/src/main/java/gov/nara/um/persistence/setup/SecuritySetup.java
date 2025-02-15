@@ -69,12 +69,8 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         task.setTaskTime("every day");
         task.setTaskDescription("ADIS");
         iTaskService.create(task);
-
-
         User user2 = iUserService.findByName(user.getName());
-       // user2.addTask(iTaskService.findTaskReference(task.getId()));
-
-
+        //user2.addTask(iTaskService.findTaskReference(task.getId()));
         iUserService.update(user2);
 
 
