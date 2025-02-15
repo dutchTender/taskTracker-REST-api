@@ -4,7 +4,7 @@
 	<name>task-tracker-api-parent</name>
 	
 	<groupId>com.zhang</groupId>
-	<artifactId>TASK-TRACKER-api</artifactId>
+	<artifactId>TASK-TRACKER-API</artifactId>
 	<version>1.1.1</version>
 	<packaging>pom</packaging>	
 
@@ -44,6 +44,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -73,14 +74,11 @@
 					<artifactId>maven-resources-plugin</artifactId>
 				</plugin>
 
-
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<version>2.7.12</version>
 				</plugin>
-
-
 
 			</plugins>
 		</pluginManagement>

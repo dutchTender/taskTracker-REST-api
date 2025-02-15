@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.zhang</groupId>
-        <artifactId>TASK-TRACKER-api</artifactId>
+        <artifactId>TASK-TRACKER-API</artifactId>
         <version>1.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
