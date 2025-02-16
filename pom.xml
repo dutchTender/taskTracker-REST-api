@@ -81,9 +81,8 @@
 						</manifest>
 						<manifestEntries>
 							<Created-By>Li Zhang</Created-By>
-						</manifestEntries>
-						<manifestEntries>
 							<Main-Class>com.zhang.app.spring.UmApp</Main-Class>
+							<Class-Path>app.jar lib/</Class-Path>
 						</manifestEntries>
 					</archive>
 				</configuration>

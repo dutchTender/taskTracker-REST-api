@@ -7,13 +7,21 @@ RUN apt-get update && \
 
 RUN useradd --create-home appUser
 USER appUser
-
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH="$JAVA_HOME/bin:${PATH}"
-
 ARG JAR_FILE=target/app.jar
 
 COPY ./target/app.jar  app.jar
+COPY ./lib /lib
+
+EXPOSE 8082
+
+ENV API_KEY=mycats
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:${PATH}"
+
+
+
+
+
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 
