@@ -15,14 +15,14 @@ import com.zhang.core.service.ITaskService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 
 
-@Controller
+@RestController
 @RequestMapping(value = UmMappings.TASKS)
 @CrossOrigin(origins = "*")
 public class TaskController extends AbstractLongIdController<Task> implements ILongIdSortingController<Task> {

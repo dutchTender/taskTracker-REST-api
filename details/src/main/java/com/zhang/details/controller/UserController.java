@@ -15,7 +15,6 @@ import com.zhang.core.service.IUserService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -23,7 +22,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 
-@Controller
+@RestController
 @RequestMapping(value = UmMappings.USERS)
 @CrossOrigin(origins = "*")
 public class UserController extends AbstractLongIdController<User> implements ILongIdSortingController<User> {

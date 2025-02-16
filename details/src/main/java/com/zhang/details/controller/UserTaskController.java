@@ -12,7 +12,6 @@ import com.zhang.core.service.IUserService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-@Controller
+
+@RestController
 @RequestMapping(value = UmMappings.USER_TASKS)
 @CrossOrigin(origins = "*")
 public class UserTaskController extends AbstractLongIdController<User>  {
