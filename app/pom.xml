@@ -51,9 +51,7 @@
         -->
         <!--health check -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
-
         <!-- test scoped -->
-
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,7 +59,6 @@
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -75,11 +72,9 @@
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger2</artifactId>
                     <version>2.2.2</version>
-
                 </dependency>
         -->
     </dependencies>
-
     <build>
         <finalName>app</finalName>
         <resources>
@@ -88,9 +83,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-
     </build>
-
     <profiles>
         <profile>
             <id>integration</id>
