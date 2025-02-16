@@ -29,7 +29,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
     @Autowired
     private IUserService userService;
-
     @Autowired
     private ITaskService taskService;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
