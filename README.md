@@ -63,3 +63,10 @@ on application start up. get users end point should produce
 ],
 "id": 1001
 }
+
+
+Building the application.
+
+run from the app module to deploy REST API to a docker container
+docker build -t task-tracker-api .
+
