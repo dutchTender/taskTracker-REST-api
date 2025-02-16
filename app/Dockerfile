@@ -22,7 +22,7 @@ ENV PATH="$JAVA_HOME/bin:${PATH}"
 
 
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar", "-classpath", "/lib"]
 
 
 CMD ["/bin/bash"]

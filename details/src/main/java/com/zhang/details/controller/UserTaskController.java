@@ -10,10 +10,8 @@ import com.zhang.core.persistence.dto.UserTasksDTO;
 import com.zhang.core.service.ITaskService;
 import com.zhang.core.service.IUserService;
 import com.zhang.details.util.UmMappings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,11 +23,17 @@ import java.util.Set;
 @CrossOrigin(origins = "*")
 public class UserTaskController extends AbstractLongIdController<User>  {
 
-    @Autowired
-    private IUserService userService;
 
-    @Autowired
-    private ITaskService taskService;
+    private final IUserService userService;
+
+
+    private final ITaskService taskService;
+
+    public UserTaskController(IUserService userService, ITaskService taskService) {
+        this.userService = userService;
+        this.taskService = taskService;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

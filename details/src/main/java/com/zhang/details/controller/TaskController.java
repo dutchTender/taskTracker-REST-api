@@ -13,9 +13,7 @@ import com.zhang.core.persistence.dto.TaskRewardDTO;
 import com.zhang.core.service.ITaskRewardService;
 import com.zhang.core.service.ITaskService;
 import com.zhang.details.util.UmMappings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -27,10 +25,15 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 public class TaskController extends AbstractLongIdController<Task> implements ILongIdSortingController<Task> {
 
-    @Autowired
-    private ITaskService taskService;
-    @Autowired
-    private ITaskRewardService rewardService;
+
+    private final ITaskService taskService;
+
+    private final ITaskRewardService rewardService;
+
+    public TaskController(ITaskService taskService, ITaskRewardService rewardService) {
+        this.taskService = taskService;
+        this.rewardService = rewardService;
+    }
     // API
     // find - all/paginated
     @Override

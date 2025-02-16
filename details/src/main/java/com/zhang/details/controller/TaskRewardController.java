@@ -7,10 +7,8 @@ import com.zhang.core.persistence.dto.TaskRewardDTO;
 import com.zhang.core.persistence.model.TaskReward;
 import com.zhang.core.service.ITaskRewardService;
 import com.zhang.details.util.UmMappings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -22,8 +20,13 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class TaskRewardController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
 
-    @Autowired
-    private ITaskRewardService service;
+
+    private final ITaskRewardService service;
+
+    public TaskRewardController(ITaskRewardService service) {
+        this.service = service;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
