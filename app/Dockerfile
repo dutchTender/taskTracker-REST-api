@@ -1,11 +1,6 @@
 FROM ubuntu:latest
 
 
-ARG JAR_FILE=/target/app.jar
-
-COPY ./target/app.jar  app.jar
-ENTRYPOINT ["java -jar /app.jar"]
-
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -14,5 +9,11 @@ RUN apt-get update && \
 
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH="$JAVA_HOME/bin:${PATH}"
+
+ARG JAR_FILE=target/app.jar
+
+COPY ./target/app.jar  app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
 
 CMD ["/bin/bash"]

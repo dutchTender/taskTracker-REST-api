@@ -30,43 +30,12 @@ localhost:8082/api/taskRewards/
 
 on application start up. get users end point should produce
 
-[
-{
-"name": "dutchTender",
-"user_type": "admin",
-"email": "lzhang422@gmail.com",
-"tasks": [
-{
-"name": "basketball practice after school",
-"taskTime": "every other tuesday",
-"taskDescription": "drop of achiles at basketball practice",
-"taskRewards": [
-{
-"name": "1 sneakers bar",
-"id": 999
-}
-],
-"id": 10002
-},
-{
-"name": "pick up cat food from amazon",
-"taskTime": "next week",
-"taskDescription": "tikicat + instinct patte",
-"taskRewards": [
-{
-"name": "1 bitcoin",
-"id": 1001
-}
-],
-"id": 10001
-}
-],
-"id": 1001
-}
+--------------------------------------------------------------
 
-
-Building the application.
-
+Building the application in a docker container
+cd to the app module
 run from the app module to deploy REST API to a docker container
-docker build -t task-tracker-api .
+  docker build -t task-tracker-api .
+  docker run -p 4444:8082 task-tracker-api
+
 
