@@ -1,4 +1,4 @@
-package com.zhang.details.controller;
+package com.zhang.app.controller;
 
 import com.zhang.common.persistence.service.ILongRawService;
 import com.zhang.common.web.controller.AbstractLongIdController;
@@ -181,7 +181,6 @@ public class UserTaskController extends AbstractLongIdController<User>  {
     }
     @Override
     protected ILongRawService<User> getService() {
-
         return userService;
     }
 }

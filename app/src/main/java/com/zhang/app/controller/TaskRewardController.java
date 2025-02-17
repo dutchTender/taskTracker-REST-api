@@ -1,4 +1,4 @@
-package com.zhang.details.controller;
+package com.zhang.app.controller;
 
 import com.zhang.common.util.QueryConstants;
 import com.zhang.common.web.controller.AbstractLongIdController;
@@ -6,13 +6,12 @@ import com.zhang.common.web.controller.ILongIdSortingController;
 import com.zhang.core.persistence.dto.TaskRewardDTO;
 import com.zhang.core.persistence.model.TaskReward;
 import com.zhang.core.service.ITaskRewardService;
-import com.zhang.details.util.DTOService;
+import com.zhang.details.service.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

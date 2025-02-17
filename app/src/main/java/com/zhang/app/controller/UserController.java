@@ -1,18 +1,13 @@
-package com.zhang.details.controller;
+package com.zhang.app.controller;
 
 import com.zhang.common.util.QueryConstants;
 import com.zhang.common.web.controller.AbstractLongIdController;
 import com.zhang.common.web.controller.ILongIdSortingController;
-import com.zhang.core.persistence.dto.TaskDTO;
-import com.zhang.core.persistence.dto.TaskRewardDTO;
 import com.zhang.core.persistence.dto.UserDTO;
-import com.zhang.core.persistence.model.Task;
-import com.zhang.core.persistence.model.TaskReward;
-import com.zhang.core.persistence.model.TaskRewardPreference;
+
 import com.zhang.core.persistence.model.User;
-import com.zhang.core.service.ITaskService;
 import com.zhang.core.service.IUserService;
-import com.zhang.details.util.DTOService;
+import com.zhang.details.service.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +33,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
         this.dtoService = dtoService;
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,8 +160,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
-
-
 
     @Override
     protected final IUserService getService() {
