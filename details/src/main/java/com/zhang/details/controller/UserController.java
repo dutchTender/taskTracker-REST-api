@@ -12,6 +12,7 @@ import com.zhang.core.persistence.model.TaskRewardPreference;
 import com.zhang.core.persistence.model.User;
 import com.zhang.core.service.ITaskService;
 import com.zhang.core.service.IUserService;
+import com.zhang.details.util.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ import javax.validation.Valid;
 import java.util.*;
 
 
+
+
 @RestController
 @RequestMapping(value = UmMappings.USERS)
 @CrossOrigin(origins = "*")
@@ -28,11 +31,11 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
 
     private final IUserService userService;
-    private final ITaskService taskService;
 
-    public UserController(IUserService userService, ITaskService taskService) {
+
+    public UserController(IUserService userService) {
         this.userService = userService;
-        this.taskService = taskService;
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +54,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public List<UserDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return buildDTOListFromUsers(Optional.ofNullable(userList));
+        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -70,7 +73,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
-        return buildDTOListFromUsers(Optional.ofNullable(userList));
+        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -87,7 +90,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllSorted(sortBy, sortOrder);
-        return buildDTOListFromUsers(Optional.ofNullable(userList));
+        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -104,7 +107,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-        return buildDTOListFromUsers(Optional.ofNullable(userList));
+        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -118,7 +121,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public UserDTO findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
-        return buildDTOFromUser(user);
+        return DTOService.buildDTOFromUser(user);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -134,7 +137,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody @Valid final UserDTO resource) {
-        create(buildUserFromDTO(resource, 0L));
+        create(DTOService.buildUserFromDTO(resource, 0L));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -147,7 +150,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
-        updateInternal(id, buildUserFromDTO(resource, id));
+        updateInternal(id, DTOService.buildUserFromDTO(resource, id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -163,78 +166,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
         deleteByIdInternal(id);
     }
 
-    private User buildUserFromDTO(UserDTO dto, Long id){
-        User user = new User();
-        if(id != 0)
-            user.setId(id);
-        user.setName(dto.getName());
-        user.setUser_type(dto.getUser_type());
-        user.setEmail(dto.getEmail());
-        user.setTasks(buildTasksFromDTOs(dto.getTasks()));
-        return  user;
-    }
-    private HashSet<Task> buildTasksFromDTOs(HashSet<TaskDTO> taskDTOs){
-        HashSet<Task> tasks = new HashSet<>();
-        if(taskDTOs != null)
-            taskDTOs.forEach(taskDTO ->{
-                Task bUnit = taskService.findTaskReference(taskDTO.getId());
-                tasks.add(bUnit);
-            });
-        return tasks;
-    }
-    private UserDTO buildDTOFromUser(User user){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setName(user.getName());
-        userDTO.setUser_type(user.getUser_type());
-        userDTO.setTasks(buildDTOsFromTasks(user.getTasks()));
-        userDTO.setEmail(user.getEmail());
-        return  userDTO;
-    }
-    private HashSet<TaskDTO> buildDTOsFromTasks(Set<Task> tasks){
-        HashSet<TaskDTO> taskDTOs = new HashSet<>();
-        if(tasks != null)
-            tasks.forEach( task -> {
-                taskDTOs.add(buildDTOFromTask(task));
-        });
-        return  taskDTOs;
-    }
-    private List<UserDTO> buildDTOListFromUsers(Optional<List<User>> userList){
-        List<UserDTO> DTOList = new ArrayList<>();
-        userList.ifPresent(
-                users-> {
-                    users.forEach(user ->{
-                        DTOList.add(buildDTOFromUser(user));
-                    });
-        });
 
-        return DTOList;
-    }
-    private TaskDTO buildDTOFromTask(Task bUnit){
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(bUnit.getId());
-        taskDTO.setName(bUnit.getName());
-        taskDTO.setTaskDescription(bUnit.getTaskDescription());
-        taskDTO.setTaskTime(bUnit.getTaskTime());
-        taskDTO.setTaskRewards(buildIDsFromTaskRewardPreferences(Optional.ofNullable(bUnit.getTaskRewardPreferences())));
-        return taskDTO;
-    }
-    private HashSet<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<Set<TaskRewardPreference>> taskRewardPreferences){
-        HashSet<TaskRewardDTO> taskRewardDTOs = new HashSet<>();
-        taskRewardPreferences.ifPresent(
-                rewardPreferences->{
-                    rewardPreferences.forEach(rewardPreference->{
-                        TaskReward reward = rewardPreference.getTaskRewardID();
-                        // build TaskReward DTO from reward
-                        TaskRewardDTO dto = new TaskRewardDTO();
-                        dto.setId(reward.getId());
-                        dto.setName(reward.getName());
-                        taskRewardDTOs.add(dto);
-                    });
-                }
-        );
-        return  taskRewardDTOs;
-    }
+
     @Override
     protected final IUserService getService() {
         return userService;

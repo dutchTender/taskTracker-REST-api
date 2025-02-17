@@ -1,6 +1,5 @@
 package com.zhang.core.persistence.dto;
 import com.zhang.common.interfaces.ILongNameableDto;
-
 import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;

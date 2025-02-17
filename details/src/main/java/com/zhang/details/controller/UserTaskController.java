@@ -25,8 +25,6 @@ public class UserTaskController extends AbstractLongIdController<User>  {
 
 
     private final IUserService userService;
-
-
     private final ITaskService taskService;
 
     public UserTaskController(IUserService userService, ITaskService taskService) {
@@ -78,13 +76,12 @@ public class UserTaskController extends AbstractLongIdController<User>  {
         List<UserTasksDTO> returnList = new ArrayList<UserTasksDTO>();
         User user = userService.findOne(id);
         if(user != null){
-            for(Iterator<Task> iterBU = user.getTasks().iterator(); iterBU.hasNext(); ) {
-                Task task = iterBU.next();
-                UserTasksDTO userBusinessUnitDTO = new UserTasksDTO();
-                userBusinessUnitDTO.setTask_id(task.getId());
-                userBusinessUnitDTO.setUser_id(user.getId());
-                returnList.add(userBusinessUnitDTO);
-            }
+             user.getTasks().forEach(task -> {
+                 UserTasksDTO userTaskDTO = new UserTasksDTO();
+                 userTaskDTO.setTask_id(task.getId());
+                 userTaskDTO.setUser_id(user.getId());
+                 returnList.add(userTaskDTO);
+             });
         }
         else {
             throw new MyResourceNotFoundException("the resource requested does not exist.");

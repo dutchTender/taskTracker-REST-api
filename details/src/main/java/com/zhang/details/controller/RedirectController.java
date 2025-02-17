@@ -1,7 +1,6 @@
 package com.zhang.details.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
