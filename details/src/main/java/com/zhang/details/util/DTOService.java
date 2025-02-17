@@ -6,20 +6,22 @@ import com.zhang.core.persistence.dto.UserDTO;
 import com.zhang.core.persistence.model.*;
 import com.zhang.core.service.ITaskRewardService;
 import com.zhang.core.service.ITaskService;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-public final class DTOService
+@Component
+public class DTOService
 
 {
-    static ITaskService taskService;
-    static ITaskRewardService taskRewardService;
+    ITaskService taskService;
+    ITaskRewardService taskRewardService;
     public DTOService(ITaskService taskService, ITaskRewardService taskRewardService) {
-        DTOService.taskService = taskService;
-        DTOService.taskRewardService = taskRewardService;
+        this.taskService = taskService;
+        this.taskRewardService = taskRewardService;
     }
 
-    public static User buildUserFromDTO(UserDTO dto, Long id){
+    public  User buildUserFromDTO(UserDTO dto, Long id){
         User user = new User();
         if(id != 0)
             user.setId(id);
@@ -29,7 +31,7 @@ public final class DTOService
         user.setTasks(buildTasksFromDTOs(dto.getTasks()));
         return  user;
     }
-    public static HashSet<Task> buildTasksFromDTOs(HashSet<TaskDTO> taskDTOs){
+    public HashSet<Task> buildTasksFromDTOs(HashSet<TaskDTO> taskDTOs){
         HashSet<Task> tasks = new HashSet<>();
         if(taskDTOs != null)
             taskDTOs.forEach(taskDTO ->{
@@ -38,7 +40,7 @@ public final class DTOService
             });
         return tasks;
     }
-    public static UserDTO buildDTOFromUser(User user){
+    public UserDTO buildDTOFromUser(User user){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
@@ -47,7 +49,7 @@ public final class DTOService
         userDTO.setEmail(user.getEmail());
         return  userDTO;
     }
-    public static HashSet<TaskDTO> buildDTOsFromTasks(Set<Task> tasks){
+    public HashSet<TaskDTO> buildDTOsFromTasks(Set<Task> tasks){
         HashSet<TaskDTO> taskDTOs = new HashSet<>();
         if(tasks != null)
             tasks.forEach( task -> {
@@ -55,7 +57,7 @@ public final class DTOService
             });
         return  taskDTOs;
     }
-    public static List<UserDTO> buildDTOListFromUsers(Optional<List<User>> userList){
+    public List<UserDTO> buildDTOListFromUsers(Optional<List<User>> userList){
         List<UserDTO> DTOList = new ArrayList<>();
         userList.ifPresent(
                 users-> {
@@ -67,7 +69,7 @@ public final class DTOService
         return DTOList;
     }
 
-    public static Task buildTaskFromDTO(TaskDTO taskDTO){
+    public Task buildTaskFromDTO(TaskDTO taskDTO){
         Task task;
         if(taskDTO.getId() != null){
             task = taskService.findOne(taskDTO.getId());
@@ -89,7 +91,7 @@ public final class DTOService
         }
         return task;
     }
-    public static TaskDTO buildDTOFromTask(Task bUnit){
+    public TaskDTO buildDTOFromTask(Task bUnit){
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setId(bUnit.getId());
         taskDTO.setName(bUnit.getName());
@@ -98,7 +100,7 @@ public final class DTOService
         taskDTO.setTaskRewards(buildIDsFromTaskRewardPreferences(Optional.ofNullable(bUnit.getTaskRewardPreferences())));
         return taskDTO;
     }
-    public static TaskRewardPreference buildTaskRewardConfigsFromID(TaskReward taskReward, Task task){
+    public TaskRewardPreference buildTaskRewardConfigsFromID(TaskReward taskReward, Task task){
 
         TaskRewardPreference taskRewardPreference = new TaskRewardPreference();
         // create embeded ID
@@ -114,7 +116,7 @@ public final class DTOService
 
         return taskRewardPreference;
     }
-    public static HashSet<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<Set<TaskRewardPreference>> taskRewardPreferences){
+    public  HashSet<TaskRewardDTO> buildIDsFromTaskRewardPreferences(Optional<Set<TaskRewardPreference>> taskRewardPreferences){
         HashSet<TaskRewardDTO> taskRewardDTOs = new HashSet<>();
         taskRewardPreferences.ifPresent(
                 rewardPreferences->{
@@ -131,19 +133,19 @@ public final class DTOService
         return  taskRewardDTOs;
     }
 
-    public static TaskRewardDTO buildDTOFromTaskReward(TaskReward reward){
+    public  TaskRewardDTO buildDTOFromTaskReward(TaskReward reward){
         TaskRewardDTO taskRewardDTO = new TaskRewardDTO();
         taskRewardDTO.setId(reward.getId());
         taskRewardDTO.setName(reward.getName());
         return  taskRewardDTO;
     }
-    public static TaskReward buildTaskConfigurationFromDTO(TaskRewardDTO taskRewardDTO){
+    public  TaskReward buildTaskConfigurationFromDTO(TaskRewardDTO taskRewardDTO){
         TaskReward taskReward = new TaskReward();
         taskReward.setId(taskRewardDTO.getId());
         taskReward.setName(taskRewardDTO.getName());
         return  taskReward;
     }
-    public static List<TaskRewardDTO> buildDTOListFromConfigurationList(Optional<List<TaskReward>> taskRewardList ){
+    public  List<TaskRewardDTO> buildDTOListFromConfigurationList(Optional<List<TaskReward>> taskRewardList ){
         List<TaskRewardDTO> dtoList = new ArrayList<>();
         taskRewardList.ifPresent(
                 rList->{
@@ -154,7 +156,7 @@ public final class DTOService
         );
         return dtoList;
     }
-    public static List<TaskDTO> buildDTOListFromTasks(Optional<List<Task>> taskList){
+    public  List<TaskDTO> buildDTOListFromTasks(Optional<List<Task>> taskList){
         List<TaskDTO> DTOList = new ArrayList<>();
         taskList.ifPresent(
                 tasks -> {

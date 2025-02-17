@@ -23,9 +23,11 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
 
 
     private final ITaskRewardService service;
+    private final DTOService dtoService;
 
-    public TaskRewardController(ITaskRewardService service) {
+    public TaskRewardController(ITaskRewardService service, DTOService dtoService) {
         this.service = service;
+        this.dtoService = dtoService;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -43,7 +45,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     public List<TaskRewardDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                             @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<TaskReward> bUnitConfigList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return DTOService.buildDTOListFromConfigurationList(Optional.ofNullable(bUnitConfigList));
+        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(bUnitConfigList));
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +63,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     @ResponseBody
     public List<TaskRewardDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<TaskReward> taskConfigList = findAllPaginated(page, size);
-        return DTOService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
+        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -78,7 +80,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     @ResponseBody
     public List<TaskRewardDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<TaskReward> taskConfigList =  findAllSorted(sortBy, sortOrder);
-        return DTOService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
+        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -95,7 +97,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     @ResponseBody
     public List<TaskRewardDTO> findAllDTO(final HttpServletRequest request) {
         List<TaskReward> taskConfigList = findAll(request);
-        return DTOService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
+        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -111,7 +113,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public TaskRewardDTO findOneDTO(@PathVariable("id") final Long id) {
-        return DTOService.buildDTOFromTaskReward(findOne(id));
+        return dtoService.buildDTOFromTaskReward(findOne(id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -127,7 +129,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody @Valid final TaskRewardDTO resource) {
-        create(DTOService.buildTaskConfigurationFromDTO(resource));
+        create(dtoService.buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -142,7 +144,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskRewardDTO resource) {
-        update(id, DTOService.buildTaskConfigurationFromDTO(resource));
+        update(id, dtoService.buildTaskConfigurationFromDTO(resource));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API

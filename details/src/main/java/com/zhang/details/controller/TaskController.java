@@ -6,9 +6,8 @@ import com.zhang.common.util.QueryConstants;
 import com.zhang.common.web.controller.AbstractLongIdController;
 import com.zhang.common.web.controller.ILongIdSortingController;
 import com.zhang.core.persistence.dto.TaskDTO;
-
-import com.zhang.core.service.ITaskRewardService;
 import com.zhang.core.service.ITaskService;
+import com.zhang.core.service.IUserService;
 import com.zhang.details.util.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,11 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
 
 
     private final ITaskService taskService;
+    private final DTOService dtoService;
 
-    public TaskController(ITaskService taskService) {
+    public TaskController(ITaskService taskService, DTOService dtoService) {
         this.taskService = taskService;
+        this.dtoService = dtoService;
     }
     // API
     // find - all/paginated
@@ -40,7 +41,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public List<TaskDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                       @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
            List<Task> taskList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-           return DTOService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+           return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
     @Override
 
@@ -51,7 +52,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseBody
     public List<TaskDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<Task> taskList = findAllPaginated(page, size);
-        return DTOService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+        return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseBody
     public List<TaskDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> taskList = findAllSorted(sortBy, sortOrder);
-        return DTOService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+        return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
     @Override
     public List<Task> findAll(final HttpServletRequest request) {
@@ -72,7 +73,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseBody
     public List<TaskDTO> findAllDTO(final HttpServletRequest request) {
         List<Task> taskList = findAllInternal(request);
-        return DTOService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+        return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
     }
     public Task findOne(final Long id) {
         return findOneInternal(id);
@@ -81,7 +82,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseBody
     public TaskDTO findOneDTO(@PathVariable("id") final Long id) {
         Task task = findOne(id);
-        return DTOService.buildDTOFromTask(task);
+        return dtoService.buildDTOFromTask(task);
     }
     public void create(@RequestBody final Task resource) {
         createInternal(resource);
@@ -89,7 +90,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody @Valid final TaskDTO resource) {
-        Task newTask = DTOService.buildTaskFromDTO(resource);
+        Task newTask = dtoService.buildTaskFromDTO(resource);
         create(newTask);
     }
     public void update( final Long id, final Task resource) {
@@ -99,7 +100,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseStatus(HttpStatus.OK)
     public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
            resource.setId(id);
-           Task task = DTOService.buildTaskFromDTO(resource);
+           Task task = dtoService.buildTaskFromDTO(resource);
            update(id, task);
     }
     @RequestMapping(value = "/addUser/{id}/{uid}", method = RequestMethod.PUT)

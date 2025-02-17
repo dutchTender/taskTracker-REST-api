@@ -31,11 +31,12 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
 
     private final IUserService userService;
+    private final DTOService dtoService;
 
-
-    public UserController(IUserService userService) {
+    public UserController(IUserService userService, DTOService dtoService) {
         this.userService = userService;
 
+        this.dtoService = dtoService;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +55,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public List<UserDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -73,7 +74,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
-        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -90,7 +91,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllSorted(sortBy, sortOrder);
-        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -107,7 +108,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public List<UserDTO> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-        return DTOService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -121,7 +122,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public UserDTO findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
-        return DTOService.buildDTOFromUser(user);
+        return dtoService.buildDTOFromUser(user);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -137,7 +138,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createDTO(@RequestBody @Valid final UserDTO resource) {
-        create(DTOService.buildUserFromDTO(resource, 0L));
+        create(dtoService.buildUserFromDTO(resource, 0L));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -150,7 +151,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
-        updateInternal(id, DTOService.buildUserFromDTO(resource, id));
+        updateInternal(id, dtoService.buildUserFromDTO(resource, id));
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
