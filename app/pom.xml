@@ -15,7 +15,7 @@
         <!-- internal -->
         <dependency>
             <groupId>com.zhang</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>core</artifactId>
             <version>1.1.1</version>
         </dependency>
         <dependency>
@@ -23,7 +23,6 @@
             <artifactId>details</artifactId>
             <version>1.1.1</version>
         </dependency>
-
         <!-- web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,7 +38,6 @@
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
             <version>${tomcat.version}</version>
-            <scope>provided</scope>
         </dependency>
         <!--db access -->
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
@@ -76,7 +74,8 @@
         -->
     </dependencies>
     <build>
-        <finalName>app</finalName>
+        <plugins>
+        </plugins>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
