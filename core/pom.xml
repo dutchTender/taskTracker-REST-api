@@ -10,7 +10,6 @@
         <version>1.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <dependencies>
         <!-- internal -->
         <dependency>
@@ -51,7 +50,6 @@
             </resource>
         </resources>
     </build>
-
     <profiles>
         <profile>
             <id>integration</id>

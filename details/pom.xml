@@ -3,21 +3,14 @@
     <artifactId>details</artifactId>
     <packaging>jar</packaging>
     <name>details</name>
-
     <parent>
         <groupId>com.zhang</groupId>
         <artifactId>TASK-TRACKER-API</artifactId>
         <version>1.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <dependencies>
         <!-- internal -->
-        <dependency>
-            <groupId>com.zhang</groupId>
-            <artifactId>common</artifactId>
-            <version>1.1.1</version>
-        </dependency>
         <dependency>
             <groupId>com.zhang</groupId>
             <artifactId>core</artifactId>
@@ -62,7 +55,6 @@
             </resource>
         </resources>
     </build>
-
     <profiles>
         <profile>
             <id>integration</id>

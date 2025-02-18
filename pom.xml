@@ -69,7 +69,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
 	<properties>
 		<!-- non-dependencies -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,7 +76,6 @@
 		<!-- commons and utils -->
 		<guava.version>32.0.1-jre</guava.version>
 	</properties>
-	
 	<modules>
 		<module>common</module>
 		<module>core</module>
