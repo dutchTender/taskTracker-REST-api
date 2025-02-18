@@ -21,11 +21,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<dependencies>
-		<!--lombok -->
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-
-	</dependencies>
 	<build>
 		<pluginManagement>
 			<plugins>
