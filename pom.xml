@@ -5,7 +5,7 @@
 	
 	<groupId>com.zhang</groupId>
 	<artifactId>TASK-TRACKER-API</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -66,6 +66,20 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!--<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+							<configuration>
+								<mainClass>com.zhang.app.spring.UmApp</mainClass>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>-->
 			</plugins>
 		</pluginManagement>
 	</build>
