@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import com.zhang.common.persistence.model.ILongNameableEntity;
 //import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
-@Data
+@Getter @Setter @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
 @Table(name = "task_rewards")
@@ -34,17 +36,11 @@ public class TaskReward implements Serializable, ILongNameableEntity{
     )
     private Set<TaskRewardPreference> taskRewardPreferences = new HashSet<>();
 
-    public TaskRewardPreference addTaskRewardConfig(TaskRewardPreference taskRewardPreference){
+    public void addTaskRewardConfig(TaskRewardPreference taskRewardPreference){
         taskRewardPreferences.add(taskRewardPreference);
-        return taskRewardPreference;
     }
     public void removeTaskRewardConfig( TaskRewardPreference taskRewardPreference){
-        for(Iterator<TaskRewardPreference> iterBUCP = taskRewardPreferences.iterator(); iterBUCP.hasNext(); ) {
-            TaskRewardPreference current = iterBUCP.next();
-            if(current.equals(taskRewardPreference)){
-                iterBUCP.remove();
-            }
-        }
+     taskRewardPreferences.remove(taskRewardPreference);
     }
 
     @Override
@@ -57,5 +53,20 @@ public class TaskReward implements Serializable, ILongNameableEntity{
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName());
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Long id) {
+            this.id = id;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

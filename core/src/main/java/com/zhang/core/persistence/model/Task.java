@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.zhang.common.persistence.model.ILongNameableEntity;
 import com.zhang.core.persistence.dto.TaskDTO;
 //import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,7 +15,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter @Getter
+@ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_catalog", schema = "oif_ods")
 @Table(name = "tasks")
@@ -68,5 +72,20 @@ public class Task implements  Serializable, ILongNameableEntity{
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getTaskTime(), getTaskDescription());
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Long id) {
+            this.id = id;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

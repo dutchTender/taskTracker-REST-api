@@ -21,6 +21,15 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<properties>
+		<!-- non-dependencies -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>17</java.version>
+		<!-- commons and utils -->
+		<guava.version>32.0.1-jre</guava.version>
+	</properties>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -51,31 +60,24 @@
 					<artifactId>maven-resources-plugin</artifactId>
 				</plugin>
 				<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<packageName>com.zhang</packageName>
-						</manifest>
-						<manifestEntries>
-							<Created-By>Li Zhang</Created-By>
-							<Main-Class>com.zhang.app.spring.UmApp</Main-Class>
-							<Class-Path>app.jar lib/</Class-Path>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<packageName>com.zhang</packageName>
+							</manifest>
+							<manifestEntries>
+								<Created-By>Li Zhang</Created-By>
+								<Main-Class>com.zhang.app.spring.UmApp</Main-Class>
+								<Class-Path>app.jar lib/</Class-Path>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
-	<properties>
-		<!-- non-dependencies -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>17</java.version>
-		<!-- commons and utils -->
-		<guava.version>32.0.1-jre</guava.version>
-	</properties>
 	<modules>
 		<module>common</module>
 		<module>core</module>
