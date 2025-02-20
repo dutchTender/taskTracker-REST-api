@@ -14,7 +14,6 @@ public class UmContextConfig {
     }
 
     // beans
-
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties() {
         final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
