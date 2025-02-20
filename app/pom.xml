@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
-            <version>${tomcat.version}</version>
+            <version>9.0.12</version>
         </dependency>
         <!--db access -->
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->

@@ -5,7 +5,7 @@
 	
 	<groupId>com.zhang</groupId>
 	<artifactId>TASK-TRACKER-API</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -27,6 +27,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
 		<!-- commons and utils -->
+		<tomcat.version>9.0.12</tomcat.version>
 		<guava.version>32.0.1-jre</guava.version>
 	</properties>
 
