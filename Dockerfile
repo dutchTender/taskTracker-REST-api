@@ -16,6 +16,6 @@ COPY ./out/artifacts/app_jar/app.jar  app.jar
 
 EXPOSE 8082
 
-ENTRYPOINT ["java", "-jar", "/app.jar", "-classpath", "/lib"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 CMD ["/bin/bash"]
