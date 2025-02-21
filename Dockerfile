@@ -12,7 +12,7 @@ RUN useradd --create-home appUser
 USER appUser
 ARG JAR_FILE=target/app.jar
 
-COPY ./out/artifacts/app_jar/app.jar  app.jar
+COPY ./out/artifacts/app_jar/taskTracker-REST-api.jar  app.jar
 
 EXPOSE 8082
 
