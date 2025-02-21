@@ -30,10 +30,23 @@
 		<guava.version>32.0.1-jre</guava.version>
 	</properties>
 
+
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!--
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<excludes>
+							<exclude>**/*IntegrationTest.java</exclude>
+							<exclude>**/*LiveTest.java</exclude>
+						</excludes>
+						<systemPropertyVariables>
+							<!-- <provPersistenceTarget>h2</provPersistenceTarget> -->
+						</systemPropertyVariables>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -47,7 +60,7 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
 				</plugin>
-				plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<configuration>
@@ -62,19 +75,8 @@
 							</manifestEntries>
 						</archive>
 					</configuration>
-				</plugin>-->
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<configuration>
-						<excludes>
-							<exclude>
-								<groupId>org.projectlombok</groupId>
-								<artifactId>lombok</artifactId>
-							</exclude>
-						</excludes>
-					</configuration>
 				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
