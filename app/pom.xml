@@ -13,11 +13,6 @@
         <!-- internal -->
         <dependency>
             <groupId>com.zhang</groupId>
-            <artifactId>core</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zhang</groupId>
             <artifactId>details</artifactId>
             <version>1.1.1</version>
         </dependency>

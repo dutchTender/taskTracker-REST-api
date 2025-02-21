@@ -18,11 +18,6 @@
         </dependency>
 
         <!-- web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <!--db access -->
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
         <!--
