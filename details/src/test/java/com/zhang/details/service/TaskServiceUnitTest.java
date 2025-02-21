@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -15,7 +14,7 @@ public class TaskServiceUnitTest {
 
     @Test
     public void testAddTask() {
-        ITaskDAO mockDAO = mock(ITaskDAO.class);
+        ITaskDAO mockDAO = Mockito.mock(ITaskDAO.class);
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setTaskTime("next day");
         taskDTO.setTaskDescription("test description");
