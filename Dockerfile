@@ -12,8 +12,7 @@ RUN useradd --create-home appUser
 USER appUser
 ARG JAR_FILE=target/app.jar
 
-COPY ./target/app.jar  app.jar
-COPY ./lib /lib
+COPY ./out/artifacts/app_jar/app.jar  app.jar
 
 EXPOSE 8082
 
