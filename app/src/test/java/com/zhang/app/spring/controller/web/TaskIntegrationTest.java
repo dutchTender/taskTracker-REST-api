@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @ContextConfiguration(classes = {UmPersistenceJpaConfig.class})
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-@WebAppConfiguration
 public class TaskIntegrationTest {
 // we are going to modify this to do a dataJPA test for integration testing
 
@@ -31,10 +28,6 @@ public class TaskIntegrationTest {
     private ITaskDAO taskDAO;
     @Autowired
     private TestEntityManager entityManager;
-    @Autowired
-    private WebApplicationContext context;
-
-
     // tests jpa add and jpa find one
     @Test
     public final void whenFindByName_thenReturnBusinessUnit() {
