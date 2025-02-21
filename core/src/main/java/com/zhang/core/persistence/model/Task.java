@@ -47,6 +47,14 @@ public class Task implements  Serializable, ILongNameableEntity{
 
     public Task(){
     }
+
+    public Task(TaskDTO taskDTO) {
+        this.name = taskDTO.getName();
+        this.taskTime = taskDTO.getTaskTime();
+        this.taskDescription = taskDTO.getTaskDescription();
+        this.taskRewardPreferences = new HashSet<>();
+    }
+
     public void addTaskRewardConfiguration(TaskRewardPreference taskRewardPreference){
         taskRewardPreferences.add(taskRewardPreference);
     }
