@@ -1,16 +1,12 @@
 package com.zhang.core.persistence.dto;
 import com.zhang.common.interfaces.ILongNameableDto;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 
-@Getter @Setter
-@ToString
+
 public class UserDTO implements ILongNameableDto {
     private Long Id;
     @NotNull
@@ -46,5 +42,29 @@ public class UserDTO implements ILongNameableDto {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getUser_type(), getEmail());
+    }
+
+    public String getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public HashSet<TaskDTO> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(HashSet<TaskDTO> tasks) {
+        this.tasks = tasks;
     }
 }

@@ -15,7 +15,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Setter @Getter
 @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_catalog", schema = "oif_ods")
@@ -47,13 +46,6 @@ public class Task implements  Serializable, ILongNameableEntity{
     private Set<TaskRewardPreference> taskRewardPreferences = new HashSet<>();
 
     public Task(){
-    }
-    public Task(TaskDTO taskDTO){
-             name = taskDTO.getName();
-             taskTime = taskDTO.getTaskTime();
-             taskDescription = taskDTO.getTaskDescription();
-             id = taskDTO.getId();
-
     }
     public void addTaskRewardConfiguration(TaskRewardPreference taskRewardPreference){
         taskRewardPreferences.add(taskRewardPreference);
@@ -87,5 +79,29 @@ public class Task implements  Serializable, ILongNameableEntity{
     @Override
     public String getName() {
         return this.name;
+    }
+
+    public String getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(String taskTime) {
+        this.taskTime = taskTime;
+    }
+
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public Set<TaskRewardPreference> getTaskRewardPreferences() {
+        return taskRewardPreferences;
+    }
+
+    public void setTaskRewardPreferences(Set<TaskRewardPreference> taskRewardPreferences) {
+        this.taskRewardPreferences = taskRewardPreferences;
     }
 }
