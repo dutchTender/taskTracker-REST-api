@@ -1,6 +1,11 @@
 Java - 17.x
 Spring Boot - 2.7.12
 REST API for a Angular application
+Run in container:
+build your main artifact to : /home/out/artifacts/app_jar/taskTracker-REST-api.jar
+run your docker build command from /home/
+docker build -t task-tracker-api .
+docker run -p 8082:8082 task-tracker-api
 
 - UPCOMING ROADMAPS
   - DTO projection support
