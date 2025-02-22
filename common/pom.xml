@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-servlet-api</artifactId>
-			<version>${tomcat.version}</version>
+			<version>8.5.34</version>
 		</dependency>
 		<!-- validation -->
 		<dependency>

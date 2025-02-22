@@ -5,10 +5,10 @@ import com.zhang.core.persistence.dao.IUserDAO;
 import com.zhang.core.persistence.model.Task;
 import com.zhang.core.persistence.model.User;
 import com.zhang.core.service.ITaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
 
@@ -16,15 +16,17 @@ import java.util.Optional;
 @Transactional
 public class TaskService extends AbstractLongIdService<Task> implements ITaskService {
 
-
+    @Autowired
     private ITaskDAO dao;
+    @Autowired
     private IUserDAO userDao;
 
+    /*
     public TaskService(ITaskDAO dao, IUserDAO userDao) {
         this.dao = dao;
         this.userDao = userDao;
     }
-
+    */
     public TaskService() {
         super();
     }
