@@ -1,5 +1,6 @@
 package com.zhang.details.controller;
 
+import com.zhang.common.base.rest.AbstractRestResponse;
 import com.zhang.common.base.rest.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
 import com.zhang.common.interfaces.generics.controller.ILongIdSortingController;
@@ -10,6 +11,7 @@ import com.zhang.core.service.IUserService;
 import com.zhang.details.service.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -100,9 +102,17 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDTO> findAllDTO(final HttpServletRequest request ) {
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>,Exception>> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        AbstractRestResponse<List<UserDTO>,Exception> restResponse = new AbstractRestResponse<>(
+                "success",
+                "Users retrieved successfully",
+                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
+                null
+        ) {
+        };
+        return ResponseEntity.ok(restResponse);
+
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
