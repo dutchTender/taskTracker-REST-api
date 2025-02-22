@@ -1,4 +1,4 @@
-package com.zhang.app.controller;
+package com.zhang.details.controller;
 
 import com.zhang.common.interfaces.generics.service.ILongRawService;
 import com.zhang.common.base.controller.AbstractLongIdController;

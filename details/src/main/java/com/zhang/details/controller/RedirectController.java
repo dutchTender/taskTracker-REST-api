@@ -1,4 +1,4 @@
-package com.zhang.app.controller;
+package com.zhang.details.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import com.zhang.details.util.UmMappings;

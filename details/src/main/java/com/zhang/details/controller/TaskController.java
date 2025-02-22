@@ -1,4 +1,4 @@
-package com.zhang.app.controller;
+package com.zhang.details.controller;
 
 
 import com.zhang.core.persistence.model.Task;

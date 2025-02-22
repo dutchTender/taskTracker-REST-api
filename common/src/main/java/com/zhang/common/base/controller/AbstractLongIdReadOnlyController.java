@@ -2,7 +2,6 @@ package com.zhang.common.base.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
 import com.zhang.common.interfaces.generics.service.ILongRawService;
 import com.zhang.common.base.rest.RestPreconditions;
 import com.zhang.common.util.exception.MyResourceNotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.zhang.common.interfaces.identity.IWithName;
 import com.google.common.collect.Lists;
 
