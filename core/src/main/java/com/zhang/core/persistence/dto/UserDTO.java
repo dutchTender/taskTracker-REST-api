@@ -1,5 +1,5 @@
 package com.zhang.core.persistence.dto;
-import com.zhang.common.interfaces.ILongNameableDto;
+import com.zhang.common.interfaces.dto.ILongNameableDto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

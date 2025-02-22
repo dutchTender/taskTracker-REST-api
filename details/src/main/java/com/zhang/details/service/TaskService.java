@@ -1,5 +1,5 @@
 package com.zhang.details.service;
-import com.zhang.common.persistence.service.AbstractLongIdService;
+import com.zhang.common.base.service.AbstractLongIdService;
 import com.zhang.core.persistence.dao.ITaskDAO;
 import com.zhang.core.persistence.dao.IUserDAO;
 import com.zhang.core.persistence.model.Task;

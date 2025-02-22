@@ -1,9 +1,9 @@
 package com.zhang.app.controller;
 
-import com.zhang.common.persistence.service.ILongRawService;
-import com.zhang.common.web.controller.AbstractLongIdController;
-import com.zhang.common.web.exception.MyBadRequestException;
-import com.zhang.common.web.exception.MyResourceNotFoundException;
+import com.zhang.common.interfaces.generics.service.ILongRawService;
+import com.zhang.common.base.controller.AbstractLongIdController;
+import com.zhang.common.util.exception.MyBadRequestException;
+import com.zhang.common.util.exception.MyResourceNotFoundException;
 import com.zhang.core.persistence.model.Task;
 import com.zhang.core.persistence.model.User;
 import com.zhang.core.persistence.dto.UserTasksDTO;

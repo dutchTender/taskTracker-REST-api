@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.zhang.common.spring.util.Profiles;
+import com.zhang.common.util.web.Profiles;
 
 /**
  * This simple setup class will run during the bootstrap process of Spring and will create some setup data <br>

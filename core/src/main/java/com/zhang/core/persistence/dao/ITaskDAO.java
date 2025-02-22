@@ -1,6 +1,6 @@
 package com.zhang.core.persistence.dao;
 
-import com.zhang.common.interfaces.IByNameApi;
+import com.zhang.common.interfaces.generics.IByNameApi;
 import com.zhang.core.persistence.dto.TaskDTOInterface;
 import com.zhang.core.persistence.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;

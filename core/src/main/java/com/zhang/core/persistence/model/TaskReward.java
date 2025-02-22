@@ -2,7 +2,7 @@ package com.zhang.core.persistence.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import com.zhang.common.persistence.model.ILongNameableEntity;
+import com.zhang.common.interfaces.entity.ILongNameableEntity;
 //import io.swagger.annotations.ApiModelProperty;
 
 
