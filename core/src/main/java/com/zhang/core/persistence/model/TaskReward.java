@@ -4,16 +4,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import com.zhang.common.persistence.model.ILongNameableEntity;
 //import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
-@Getter @Setter @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
 @Table(name = "task_rewards")
@@ -44,18 +41,6 @@ public class TaskReward implements Serializable, ILongNameableEntity{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskReward that = (TaskReward) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName());
-    }
-
-    @Override
     public Long getId() {
         return this.id;
     }
@@ -68,5 +53,37 @@ public class TaskReward implements Serializable, ILongNameableEntity{
     @Override
     public String getName() {
         return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<TaskRewardPreference> getTaskRewardPreferences() {
+        return taskRewardPreferences;
+    }
+
+    public void setTaskRewardPreferences(Set<TaskRewardPreference> taskRewardPreferences) {
+        this.taskRewardPreferences = taskRewardPreferences;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskReward that = (TaskReward) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
+    }
+
+    @Override
+    public String toString() {
+        return "TaskReward{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

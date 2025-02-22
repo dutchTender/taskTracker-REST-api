@@ -4,16 +4,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.zhang.common.interfaces.ILongNameableDto;
 import com.zhang.common.persistence.model.ILongNameableEntity;
 //import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 @Entity
-
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Getter @Setter
+
 //@Table(name = "user", schema = "oif_ods")
 @Table(name = "users")
 public class User implements ILongNameableEntity, ILongNameableDto {
@@ -24,7 +22,7 @@ public class User implements ILongNameableEntity, ILongNameableDto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     //@ApiModelProperty(hidden = true)
     private Long id;
-    @Setter
+
     @Column(name = "user_name")
     private String name;
     private String user_type;
@@ -65,5 +63,53 @@ public class User implements ILongNameableEntity, ILongNameableDto {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getName(), user.getName()) && Objects.equals(getUser_type(), user.getUser_type()) && Objects.equals(getEmail(), user.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getUser_type(), getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", user_type='" + user_type + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

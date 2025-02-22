@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.zhang.common.persistence.model.ILongNameableEntity;
 import com.zhang.core.persistence.dto.TaskDTO;
 //import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +13,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_catalog", schema = "oif_ods")
 @Table(name = "tasks")
@@ -111,5 +108,15 @@ public class Task implements  Serializable, ILongNameableEntity{
 
     public void setTaskRewardPreferences(Set<TaskRewardPreference> taskRewardPreferences) {
         this.taskRewardPreferences = taskRewardPreferences;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", taskTime='" + taskTime + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                '}';
     }
 }
