@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+
 //@Table(name = "business_unit_config_values", schema = "oif_ods")
 public class TaskRewardPreference {
     @EmbeddedId

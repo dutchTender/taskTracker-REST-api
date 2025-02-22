@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_catalog", schema = "oif_ods")
 @Table(name = "tasks")
@@ -60,18 +61,6 @@ public class Task implements  Serializable, ILongNameableEntity{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(getId(), task.getId()) && Objects.equals(getName(), task.getName()) && Objects.equals(getTaskTime(), task.getTaskTime()) && Objects.equals(getTaskDescription(), task.getTaskDescription());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getTaskTime(), getTaskDescription());
-    }
-
-    @Override
     public Long getId() {
         return this.id;
     }
@@ -112,6 +101,18 @@ public class Task implements  Serializable, ILongNameableEntity{
 
     public void setTaskRewardPreferences(Set<TaskRewardPreference> taskRewardPreferences) {
         this.taskRewardPreferences = taskRewardPreferences;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(getId(), task.getId()) && Objects.equals(getName(), task.getName()) && Objects.equals(getTaskTime(), task.getTaskTime()) && Objects.equals(getTaskDescription(), task.getTaskDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getTaskTime(), getTaskDescription());
     }
 
     @Override

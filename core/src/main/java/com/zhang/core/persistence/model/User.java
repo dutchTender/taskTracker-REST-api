@@ -5,13 +5,14 @@ import com.zhang.common.interfaces.ILongNameableDto;
 import com.zhang.common.persistence.model.ILongNameableEntity;
 //import io.swagger.annotations.ApiModelProperty;
 
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "user", schema = "oif_ods")
 @Table(name = "users")
 public class User implements ILongNameableEntity, ILongNameableDto {

@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@Table(name = "business_unit_configuration", schema = "oif_ods")
 @Table(name = "task_rewards")
