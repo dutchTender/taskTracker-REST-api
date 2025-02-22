@@ -86,6 +86,10 @@ public class Task implements  Serializable, ILongNameableEntity{
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getTaskTime() {
         return taskTime;
     }
