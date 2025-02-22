@@ -1,4 +1,4 @@
-package com.zhang.common.util.rest;
+package com.zhang.common.base.rest;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;

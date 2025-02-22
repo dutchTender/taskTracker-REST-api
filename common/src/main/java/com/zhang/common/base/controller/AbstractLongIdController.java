@@ -2,7 +2,7 @@ package com.zhang.common.base.controller;
 
 import com.zhang.common.interfaces.entity.ILongNameableEntity;
 
-import com.zhang.common.util.rest.RestPreconditions;
+import com.zhang.common.base.rest.RestPreconditions;
 
 public abstract class AbstractLongIdController<T extends ILongNameableEntity> extends AbstractLongIdReadOnlyController<T> {
 

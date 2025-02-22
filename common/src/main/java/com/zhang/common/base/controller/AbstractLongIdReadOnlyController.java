@@ -4,7 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.zhang.common.interfaces.generics.service.ILongRawService;
-import com.zhang.common.util.rest.RestPreconditions;
+import com.zhang.common.base.rest.RestPreconditions;
 import com.zhang.common.util.exception.MyResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

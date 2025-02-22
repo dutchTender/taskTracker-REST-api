@@ -1,4 +1,4 @@
-package com.zhang.common.util.rest;
+package com.zhang.common.base.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpStatusCodeException;

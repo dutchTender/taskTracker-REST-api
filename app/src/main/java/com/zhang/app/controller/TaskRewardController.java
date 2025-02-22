@@ -1,6 +1,6 @@
 package com.zhang.app.controller;
 
-import com.zhang.common.util.rest.QueryConstants;
+import com.zhang.common.base.rest.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
 import com.zhang.common.interfaces.generics.controller.ILongIdSortingController;
 import com.zhang.core.persistence.dto.TaskRewardDTO;
