@@ -105,17 +105,13 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+userList.size());
         AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
                 "Users retrieved successfully",
-                dtoService.buildDTOListFromUsers(Optional.of(userList)),
+                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
                 metaData
-
-
-        ) {
-        };
+        ) {};
         return ResponseEntity.ok(restResponse);
 
     }
@@ -129,9 +125,16 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public User findOne(final Long id) {return findOneInternal(id);}
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public UserDTO findOneDTO(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<UserDTO, AbstractRestMetaData>> findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
-        return dtoService.buildDTOFromUser(user);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
+        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                "User retrieved successfully",
+                dtoService.buildDTOFromUser(user),
+                metaData
+        ){};
+        return ResponseEntity.ok(restResponse);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
