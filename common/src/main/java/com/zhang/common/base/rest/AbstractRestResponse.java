@@ -1,6 +1,6 @@
 package com.zhang.common.base.rest;
 
-public abstract class AbstractRestResponse<T,S> {
+public abstract class AbstractRestResponse<T,S extends AbstractRestMetaData> {
     private String code;
     private String message;
     private T data;

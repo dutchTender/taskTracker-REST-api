@@ -1,5 +1,6 @@
 package com.zhang.details.controller;
 
+import com.zhang.common.base.rest.AbstractRestMetaData;
 import com.zhang.common.base.rest.AbstractRestResponse;
 import com.zhang.common.base.rest.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
@@ -102,13 +103,17 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<UserDTO>,Exception>> findAllDTO(final HttpServletRequest request ) {
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
-        AbstractRestResponse<List<UserDTO>,Exception> restResponse = new AbstractRestResponse<>(
+
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+userList.size());
+        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
                 "Users retrieved successfully",
-                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
-                null
+                dtoService.buildDTOListFromUsers(Optional.of(userList)),
+                metaData
+
+
         ) {
         };
         return ResponseEntity.ok(restResponse);
