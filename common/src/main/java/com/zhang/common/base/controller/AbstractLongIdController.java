@@ -8,11 +8,11 @@ public abstract class AbstractLongIdController<T extends ILongNameableEntity> ex
 
     // save/create/persist
 
-    protected final void createInternal(final T resource) {
+    protected final T createInternal(final T resource) {
         RestPreconditions.checkRequestElementNotNull(resource);
         // verifies that id is not part of the payload
         RestPreconditions.checkRequestState(resource.getId() == null);
-        getService().create(resource);
+        return getService().create(resource);
     }
 
     // update
@@ -34,7 +34,6 @@ public abstract class AbstractLongIdController<T extends ILongNameableEntity> ex
     }
 
     // delete/remove
-
     protected final void deleteByIdInternal(final Long id) {
         getService().delete(id);
     }

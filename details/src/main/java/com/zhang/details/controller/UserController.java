@@ -27,13 +27,11 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 public class UserController extends AbstractLongIdController<User> implements ILongIdSortingController<User> {
 
-
     private final IUserService userService;
     private final DTOService dtoService;
 
     public UserController(IUserService userService, DTOService dtoService) {
         this.userService = userService;
-
         this.dtoService = dtoService;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,15 +140,25 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // create - one
     // Unit testing  : NA
     // Integration testing : NA
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void create(@RequestBody final User resource) {
-        createInternal(resource);
+    /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///
+    public User create(@RequestBody final User resource) {
+        return createInternal(resource);
     }
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody @Valid final UserDTO resource) {
-        create(dtoService.buildUserFromDTO(resource, 0L));
+    public ResponseEntity<AbstractRestResponse<UserDTO,AbstractRestMetaData>> createDTO(@RequestBody @Valid final UserDTO resource) {
+
+        User user = create(dtoService.buildUserFromDTO(resource, 0L));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
+        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                "New User created successfully",
+                dtoService.buildDTOFromUser(user),
+                metaData
+        ){};
+        return ResponseEntity.ok(restResponse);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
