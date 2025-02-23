@@ -4,6 +4,7 @@ import com.zhang.common.base.rest.AbstractRestMetaData;
 import com.zhang.common.base.rest.AbstractRestResponse;
 import com.zhang.common.base.rest.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
+import com.zhang.common.base.rest.RestResponseMessage;
 import com.zhang.common.interfaces.generics.controller.ILongIdSortingController;
 import com.zhang.core.persistence.dto.UserDTO;
 import com.zhang.core.persistence.model.User;
@@ -105,7 +106,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+userList.size());
         AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
-                "Users retrieved successfully",
+                RestResponseMessage.USERS_GET_SUCCESS,
                 dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
                 metaData
         ) {};
@@ -127,7 +128,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
         AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
-                "User retrieved successfully",
+                RestResponseMessage.USER_GET_SUCCESS,
                 dtoService.buildDTOFromUser(user),
                 metaData
         ){};
@@ -148,12 +149,11 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AbstractRestResponse<UserDTO,AbstractRestMetaData>> createDTO(@RequestBody @Valid final UserDTO resource) {
-
         User user = create(dtoService.buildUserFromDTO(resource, 0L));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
         AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
-                "New User created successfully",
+                RestResponseMessage.USER_CREATE_SUCCESS,
                 dtoService.buildDTOFromUser(user),
                 metaData
         ){};
@@ -176,7 +176,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
         AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
-                "User update successfully",
+                RestResponseMessage.USER_UPDATE_SUCCESS,
                 dtoService.buildDTOFromUser(user),
                 metaData
         ){};
@@ -197,13 +197,12 @@ public class UserController extends AbstractLongIdController<User> implements IL
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "N/A");
         AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
-                "User deleted successfully",
+                RestResponseMessage.USER_DELETE_SUCCESS,
                 null,
                 metaData
         ){};
         return ResponseEntity.ok(restResponse);
     }
-
     @Override
     protected final IUserService getService() {
         return userService;
