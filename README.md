@@ -28,6 +28,7 @@ docker run -p 8082:8082 task-tracker-api
   - DTO projection support
   - Entity Graph support
   - oAUTH2 SUPPORT VIA AUTHORIZATION AND RESOURCE SERVER SUPPORT
+  - Open telemetry integration
   - Idempotent implementation
 
 
