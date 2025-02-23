@@ -18,7 +18,11 @@ docker run -p 8082:8082 task-tracker-api
   - custom exception handling
   - performance monitoring
   - docker support
-  - 
+  - Structured Api Response
+  - concurrency support
+  - thread pool optimization
+
+
 - UPCOMING ROADMAPS
   - Netflix Eureka Support
   - DTO projection support
