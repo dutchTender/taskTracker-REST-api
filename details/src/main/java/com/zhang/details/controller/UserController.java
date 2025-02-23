@@ -47,10 +47,18 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
+
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"}");
+        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.USERS_GET_SUCCESS,
+                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -67,9 +75,17 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
-        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
+
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: page - {" +page+" }" + " size- {"+size+"}");
+        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.USERS_GET_SUCCESS,
+                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
