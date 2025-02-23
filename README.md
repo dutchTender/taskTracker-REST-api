@@ -14,7 +14,13 @@ docker build -t task-tracker-api .
 
 docker run -p 8082:8082 task-tracker-api
 
+- features
+  - custom exception handling
+  - performance monitoring
+  - docker support
+  - 
 - UPCOMING ROADMAPS
+  - Netflix Eureka Support
   - DTO projection support
   - Entity Graph support
   - oAUTH2 SUPPORT VIA AUTHORIZATION AND RESOURCE SERVER SUPPORT
