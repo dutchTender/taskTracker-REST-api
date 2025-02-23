@@ -34,7 +34,7 @@ public interface ILongOperations<T extends Serializable> {
 
     // update
 
-    void update(final T resource);
+    T update(final T resource);
 
     // delete
 

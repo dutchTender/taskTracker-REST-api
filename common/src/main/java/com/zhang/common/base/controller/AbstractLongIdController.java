@@ -20,7 +20,7 @@ public abstract class AbstractLongIdController<T extends ILongNameableEntity> ex
     /**
      * - note: the operation is IDEMPOTENT <br/>
      */
-    protected final void updateInternal(final Long id, final T resource) {
+    protected final T updateInternal(final Long id, final T resource) {
         RestPreconditions.checkRequestElementNotNull(resource);
         RestPreconditions.checkRequestElementNotNull(id);
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ public abstract class AbstractLongIdController<T extends ILongNameableEntity> ex
         //RestPreconditions.checkRequestState(resource.getId() == null);
         ////////////////////////////////////////////////////////////////////////////////////////////
         RestPreconditions.checkNotNull(getService().findOne(id));
-        getService().update(resource);
+        return getService().update(resource);
     }
 
     // delete/remove

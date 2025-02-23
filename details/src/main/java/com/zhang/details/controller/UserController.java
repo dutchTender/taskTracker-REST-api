@@ -166,12 +166,22 @@ public class UserController extends AbstractLongIdController<User> implements IL
     // update - one
     // Unit testing  : NA
     // Integration testing : NA
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///
+    ///
     @Transactional
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
-        updateInternal(id, dtoService.buildUserFromDTO(resource, id));
+    public ResponseEntity<AbstractRestResponse<UserDTO, AbstractRestMetaData>> update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
+        User user = updateInternal(id, dtoService.buildUserFromDTO(resource, id));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
+        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                "User update successfully",
+                dtoService.buildDTOFromUser(user),
+                metaData
+        ){};
+        return ResponseEntity.ok(restResponse);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API

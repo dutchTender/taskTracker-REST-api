@@ -95,19 +95,15 @@ public abstract class AbstractLongIdRawService<T extends IWithName> implements I
     @Override
     public T create(final T entity) {
         Preconditions.checkNotNull(entity);
-
-        final T persistedEntity = getDao().save(entity);
-
-        return persistedEntity;
+        return getDao().save(entity);
     }
 
     // update/merge
 
     @Override
-    public void update(final T entity) {
+    public T update(final T entity) {
         Preconditions.checkNotNull(entity);
-
-        getDao().save(entity);
+        return getDao().save(entity);
     }
 
     // delete
