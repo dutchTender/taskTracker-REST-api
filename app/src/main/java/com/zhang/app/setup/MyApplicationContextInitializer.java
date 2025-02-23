@@ -1,4 +1,4 @@
-package com.zhang.details.persistence.setup;
+package com.zhang.app.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

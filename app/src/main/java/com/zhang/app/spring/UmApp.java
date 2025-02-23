@@ -1,5 +1,5 @@
 package com.zhang.app.spring;
-import com.zhang.details.persistence.setup.MyApplicationContextInitializer;
+import com.zhang.app.setup.MyApplicationContextInitializer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;

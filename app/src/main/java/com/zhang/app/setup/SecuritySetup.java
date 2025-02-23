@@ -1,4 +1,4 @@
-package com.zhang.details.persistence.setup;
+package com.zhang.app.setup;
 
 import com.zhang.core.persistence.model.Task;
 import com.zhang.core.persistence.model.User;

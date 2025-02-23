@@ -50,7 +50,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"}");
         AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
@@ -77,7 +76,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
-
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: page - {" +page+" }" + " size- {"+size+"}");
         AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
                 "success",
