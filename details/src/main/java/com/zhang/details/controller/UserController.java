@@ -84,9 +84,17 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllSorted(sortBy, sortOrder);
-        return dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } page size: "+dtoList.size());
+        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.USERS_GET_SUCCESS,
+                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
