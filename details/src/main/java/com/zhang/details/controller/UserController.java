@@ -6,7 +6,6 @@ import com.zhang.common.base.rest.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
 import com.zhang.common.interfaces.generics.controller.ILongIdSortingController;
 import com.zhang.core.persistence.dto.UserDTO;
-
 import com.zhang.core.persistence.model.User;
 import com.zhang.core.service.IUserService;
 import com.zhang.details.service.DTOService;
@@ -193,8 +192,16 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @Transactional
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<UserDTO, AbstractRestMetaData>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "N/A");
+        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                "User deleted successfully",
+                null,
+                metaData
+        ){};
+        return ResponseEntity.ok(restResponse);
     }
 
     @Override
