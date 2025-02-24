@@ -13,4 +13,11 @@ public class RestResponseMessage{
     public static final String TASK_DELETE_SUCCESS = "Task deleted successfully";
     public static final String TASK_GET_SUCCESS = "Task retrieved successfully";
     public static final String TASKS_GET_SUCCESS = "Tasks retrieved successfully"; // is constant because it's used for the controller mapping
+
+
+    public static final String TASK_REWARD_CREATE_SUCCESS = "New Task Reward created successfully";
+    public static final String TASK_REWARD_UPDATE_SUCCESS = "Task Reward update successfully";
+    public static final String TASK_REWARD_DELETE_SUCCESS = "Task Reward deleted successfully";
+    public static final String TASK_REWARD_GET_SUCCESS = "Task Reward retrieved successfully";
+    public static final String TASKS_REWARD_GET_SUCCESS = "Tasks Reward retrieved successfully"; // is constant because it's used for the controller mapping
 }
