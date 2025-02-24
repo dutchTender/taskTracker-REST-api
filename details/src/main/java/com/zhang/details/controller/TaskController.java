@@ -1,11 +1,8 @@
 package com.zhang.details.controller;
-
-
 import com.zhang.common.base.rest.response.AbstractAPIResponse;
 import com.zhang.common.base.rest.response.AbstractRestMetaData;
 import com.zhang.common.base.rest.response.AbstractRestResponse;
 import com.zhang.common.base.rest.response.RestResponseMessage;
-import com.zhang.core.persistence.dto.UserDTO;
 import com.zhang.core.persistence.model.Task;
 import com.zhang.common.base.rest.validate.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
@@ -43,10 +40,12 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+    public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                       @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-           List<Task> taskList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-           return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+        List<Task> taskList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total tasks : "+taskList.size());
+        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
     @Override
 
@@ -55,9 +54,11 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+    public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<Task> taskList = findAllPaginated(page, size);
-        return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "params: page - {" +page+" }" + " size- {"+size+"} total tasks :"+taskList.size());
+        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
 
     @Override
