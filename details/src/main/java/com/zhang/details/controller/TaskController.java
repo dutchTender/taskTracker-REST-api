@@ -118,30 +118,38 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         ) {};
         return ResponseEntity.ok(restResponse);
     }
-    public void update( final Long id, final Task resource) {
-        updateInternal(id, resource);
+    public Task update( final Long id, final Task resource) {
+        return updateInternal(id, resource);
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
            resource.setId(id);
-           Task task = dtoService.buildTaskFromDTO(resource);
-           update(id, task);
+           Task updatedTask = updateInternal(id, dtoService.buildTaskFromDTO(resource));
+
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
+        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.TASK_UPDATE_SUCCESS,
+                dtoService.buildDTOFromTask(updatedTask),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", " N/A");
+        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.TASK_DELETE_SUCCESS,
+                null,
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
-
-    // remove user from business unit
-    @RequestMapping(value = "/removeUser/{id}/{uid}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    public void removeUserFromTask(@PathVariable("id") final String id, @PathVariable("uid") final String uid) {
-        getService().removerUser(id, uid);
-    }
-
     @Override
     protected final ITaskService getService() {
         return taskService;
