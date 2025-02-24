@@ -52,13 +52,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"}");
-        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USERS_GET_SUCCESS,
-                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -78,13 +73,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: page - {" +page+" }" + " size- {"+size+"}");
-        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USERS_GET_SUCCESS,
-                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -102,13 +92,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAllSorted(sortBy, sortOrder)));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } page size: "+dtoList.size());
-        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USERS_GET_SUCCESS,
-                dtoList,
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -123,11 +108,11 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<Collection<UserDTO>>> findAllDTO(final HttpServletRequest request ) {
-        List<UserDTO> dtoCollection = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAll(request)));
-        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+dtoCollection.size());
-        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponseCollection(dtoCollection,metaData, RestResponseMessage.USERS_GET_SUCCESS);
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllDTO(final HttpServletRequest request ) {
+        List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAll(request)));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+dtoList.size());
+        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS);
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
