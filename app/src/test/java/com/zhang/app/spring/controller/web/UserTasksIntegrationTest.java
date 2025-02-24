@@ -5,7 +5,6 @@ import com.zhang.core.persistence.dto.UserTasksDTO;
 import com.zhang.core.service.ITaskService;
 
 import com.zhang.core.service.IUserService;
-import com.zhang.details.controller.UserTaskController;
 import com.zhang.details.util.UmMappings;
 import org.junit.Test;
 import org.junit.runner.RunWith;

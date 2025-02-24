@@ -1,6 +1,10 @@
 package com.zhang.details.controller;
 
 
+import com.zhang.common.base.rest.AbstractRestMetaData;
+import com.zhang.common.base.rest.AbstractRestResponse;
+import com.zhang.common.base.rest.RestResponseMessage;
+import com.zhang.core.persistence.dto.UserDTO;
 import com.zhang.core.persistence.model.Task;
 import com.zhang.common.base.rest.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
@@ -10,6 +14,7 @@ import com.zhang.core.service.ITaskService;
 import com.zhang.details.service.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -70,9 +75,16 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskDTO> findAllDTO(final HttpServletRequest request) {
-        List<Task> taskList = findAllInternal(request);
-        return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+    public ResponseEntity<AbstractRestResponse<List<TaskDTO>, AbstractRestMetaData>> findAllDTO(final HttpServletRequest request) {
+        List<Task> taskList = findAll(request);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "total tasks : "+taskList.size());
+        AbstractRestResponse<List<TaskDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.TASKS_GET_SUCCESS,
+                dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     public Task findOne(final Long id) {
         return findOneInternal(id);

@@ -21,7 +21,7 @@ public class TaskService extends AbstractLongIdService<Task> implements ITaskSer
     @Autowired
     private IUserDAO userDao;
 
-    /*
+    /* this didn't work ...
     public TaskService(ITaskDAO dao, IUserDAO userDao) {
         this.dao = dao;
         this.userDao = userDao;
@@ -43,8 +43,6 @@ public class TaskService extends AbstractLongIdService<Task> implements ITaskSer
     public Task findTaskReference(final Long Id) {
              return dao.getReferenceById(Id);
     }
-
-
     @Override
     protected final ITaskDAO getDao() {
         return dao;
