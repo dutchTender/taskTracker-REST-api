@@ -128,12 +128,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
            Task task = dtoService.buildTaskFromDTO(resource);
            update(id, task);
     }
-    @RequestMapping(value = "/addUser/{id}/{uid}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
-    public void addUserToTask(@PathVariable("id") final String id, @PathVariable("uid") final String uid) {
-        getService().addUser(id, uid);
 
-    }
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") final Long id) {
