@@ -102,14 +102,21 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         ) {};
         return ResponseEntity.ok(restResponse);
     }
-    public void create(@RequestBody final Task resource) {
-        createInternal(resource);
+    public Task create(@RequestBody final Task resource) {
+        return createInternal(resource);
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createDTO(@RequestBody @Valid final TaskDTO resource) {
-        Task newTask = dtoService.buildTaskFromDTO(resource);
-        create(newTask);
+    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> createDTO(@RequestBody @Valid final TaskDTO resource) {
+        Task createdTask = create(dtoService.buildTaskFromDTO(resource));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+createdTask.getId(), " N/A");
+        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.TASK_CREATE_SUCCESS,
+                dtoService.buildDTOFromTask(createdTask),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     public void update( final Long id, final Task resource) {
         updateInternal(id, resource);
