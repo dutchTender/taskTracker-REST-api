@@ -91,9 +91,16 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public TaskDTO findOneDTO(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> findOneDTO(@PathVariable("id") final Long id) {
         Task task = findOne(id);
-        return dtoService.buildDTOFromTask(task);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
+        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.TASKS_GET_SUCCESS,
+                dtoService.buildDTOFromTask(task),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     public void create(@RequestBody final Task resource) {
         createInternal(resource);
