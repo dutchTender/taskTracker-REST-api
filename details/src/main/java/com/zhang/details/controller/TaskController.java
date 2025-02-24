@@ -1,12 +1,11 @@
 package com.zhang.details.controller;
 
 
-import com.zhang.common.base.rest.AbstractRestMetaData;
-import com.zhang.common.base.rest.AbstractRestResponse;
-import com.zhang.common.base.rest.RestResponseMessage;
-import com.zhang.core.persistence.dto.UserDTO;
+import com.zhang.common.base.rest.response.AbstractRestMetaData;
+import com.zhang.common.base.rest.response.AbstractRestResponse;
+import com.zhang.common.base.rest.response.RestResponseMessage;
 import com.zhang.core.persistence.model.Task;
-import com.zhang.common.base.rest.QueryConstants;
+import com.zhang.common.base.rest.validate.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
 import com.zhang.common.interfaces.generics.controller.ILongIdSortingController;
 import com.zhang.core.persistence.dto.TaskDTO;

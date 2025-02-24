@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.response;
 
 public class AbstractRestMetaData {
     private String uri;

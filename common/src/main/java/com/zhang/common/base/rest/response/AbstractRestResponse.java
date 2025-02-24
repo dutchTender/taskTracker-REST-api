@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.response;
 
 public abstract class AbstractRestResponse<T> {
     private String code;

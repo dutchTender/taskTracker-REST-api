@@ -1,12 +1,8 @@
 package com.zhang.common.base.controller;
 
-import com.zhang.common.base.rest.AbstractRestMetaData;
-import com.zhang.common.base.rest.AbstractRestResponse;
-import com.zhang.common.base.rest.RestResponseMessage;
 import com.zhang.common.interfaces.entity.ILongNameableEntity;
 
-import com.zhang.common.base.rest.RestPreconditions;
-import org.springframework.http.ResponseEntity;
+import com.zhang.common.base.rest.validate.RestPreconditions;
 
 public abstract class AbstractLongIdController<T extends ILongNameableEntity> extends AbstractLongIdReadOnlyController<T>  {
 

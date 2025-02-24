@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.validate;
 
 public final class QueryConstants {
 

@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Optional;
 import com.zhang.common.interfaces.identity.IWithName;
 import com.zhang.common.interfaces.generics.service.ILongRawService;
-import com.zhang.common.base.rest.ServicePreconditions;
+import com.zhang.common.base.rest.validate.ServicePreconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

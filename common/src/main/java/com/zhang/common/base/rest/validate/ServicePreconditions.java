@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.validate;
 
 import com.zhang.common.util.exception.MyEntityNotFoundException;
 import com.zhang.common.util.exception.MyBadRequestException;

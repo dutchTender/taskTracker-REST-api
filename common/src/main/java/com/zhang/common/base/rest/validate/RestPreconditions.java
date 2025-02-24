@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.validate;
 
 import com.zhang.common.util.exception.MyBadRequestException;
 import org.springframework.http.HttpStatus;

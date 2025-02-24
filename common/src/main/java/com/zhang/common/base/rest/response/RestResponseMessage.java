@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.response;
 
 public class RestResponseMessage{
     public static final String USER_CREATE_SUCCESS = "New User created successfully";

@@ -1,4 +1,4 @@
-package com.zhang.common.base.rest;
+package com.zhang.common.base.rest.response;
 import org.springframework.http.ResponseEntity;
 
 
