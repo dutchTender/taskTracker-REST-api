@@ -163,13 +163,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> createDTO(@RequestBody @Valid final UserDTO resource) {
         User user = create(dtoService.buildUserFromDTO(resource, 0L));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USER_CREATE_SUCCESS,
-                dtoService.buildDTOFromUser(user),
-                metaData
-        ){};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromUser(user), metaData, RestResponseMessage.USER_CREATE_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -186,13 +181,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
         User user = updateInternal(id, dtoService.buildUserFromDTO(resource, id));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USER_UPDATE_SUCCESS,
-                dtoService.buildDTOFromUser(user),
-                metaData
-        ){};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromUser(user), metaData, RestResponseMessage.USER_UPDATE_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -207,13 +197,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "N/A");
-        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USER_DELETE_SUCCESS,
-                null,
-                metaData
-        ){};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(null, metaData, RestResponseMessage.USER_DELETE_SUCCESS);
     }
     @Override
     protected final IUserService getService() {
