@@ -19,5 +19,5 @@ public class RestResponseMessage{
     public static final String TASK_REWARD_UPDATE_SUCCESS = "Task Reward update successfully";
     public static final String TASK_REWARD_DELETE_SUCCESS = "Task Reward deleted successfully";
     public static final String TASK_REWARD_GET_SUCCESS = "Task Reward retrieved successfully";
-    public static final String TASKS_REWARD_GET_SUCCESS = "Tasks Reward retrieved successfully";
+    public static final String TASK_REWARDS_GET_SUCCESS = "Task Rewards retrieved successfully";
 }

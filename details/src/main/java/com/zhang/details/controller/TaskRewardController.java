@@ -1,14 +1,20 @@
 package com.zhang.details.controller;
 
+import com.zhang.common.base.rest.response.AbstractAPIResponse;
+import com.zhang.common.base.rest.response.AbstractRestMetaData;
+import com.zhang.common.base.rest.response.AbstractRestResponse;
+import com.zhang.common.base.rest.response.RestResponseMessage;
 import com.zhang.common.base.rest.validate.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
 import com.zhang.common.interfaces.generics.controller.ILongIdSortingController;
+import com.zhang.core.persistence.dto.TaskDTO;
 import com.zhang.core.persistence.dto.TaskRewardDTO;
 import com.zhang.core.persistence.model.TaskReward;
 import com.zhang.core.service.ITaskRewardService;
 import com.zhang.details.service.DTOService;
 import com.zhang.details.util.UmMappings;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -94,9 +100,11 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskRewardDTO> findAllDTO(final HttpServletRequest request) {
-        List<TaskReward> taskConfigList = findAll(request);
-        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
+    public ResponseEntity<AbstractRestResponse<List<TaskRewardDTO>>> findAllDTO(final HttpServletRequest request) {
+        List<TaskReward> taskRewardsList = findAll(request);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "total tasks : "+taskRewardsList.size());
+        AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API

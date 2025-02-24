@@ -47,8 +47,8 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
-    @Override
 
+    @Override
     public List<Task> findAllPaginated(final int page, final int size) {
         return findPaginatedInternal(page, size);
     }
@@ -73,6 +73,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
+
     @Override
     public List<Task> findAll(final HttpServletRequest request) {
         return findAllInternal(request);
@@ -85,6 +86,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
+
     public Task findOne(final Long id) {
         return findOneInternal(id);
     }
@@ -95,6 +97,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTask(findOne(id)), metaData, RestResponseMessage.TASK_GET_SUCCESS);
     }
+
     public Task create(@RequestBody final Task resource) {
         return createInternal(resource);
     }
@@ -106,6 +109,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
         AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTask(createdTask), metaData, RestResponseMessage.TASK_CREATE_SUCCESS);
     }
+
     public Task update( final Long id, final Task resource) {
         return updateInternal(id, resource);
     }
