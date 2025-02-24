@@ -143,13 +143,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USER_GET_SUCCESS,
-                dtoService.buildDTOFromUser(user),
-                metaData
-        ){};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromUser(user), metaData, RestResponseMessage.USER_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
