@@ -1,10 +1,8 @@
 package com.zhang.details.service;
-
 import com.zhang.common.base.service.AbstractLongIdService;
 import com.zhang.core.persistence.dao.ITaskRewardsDAO;
 import com.zhang.core.persistence.model.TaskReward;
 import com.zhang.core.service.ITaskRewardService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -13,9 +11,12 @@ import javax.transaction.Transactional;
 @Transactional
 public class TaskRewardService extends AbstractLongIdService<TaskReward> implements ITaskRewardService {
 
-    @Autowired
-    private ITaskRewardsDAO dao;
-    TaskRewardService(){super();}
+
+    private final ITaskRewardsDAO dao;
+    TaskRewardService(ITaskRewardsDAO dao){
+        super();
+        this.dao = dao;
+    }
 
     @Override
     protected JpaSpecificationExecutor<TaskReward> getSpecificationExecutor() {

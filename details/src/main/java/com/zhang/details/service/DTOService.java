@@ -1,5 +1,4 @@
 package com.zhang.details.service;
-
 import com.zhang.core.persistence.dto.TaskDTO;
 import com.zhang.core.persistence.dto.TaskRewardDTO;
 import com.zhang.core.persistence.dto.UserDTO;
