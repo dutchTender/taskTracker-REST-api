@@ -1,5 +1,6 @@
 package com.zhang.details.controller;
 
+import com.zhang.common.base.rest.response.AbstractAPIResponse;
 import com.zhang.common.base.rest.response.AbstractRestMetaData;
 import com.zhang.common.base.rest.response.AbstractRestResponse;
 import com.zhang.common.base.rest.validate.QueryConstants;
@@ -122,16 +123,11 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllDTO(final HttpServletRequest request ) {
-        List<User> userList = findAll(request);
-        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+userList.size());
-        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.USERS_GET_SUCCESS,
-                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+    public ResponseEntity<AbstractRestResponse<Collection<UserDTO>>> findAllDTO(final HttpServletRequest request ) {
+        List<UserDTO> dtoCollection = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAll(request)));
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+dtoCollection.size());
+        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponseCollection(dtoCollection,metaData, RestResponseMessage.USERS_GET_SUCCESS);
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
