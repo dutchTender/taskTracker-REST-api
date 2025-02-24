@@ -1,12 +1,12 @@
 package com.zhang.common.base.rest;
 
-public abstract class AbstractRestResponse<T,S extends AbstractRestMetaData> {
+public abstract class AbstractRestResponse<T> {
     private String code;
     private String message;
     private T data;
-    private S metaData;
+    private AbstractRestMetaData metaData;
 
-    public AbstractRestResponse(String code, String message, T data, S metaData) {
+    public AbstractRestResponse(String code, String message, T data, AbstractRestMetaData metaData) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -37,11 +37,11 @@ public abstract class AbstractRestResponse<T,S extends AbstractRestMetaData> {
         this.data = data;
     }
 
-    public S getMetaData() {
+    public AbstractRestMetaData getMetaData() {
         return metaData;
     }
 
-    public void setMetaData(S metaData) {
+    public void setMetaData(AbstractRestMetaData metaData) {
         this.metaData = metaData;
     }
 }

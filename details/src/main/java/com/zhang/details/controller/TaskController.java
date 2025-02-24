@@ -65,9 +65,17 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> taskList = findAllSorted(sortBy, sortOrder);
-        return dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList));
+
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "total tasks : "+taskList.size());
+        AbstractRestResponse<List<TaskDTO>> restResponse = new AbstractRestResponse<>(
+                "success",
+                RestResponseMessage.TASKS_GET_SUCCESS,
+                dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)),
+                metaData
+        ) {};
+        return ResponseEntity.ok(restResponse);
     }
     @Override
     public List<Task> findAll(final HttpServletRequest request) {
@@ -75,10 +83,10 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<TaskDTO>, AbstractRestMetaData>> findAllDTO(final HttpServletRequest request) {
+    public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllDTO(final HttpServletRequest request) {
         List<Task> taskList = findAll(request);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "total tasks : "+taskList.size());
-        AbstractRestResponse<List<TaskDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<List<TaskDTO>> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.TASKS_GET_SUCCESS,
                 dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)),
@@ -91,10 +99,10 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> findOneDTO(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO>> findOneDTO(@PathVariable("id") final Long id) {
         Task task = findOne(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
-        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.TASKS_GET_SUCCESS,
                 dtoService.buildDTOFromTask(task),
@@ -107,10 +115,10 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> createDTO(@RequestBody @Valid final TaskDTO resource) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO>> createDTO(@RequestBody @Valid final TaskDTO resource) {
         Task createdTask = create(dtoService.buildTaskFromDTO(resource));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+createdTask.getId(), " N/A");
-        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.TASK_CREATE_SUCCESS,
                 dtoService.buildDTOFromTask(createdTask),
@@ -123,12 +131,12 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO>> updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
            resource.setId(id);
            Task updatedTask = updateInternal(id, dtoService.buildTaskFromDTO(resource));
 
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
-        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.TASK_UPDATE_SUCCESS,
                 dtoService.buildDTOFromTask(updatedTask),
@@ -139,10 +147,10 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<AbstractRestResponse<TaskDTO, AbstractRestMetaData>> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<TaskDTO>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", " N/A");
-        AbstractRestResponse<TaskDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.TASK_DELETE_SUCCESS,
                 null,

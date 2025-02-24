@@ -1,9 +1,11 @@
 package com.zhang.core.persistence.dto;
 
+import com.zhang.common.base.rest.AbstractAPIResponse;
+
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-public class TaskRewardDTO {
+public class TaskRewardDTO extends AbstractAPIResponse<TaskRewardDTO> {
     private Long Id;
     @NotNull
     private String name;

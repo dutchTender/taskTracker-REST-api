@@ -1,4 +1,5 @@
 package com.zhang.core.persistence.dto;
+import com.zhang.common.base.rest.AbstractAPIResponse;
 import com.zhang.common.interfaces.dto.ILongNameableDto;
 
 import javax.validation.constraints.NotNull;
@@ -6,7 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 
-public class TaskDTO implements ILongNameableDto {
+public class TaskDTO extends AbstractAPIResponse<TaskDTO> implements ILongNameableDto {
     private Long Id;
     @NotNull
     private String name;

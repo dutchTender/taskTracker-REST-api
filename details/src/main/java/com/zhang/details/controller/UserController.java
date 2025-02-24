@@ -47,11 +47,11 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"}");
-        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USERS_GET_SUCCESS,
                 dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
@@ -74,10 +74,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: page - {" +page+" }" + " size- {"+size+"}");
-        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USERS_GET_SUCCESS,
                 dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
@@ -98,14 +98,13 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        List<User> userList = findAllSorted(sortBy, sortOrder);
-        List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(userList));
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAllSorted(sortBy, sortOrder)));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } page size: "+dtoList.size());
-        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USERS_GET_SUCCESS,
-                dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
+                dtoList,
                 metaData
         ) {};
         return ResponseEntity.ok(restResponse);
@@ -123,10 +122,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
     }
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<List<UserDTO>, AbstractRestMetaData>> findAllDTO(final HttpServletRequest request ) {
+    public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllDTO(final HttpServletRequest request ) {
         List<User> userList = findAll(request);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+userList.size());
-        AbstractRestResponse<List<UserDTO>,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<List<UserDTO>> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USERS_GET_SUCCESS,
                 dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)),
@@ -145,10 +144,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public User findOne(final Long id) {return findOneInternal(id);}
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<AbstractRestResponse<UserDTO, AbstractRestMetaData>> findOneDTO(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<UserDTO>> findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USER_GET_SUCCESS,
                 dtoService.buildDTOFromUser(user),
@@ -170,10 +169,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AbstractRestResponse<UserDTO,AbstractRestMetaData>> createDTO(@RequestBody @Valid final UserDTO resource) {
+    public ResponseEntity<AbstractRestResponse<UserDTO>> createDTO(@RequestBody @Valid final UserDTO resource) {
         User user = create(dtoService.buildUserFromDTO(resource, 0L));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USER_CREATE_SUCCESS,
                 dtoService.buildDTOFromUser(user),
@@ -193,10 +192,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @Transactional
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AbstractRestResponse<UserDTO, AbstractRestMetaData>> update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
+    public ResponseEntity<AbstractRestResponse<UserDTO>> update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
         User user = updateInternal(id, dtoService.buildUserFromDTO(resource, id));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USER_UPDATE_SUCCESS,
                 dtoService.buildDTOFromUser(user),
@@ -214,10 +213,10 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @Transactional
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<AbstractRestResponse<UserDTO, AbstractRestMetaData>> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<UserDTO>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "N/A");
-        AbstractRestResponse<UserDTO,AbstractRestMetaData> restResponse = new AbstractRestResponse<>(
+        AbstractRestResponse<UserDTO> restResponse = new AbstractRestResponse<>(
                 "success",
                 RestResponseMessage.USER_DELETE_SUCCESS,
                 null,
