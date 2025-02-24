@@ -1,9 +1,11 @@
 package com.zhang.details.controller;
 
 
+import com.zhang.common.base.rest.response.AbstractAPIResponse;
 import com.zhang.common.base.rest.response.AbstractRestMetaData;
 import com.zhang.common.base.rest.response.AbstractRestResponse;
 import com.zhang.common.base.rest.response.RestResponseMessage;
+import com.zhang.core.persistence.dto.UserDTO;
 import com.zhang.core.persistence.model.Task;
 import com.zhang.common.base.rest.validate.QueryConstants;
 import com.zhang.common.base.controller.AbstractLongIdController;
@@ -66,15 +68,9 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseBody
     public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> taskList = findAllSorted(sortBy, sortOrder);
-
-        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "total tasks : "+taskList.size());
-        AbstractRestResponse<List<TaskDTO>> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.TASKS_GET_SUCCESS,
-                dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } total tasks : "+taskList.size());
+        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
     @Override
     public List<Task> findAll(final HttpServletRequest request) {
@@ -85,13 +81,8 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllDTO(final HttpServletRequest request) {
         List<Task> taskList = findAll(request);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "total tasks : "+taskList.size());
-        AbstractRestResponse<List<TaskDTO>> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.TASKS_GET_SUCCESS,
-                dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS);
     }
     public Task findOne(final Long id) {
         return findOneInternal(id);
@@ -99,15 +90,9 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<AbstractRestResponse<TaskDTO>> findOneDTO(@PathVariable("id") final Long id) {
-        Task task = findOne(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
-        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.TASKS_GET_SUCCESS,
-                dtoService.buildDTOFromTask(task),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTask(findOne(id)), metaData, RestResponseMessage.TASK_GET_SUCCESS);
     }
     public Task create(@RequestBody final Task resource) {
         return createInternal(resource);
@@ -117,13 +102,8 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<TaskDTO>> createDTO(@RequestBody @Valid final TaskDTO resource) {
         Task createdTask = create(dtoService.buildTaskFromDTO(resource));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+createdTask.getId(), " N/A");
-        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.TASK_CREATE_SUCCESS,
-                dtoService.buildDTOFromTask(createdTask),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTask(createdTask), metaData, RestResponseMessage.TASK_CREATE_SUCCESS);
     }
     public Task update( final Long id, final Task resource) {
         return updateInternal(id, resource);
@@ -131,17 +111,10 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AbstractRestResponse<TaskDTO>> updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
-           resource.setId(id);
-           Task updatedTask = updateInternal(id, dtoService.buildTaskFromDTO(resource));
-
+        resource.setId(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
-        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.TASK_UPDATE_SUCCESS,
-                dtoService.buildDTOFromTask(updatedTask),
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTask(update(id, dtoService.buildTaskFromDTO(resource))), metaData, RestResponseMessage.TASK_UPDATE_SUCCESS);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -149,13 +122,8 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<TaskDTO>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", " N/A");
-        AbstractRestResponse<TaskDTO> restResponse = new AbstractRestResponse<>(
-                "success",
-                RestResponseMessage.TASK_DELETE_SUCCESS,
-                null,
-                metaData
-        ) {};
-        return ResponseEntity.ok(restResponse);
+        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(null, metaData, RestResponseMessage.TASK_DELETE_SUCCESS);
     }
     @Override
     protected final ITaskService getService() {

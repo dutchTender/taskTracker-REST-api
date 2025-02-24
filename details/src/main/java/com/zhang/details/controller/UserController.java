@@ -91,7 +91,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     @ResponseBody
     public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAllSorted(sortBy, sortOrder)));
-        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } page size: "+dtoList.size());
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } total users : "+dtoList.size());
         AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPISuccessResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS);
     }
