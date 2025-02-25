@@ -14,9 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TaskService extends AbstractLongIdService<Task> implements ITaskService {
 
-
     private final ITaskDAO dao;
-
 
     public TaskService(ITaskDAO dao, IUserDAO userDao) {
         super();
