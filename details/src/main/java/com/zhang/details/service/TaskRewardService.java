@@ -10,14 +10,11 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class TaskRewardService extends AbstractLongIdService<TaskReward> implements ITaskRewardService {
-
-
     private final ITaskRewardsDAO dao;
     TaskRewardService(ITaskRewardsDAO dao){
         super();
         this.dao = dao;
     }
-
     @Override
     protected JpaSpecificationExecutor<TaskReward> getSpecificationExecutor() {
         return this.getSpecificationExecutor();
@@ -29,10 +26,6 @@ public class TaskRewardService extends AbstractLongIdService<TaskReward> impleme
     @Override
     public TaskReward findOne(Long id) {
         return dao.findById(id).get();
-    }
-    @Override
-    public void delete(Long id) {
-         this.delete(id);
     }
     @Override
     protected ITaskRewardsDAO getDao() {
