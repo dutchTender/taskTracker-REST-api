@@ -47,9 +47,7 @@ localhost:8082/api/users/
 
 localhost:8082/api/tasks/
 
-localhost:8082/api/rewards/
-
-localhost:8082/api/taskRewards/
+localhost:8082/api/task-rewards/
 
 
 on application start up. get users end point should produce
