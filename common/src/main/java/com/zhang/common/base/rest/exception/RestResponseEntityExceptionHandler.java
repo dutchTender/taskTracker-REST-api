@@ -3,6 +3,10 @@ package com.zhang.common.base.rest.exception;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 
+import com.zhang.common.base.rest.response.AbstractAPIResponse;
+import com.zhang.common.base.rest.response.AbstractRestMetaData;
+import com.zhang.common.base.rest.response.AbstractRestResponse;
+import com.zhang.common.base.rest.response.RestResponseMessage;
 import com.zhang.common.util.exception.*;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.DataAccessException;
@@ -18,6 +22,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.List;
+import java.util.Optional;
+
 
 // can not enable controller advice at this time
 // it is causing all unit tests to fail
@@ -30,13 +37,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     // API
     // 400  duplicate entry will be checked here
     @ExceptionHandler({ ConstraintViolationException.class, MyBadRequestException.class, DataIntegrityViolationException.class })
-    public ResponseEntity<Object> handleBadRequest(final RuntimeException ex, final WebRequest request) {
+    public ResponseEntity<AbstractRestResponse<Object>> handleBadRequest(final RuntimeException ex, final WebRequest request) {
         //final String bodyOfResponse = "This should be application specific";
-        return handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        AbstractAPIResponse<Object> apiErrorResponse = new AbstractAPIResponse<>();
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/", "error: "+ex.getMessage());
+        return apiErrorResponse.createAPIResponse( handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), new HttpHeaders(), HttpStatus.BAD_REQUEST, request), metaData, RestResponseMessage.BadRequest, "Error");
     }
     // bad request name
     @Override
-
     protected ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         //final String bodyOfResponse = "This should be application specific";
         // ex.getCause() instanceof JsonMappingException, JsonParseException // for additional information later on
@@ -44,10 +52,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), headers, HttpStatus.BAD_REQUEST, request);
     }
     // bad request value
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
 
-        return handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), headers, HttpStatus.BAD_REQUEST, request);
+        AbstractAPIResponse<Object> apiErrorResponse = new AbstractAPIResponse<>();
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/", "error: "+ex.getMessage());
+        return ResponseEntity.ok(apiErrorResponse.createAPIResponse( handleExceptionInternal(ex, exceptionMessage(HttpStatus.BAD_REQUEST, ex), new HttpHeaders(), HttpStatus.BAD_REQUEST, request), metaData, RestResponseMessage.MethodArgumentNotValid, "Error"));
     }
     // 403
     // forbidden resource access

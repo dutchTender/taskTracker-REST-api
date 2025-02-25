@@ -52,7 +52,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         List<TaskReward> taskRewardsList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total tasks : "+taskRewardsList.size());
         AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -71,7 +71,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         List<TaskReward> taskRewardsList = findAllPaginated(page, size);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "params: page - {" +page+" }" + " size- {"+size+"} total tasks :"+taskRewardsList.size());
         AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -90,7 +90,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         List<TaskReward> taskRewardsList =  findAllSorted(sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } total tasks : "+taskRewardsList.size());
         AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -109,7 +109,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         List<TaskReward> taskRewardsList = findAll(request);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "total tasks : "+taskRewardsList.size());
         AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -127,7 +127,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     public ResponseEntity<AbstractRestResponse<TaskRewardDTO>> findOneDTO(@PathVariable("id") final Long id) {
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "total tasks : N/A");
         AbstractAPIResponse<TaskRewardDTO> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTaskReward(findOne(id)), metaData, RestResponseMessage.TASK_REWARD_GET_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOFromTaskReward(findOne(id)), metaData, RestResponseMessage.TASK_REWARD_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -146,7 +146,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         TaskReward createdReward = create(dtoService.buildTaskConfigurationFromDTO(resource));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/"+createdReward.getId(), "total tasks : N/A");
         AbstractAPIResponse<TaskRewardDTO> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTaskReward(createdReward), metaData, RestResponseMessage.TASK_REWARD_CREATE_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOFromTaskReward(createdReward), metaData, RestResponseMessage.TASK_REWARD_CREATE_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -164,7 +164,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         TaskReward updatedReward = update(id, dtoService.buildTaskConfigurationFromDTO(resource));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/"+updatedReward.getId(), "total tasks : N/A");
         AbstractAPIResponse<TaskRewardDTO> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(dtoService.buildDTOFromTaskReward(updatedReward), metaData, RestResponseMessage.TASK_REWARD_UPDATE_SUCCESS);
+        return apiResponse.createAPIResponse(dtoService.buildDTOFromTaskReward(updatedReward), metaData, RestResponseMessage.TASK_REWARD_UPDATE_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -179,7 +179,7 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "total tasks : N/A");
         AbstractAPIResponse<TaskRewardDTO> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPISuccessResponse(null, metaData, RestResponseMessage.TASK_REWARD_DELETE_SUCCESS);
+        return apiResponse.createAPIResponse(null, metaData, RestResponseMessage.TASK_REWARD_DELETE_SUCCESS, "Success");
     }
     @Override
     protected final ITaskRewardService getService() {
