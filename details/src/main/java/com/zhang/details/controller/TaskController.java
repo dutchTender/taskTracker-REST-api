@@ -27,6 +27,8 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
 
     private final ITaskService taskService;
     private final DTOService dtoService;
+    private final AbstractAPIResponse<List<TaskDTO>> apiResponseCollection = new AbstractAPIResponse<>();
+    private final AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
 
     public TaskController(ITaskService taskService, DTOService dtoService) {
         this.taskService = taskService;
@@ -44,8 +46,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
                                                       @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> taskList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total tasks : "+taskList.size());
-        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
     }
 
     @Override
@@ -57,8 +58,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<Task> taskList = findAllPaginated(page, size);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "params: page - {" +page+" }" + " size- {"+size+"} total tasks :"+taskList.size());
-        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
     }
 
     @Override
@@ -70,8 +70,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<Task> taskList = findAllSorted(sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } total tasks : "+taskList.size());
-        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
     }
 
     @Override
@@ -83,8 +82,7 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<List<TaskDTO>>> findAllDTO(final HttpServletRequest request) {
         List<Task> taskList = findAll(request);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", "total tasks : "+taskList.size());
-        AbstractAPIResponse<List<TaskDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse( dtoService.buildDTOListFromTasks(Optional.ofNullable(taskList)), metaData, RestResponseMessage.TASKS_GET_SUCCESS, "Success");
     }
 
     public Task findOne(final Long id) {
@@ -94,7 +92,6 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     @ResponseBody
     public ResponseEntity<AbstractRestResponse<TaskDTO>> findOneDTO(@PathVariable("id") final Long id) {
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
-        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(dtoService.buildDTOFromTask(findOne(id)), metaData, RestResponseMessage.TASK_GET_SUCCESS, "Success");
     }
 
@@ -106,7 +103,6 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<TaskDTO>> createDTO(@RequestBody @Valid final TaskDTO resource) {
         Task createdTask = create(dtoService.buildTaskFromDTO(resource));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+createdTask.getId(), " N/A");
-        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(dtoService.buildDTOFromTask(createdTask), metaData, RestResponseMessage.TASK_CREATE_SUCCESS, "Success");
     }
 
@@ -118,7 +114,6 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<TaskDTO>> updateDTO(@PathVariable("id") final Long id, @RequestBody @Valid final TaskDTO resource) {
         resource.setId(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/"+id, " N/A");
-        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(dtoService.buildDTOFromTask(update(id, dtoService.buildTaskFromDTO(resource))), metaData, RestResponseMessage.TASK_UPDATE_SUCCESS, "Success");
     }
 
@@ -127,7 +122,6 @@ public class TaskController extends AbstractLongIdController<Task> implements IL
     public ResponseEntity<AbstractRestResponse<TaskDTO>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks/", " N/A");
-        AbstractAPIResponse<TaskDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(null, metaData, RestResponseMessage.TASK_DELETE_SUCCESS, "Success");
     }
     @Override
