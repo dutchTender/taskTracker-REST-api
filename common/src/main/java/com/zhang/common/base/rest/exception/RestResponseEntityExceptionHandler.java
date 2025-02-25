@@ -36,6 +36,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
     // bad request name
     @Override
+
     protected ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         //final String bodyOfResponse = "This should be application specific";
         // ex.getCause() instanceof JsonMappingException, JsonParseException // for additional information later on

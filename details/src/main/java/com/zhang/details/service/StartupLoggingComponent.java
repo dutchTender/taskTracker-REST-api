@@ -20,11 +20,13 @@ public class StartupLoggingComponent implements InitializingBean {
     private static final String ACTIVE_SPRING_PROFILE_KEY = "spring.profiles.active";
     private static final String PERSISTENCE_HOST_KEY = "jdbc.url";
 
-    @Autowired
-    private Environment env;
 
-    public StartupLoggingComponent() {
+    private final Environment env;
+
+    public StartupLoggingComponent(Environment env) {
+
         super();
+        this.env = env;
     }
 
     //

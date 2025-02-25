@@ -24,10 +24,6 @@ public class UserService extends AbstractLongIdService<User>  implements IUserSe
     public User findByName(final String name) {
         return dao.findByName(name);
     }
-    // other
-    public void removeUser(final String name){
-        dao.delete(findByName(name));
-    }
     // Spring
     @Override
     protected final IUserDAO getDao() {
