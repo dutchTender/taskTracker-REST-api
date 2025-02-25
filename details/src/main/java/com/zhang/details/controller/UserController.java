@@ -30,6 +30,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
 
     private final IUserService userService;
     private final DTOService dtoService;
+    private final AbstractAPIResponse<List<UserDTO>> apiResponseCollection = new AbstractAPIResponse<>();
+    private final AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
 
     public UserController(IUserService userService, DTOService dtoService) {
         this.userService = userService;
@@ -52,8 +54,8 @@ public class UserController extends AbstractLongIdController<User> implements IL
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" + sortBy + " }" + " sort order - { " + sortOrder + " }  page - {" + page + "}  size - {" + size + "}");
-        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse(dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+
+        return apiResponseCollection.createAPIResponse(dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -73,8 +75,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         List<User> userList =  findAllPaginated(page, size);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: page - {" +page+" }" + " size- {"+size+"}");
-        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse( dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse( dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -92,8 +93,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAllSorted(sortBy, sortOrder)));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } total users : "+dtoList.size());
-        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -111,8 +111,7 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<List<UserDTO>>> findAllDTO(final HttpServletRequest request ) {
         List<UserDTO> dtoList = dtoService.buildDTOListFromUsers(Optional.ofNullable(findAll(request)));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "total users : "+dtoList.size());
-        AbstractAPIResponse<List<UserDTO>> apiResponse = new AbstractAPIResponse<>();
-        return apiResponse.createAPIResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse(dtoList, metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +127,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> findOneDTO(@PathVariable("id") final Long id) {
         User user = findOne(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(dtoService.buildDTOFromUser(user), metaData, RestResponseMessage.USER_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +146,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> createDTO(@RequestBody @Valid final UserDTO resource) {
         User user = create(dtoService.buildUserFromDTO(resource, 0L));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(dtoService.buildDTOFromUser(user), metaData, RestResponseMessage.USER_CREATE_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +163,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> update(@PathVariable("id") final Long id, @RequestBody @Valid final UserDTO resource) {
         User user = updateInternal(id, dtoService.buildUserFromDTO(resource, id));
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/"+user.getId(), "N/A");
-        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(dtoService.buildDTOFromUser(user), metaData, RestResponseMessage.USER_UPDATE_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +178,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
     public ResponseEntity<AbstractRestResponse<UserDTO>> delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "N/A");
-        AbstractAPIResponse<UserDTO> apiResponse = new AbstractAPIResponse<>();
         return apiResponse.createAPIResponse(null, metaData, RestResponseMessage.USER_DELETE_SUCCESS, "Success");
     }
     @Override
