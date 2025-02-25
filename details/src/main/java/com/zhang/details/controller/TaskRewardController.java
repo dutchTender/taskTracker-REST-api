@@ -51,7 +51,6 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
                                                             @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<TaskReward> bUnitConfigList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(bUnitConfigList));
-
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -83,9 +82,11 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     }
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskRewardDTO> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        List<TaskReward> taskConfigList =  findAllSorted(sortBy, sortOrder);
-        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
+    public ResponseEntity<AbstractRestResponse<List<TaskRewardDTO>>> findAllSortedDTO(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        List<TaskReward> taskRewardsList =  findAllSorted(sortBy, sortOrder);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" } total tasks : "+taskRewardsList.size());
+        AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
