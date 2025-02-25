@@ -23,4 +23,5 @@ public class RestResponseMessage{
 
     public static final String MethodArgumentNotValid = "Method argument not valid";
     public static final String BadRequest = "Logically malformed Request";
+    public static final String HttpMessageNotReadable = "Http Message Not Readable";
 }
