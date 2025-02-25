@@ -47,10 +47,12 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskRewardDTO> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+    public ResponseEntity<AbstractRestResponse<List<TaskRewardDTO>>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                             @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        List<TaskReward> bUnitConfigList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(bUnitConfigList));
+        List<TaskReward> taskRewardsList =  findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total tasks : "+taskRewardsList.size());
+        AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
@@ -65,9 +67,11 @@ public class TaskRewardController extends AbstractLongIdController<TaskReward> i
     }
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskRewardDTO> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        List<TaskReward> taskConfigList = findAllPaginated(page, size);
-        return dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskConfigList));
+    public ResponseEntity<AbstractRestResponse<List<TaskRewardDTO>>> findAllPaginatedDTO(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+        List<TaskReward> taskRewardsList = findAllPaginated(page, size);
+        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/tasks-rweards/", "params: page - {" +page+" }" + " size- {"+size+"} total tasks :"+taskRewardsList.size());
+        AbstractAPIResponse<List<TaskRewardDTO>> apiResponse = new AbstractAPIResponse<>();
+        return apiResponse.createAPISuccessResponse(dtoService.buildDTOListFromConfigurationList(Optional.ofNullable(taskRewardsList)), metaData, RestResponseMessage.TASK_REWARDS_GET_SUCCESS);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // API
