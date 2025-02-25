@@ -27,7 +27,6 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class TaskRewardController extends AbstractLongIdController<TaskReward> implements ILongIdSortingController<TaskReward> {
 
-
     private final ITaskRewardService service;
     private final DTOService dtoService;
     private final AbstractAPIResponse<List<TaskRewardDTO>> apiResponseCollection = new AbstractAPIResponse<>();
