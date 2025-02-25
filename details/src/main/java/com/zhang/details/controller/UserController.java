@@ -54,7 +54,6 @@ public class UserController extends AbstractLongIdController<User> implements IL
                                                    @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         List<User> userList = findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8082/api/users/", "params: sort by - {" + sortBy + " }" + " sort order - { " + sortOrder + " }  page - {" + page + "}  size - {" + size + "}");
-
         return apiResponseCollection.createAPIResponse(dtoService.buildDTOListFromUsers(Optional.ofNullable(userList)), metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
