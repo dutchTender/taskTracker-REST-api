@@ -16,12 +16,11 @@ public class TaskService extends AbstractLongIdService<Task> implements ITaskSer
 
 
     private final ITaskDAO dao;
-    private final IUserDAO userDao;
+
 
     public TaskService(ITaskDAO dao, IUserDAO userDao) {
         super();
         this.dao = dao;
-        this.userDao = userDao;
     }
     // API
     // find
