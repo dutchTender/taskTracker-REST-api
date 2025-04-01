@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
     UmPersistenceJpaConfig.class,
     UmServiceConfig.class,
     UmWebConfig.class,
-    //UmAsyncConfig.class
+    UmAsyncConfig.class
 }) // @formatter:on
 public class UmApp {
     public static void main(final String... args) {

@@ -19,7 +19,6 @@ public class UmAsyncConfig {
         executor.setQueueCapacity(100);
         executor.setThreadNamePrefix("Async-");
         executor.initialize();
-
         return executor;
     }
 

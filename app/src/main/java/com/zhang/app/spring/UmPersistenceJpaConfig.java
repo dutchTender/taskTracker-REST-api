@@ -2,9 +2,7 @@ package com.zhang.app.spring;
 
 import java.util.Objects;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,11 +25,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "com.zhang.core.persistence.dao")
 public class UmPersistenceJpaConfig {
 
-    @Autowired
-    private Environment env;
-
-    public UmPersistenceJpaConfig() {
+    private final Environment env;
+    public UmPersistenceJpaConfig(Environment env) {
         super();
+        this.env = env;
     }
     //////////////////////////////////////////////////////////////////////////////////////
     // beans
